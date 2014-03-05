@@ -1,0 +1,4 @@
+OPTIONS=color, DECgraphics
+OPTIONS=boulder:0, !autopickup
+OPTIONS=pushweapon, autoquiver, time, showexp, lit_corridor, standout
+OPTIONS=horsename:Rocinante

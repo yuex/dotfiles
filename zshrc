@@ -57,7 +57,7 @@ alias mux=tmuxinator
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
 #export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/android-sdk/platform-tools:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/yuexin/bin:/sbin:/home/yuexin/.gem/ruby/1.9.1/bin:/home/yuexin/.gem/ruby/2.0.0/bin
 
 export EDITOR=vim

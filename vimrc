@@ -277,8 +277,8 @@
     inoremap <M-m> <C-o>:setlocal number!<CR>
     nnoremap <M-m> :setlocal number!<CR>
     "nnoremap <M-r> :vertical resize 80<CR>
-    inoremap <M-s> <C-o>:set invhlsearch<CR>
-    nnoremap <M-s> :set invhlsearch<CR>
+    inoremap <M-s> <C-o>:setlocal hlsearch!<CR>
+    nnoremap <M-s> :setlocal hlsearch!<CR>
     nnoremap <M-e> :NERDTree %:p:h<CR>
     autocmd FileType nerdtree nnoremap <buffer><M-e> :NERDTreeClose<CR>
     nnoremap <M-u> :UndotreeToggle<CR>
@@ -346,7 +346,9 @@
         " it seems <C-Left> and <C-Right> in insert mode
         inoremap <Esc><C-h> <C-o>B
         inoremap <Esc><C-l> <C-o>E<Right>
-        inoremap <M-f> <C-o>e<Right>
+        " noremap! <S-Left> is enough for i-mode
+        "inoremap <M-f> <C-o>w
+        "inoremap <M-b> <C-o>b
 
         inoremap <C-a> <C-o>^
         inoremap <C-j> <C-o>g<Down>
@@ -382,6 +384,9 @@
         cnoremap <M-p> <Up>
         cnoremap <M-j> <Down>
         cnoremap <M-k> <Up>
+        " noremap! <S-Left> isn't enough for c-mode
+        cnoremap <M-f> <C-o>w<C-c>
+        cnoremap <M-b> <C-o>b<C-c>
 
         cnoremap <C-a> <C-o>^<C-c>
         cnoremap <C-j> <C-n>
@@ -410,6 +415,8 @@
         "noremap
             noremap <Esc><C-w> w
 
+        noremap <M-f> <S-Right>
+        noremap <M-b> <S-Left>
         noremap <C-a> ^
         noremap <C-e> <End>
         noremap <C-h> <Left>
@@ -446,11 +453,8 @@
         function Searchlist(pattern, flag)
             let @/ = a:pattern
             exec 'lvimgrep /'.a:pattern.'/'.a:flag.' %'
-            call ToggleQuickfix('l')
+            call QuickfixToggle('l')
         endfun
-
-        onoremap in( :<c-u>normal! f(vi(
-        vnoremap in( :<c-u>normal! f(vi(
 
         " search and visual select (..) and )..(
         " checkout vim-textobj-user
@@ -587,7 +591,7 @@
 
     " quickfix
         " todo, fixme, and xxx vimgrep
-        function ToggleQuickfix(type)
+        function QuickfixToggle(type)
             let flagname = 'b:quickfix_'.a:type.'_opened'
             let cmdopen = a:type.'window'
             let cmdclose = a:type.'close'
@@ -603,12 +607,12 @@
                 exec "let ".flagname." = 0 "
             endif
         endfun
-        nnoremap <Leader>td :vimgrep /TODO\\|FIXME\\|XXX/ %<CR>:call ToggleQuickfix('c')<CR>
-        nnoremap <Leader>ld :lvimgrep /TODO\\|FIXME\\|XXX/ %<CR>:call ToggleQuickfix('l')<CR>
-        nnoremap <Leader>tt :call ToggleQuickfix('c')<CR>
+        nnoremap <Leader>td :vimgrep /TODO\\|FIXME\\|XXX/ %<CR>:call QuickfixToggle('c')<CR>
+        nnoremap <Leader>ld :lvimgrep /TODO\\|FIXME\\|XXX/ %<CR>:call QuickfixToggle('l')<CR>
+        nnoremap <Leader>tt :call QuickfixToggle('c')<CR>
         nnoremap <Leader>tn :cnext<CR>
         nnoremap <Leader>tp :cprev<CR>
-        nnoremap <Leader>ll :call ToggleQuickfix('l')<CR>
+        nnoremap <Leader>ll :call QuickfixToggle('l')<CR>
         nnoremap <Leader>ln :lnext<CR>
         nnoremap <Leader>lp :lprev<CR>
 
@@ -713,12 +717,23 @@ endif
 
 " vim-textobj-user
 if match(bundle_name, 'vim-textobj-user') >= 0
-    "call textobj#user#plugin('asterisk', {
-                "\   'text': {
-                "\       'pattern': ['\*','\*'],
-                "\       'select-a': 'a*',
-                "\       'select-i': 'i*',
-                "\   }
+    call textobj#user#plugin('php', {
+        \   'code': {
+        \       'pattern': ['<?php\>','?>'],
+        \       'select-a': 'ap',
+        \       'select-i': 'ip',
+        \   }
+        \ })
+    call textobj#user#plugin('datetime', {
+        \   'date': {
+        \     'pattern': '\<\d\d\d\d-\d\d-\d\d\>',
+        \     'select': ['ad', 'id'],
+        \   },
+        \   'time': {
+        \     'pattern': '\<\d\d:\d\d:\d\d\>',
+        \     'select': ['at', 'it'],
+        \   },
+        \ })
 endif
 
 " indentLine

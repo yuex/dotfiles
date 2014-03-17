@@ -29,8 +29,8 @@
         "Bundle 'YankRing.vim'
         Bundle 'godlygeek/tabular'
 
-        "Bundle 'Lokaltog/vim-easymotion'
-        Bundle 'yuex/vim-easymotion'
+        Bundle 'Lokaltog/vim-easymotion'
+        "Bundle 'yuex/vim-easymotion'
         Bundle 'matchit.zip'
 
         Bundle 'Lokaltog/vim-powerline'
@@ -448,6 +448,9 @@
             exec 'lvimgrep /'.a:pattern.'/'.a:flag.' %'
             call ToggleQuickfix('l')
         endfun
+
+        onoremap in( :<c-u>normal! f(vi(
+        vnoremap in( :<c-u>normal! f(vi(
 
         " search and visual select (..) and )..(
         " checkout vim-textobj-user

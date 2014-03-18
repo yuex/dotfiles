@@ -368,8 +368,8 @@
         inoremap <C-s> <C-o>d
         inoremap <C-s>u <C-o>u
 
-        inoremap <Esc>, <C-o><<
-        inoremap <Esc>. <C-o>>>
+        inoremap <Esc>, <C-o><<<End>
+        inoremap <Esc>. <C-o>>><End>
         inoremap <M-a> <C-o><C-a>
         inoremap <M-x> <C-o><C-x>
 
@@ -405,8 +405,8 @@
         cnoremap <C-y> <C-r>-
         cnoremap <C-s> <C-o>d
 
-        cnoremap <Esc>, <C-o><<<C-c>
-        cnoremap <Esc>. <C-o>>><C-c>
+        cnoremap <Esc>, <C-o><<<End><C-c>
+        cnoremap <Esc>. <C-o>>><End><C-c>
         cnoremap <M-a> <C-o><C-a><C-c>
         cnoremap <M-x> <C-o><C-x><C-c>
         "cnoremap <C-w> <C-c><C-w>
@@ -432,8 +432,8 @@
         noremap <Esc><C-j> }
         noremap <Esc><C-k> {
 
-        nnoremap <Esc>, <<
-        nnoremap <Esc>. >>
+        nnoremap <Esc>, <<<End>
+        nnoremap <Esc>. >><End>
         nnoremap Y y$
 
         nnoremap <M-a> <C-a>

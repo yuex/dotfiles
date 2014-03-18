@@ -57,10 +57,6 @@ alias mux=tmuxinator
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
-#export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/android-sdk/platform-tools:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/yuexin/bin:/sbin:/home/yuexin/.gem/ruby/1.9.1/bin:/home/yuexin/.gem/ruby/2.0.0/bin
-
-export EDITOR=vim
 
 # disable terminal flow control <C-s> and <C-q>, save two prefix for vim
 stty stop ''
@@ -162,18 +158,4 @@ $(git_prompt_info)%(!.#.») '
 
 setprompt
 
-# virtualenvwrapper settings
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
-VIRTUALENV_HOME=$HOME/.virtualenv
-export WORKON_HOME=$VIRTUALENV_HOME/workon
-export PROJECT_HOME=$VIRTUALENV_HOME/project
-source /usr/bin/virtualenvwrapper.sh
-
-# self-defined location ab.
-export PLAYGROUND=$HOME/coding/playground
-export PROJECT=$HOME/coding/project
-export VIMWIKI=$HOME/vimwiki/
-
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+source .zshrc-export

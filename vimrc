@@ -368,8 +368,8 @@
         inoremap <C-s> <C-o>d
         inoremap <C-s>u <C-o>u
 
-        inoremap <Esc>, <C-o><<<End>
-        inoremap <Esc>. <C-o>>><End>
+        inoremap <Esc>, <C-d>
+        inoremap <Esc>. <C-t>
         inoremap <M-a> <C-o><C-a>
         inoremap <M-x> <C-o><C-x>
 
@@ -405,8 +405,10 @@
         cnoremap <C-y> <C-r>-
         cnoremap <C-s> <C-o>d
 
-        cnoremap <Esc>, <C-o><<<End><C-c>
-        cnoremap <Esc>. <C-o>>><End><C-c>
+
+        " use <c-d> and <c-t> in i-mode to keep cursor's position
+        cnoremap <Esc>, <C-o>i<C-d><C-c>
+        cnoremap <Esc>. <C-o>i<C-t><C-c>
         cnoremap <M-a> <C-o><C-a><C-c>
         cnoremap <M-x> <C-o><C-x><C-c>
         "cnoremap <C-w> <C-c><C-w>
@@ -432,8 +434,9 @@
         noremap <Esc><C-j> }
         noremap <Esc><C-k> {
 
-        nnoremap <Esc>, <<<End>
-        nnoremap <Esc>. >><End>
+        " use <c-d> and <c-t> in i-mode to keep cursor's position
+        nnoremap <Esc>, a<C-d><Esc>
+        nnoremap <Esc>. a<C-t><Esc>
         nnoremap Y y$
 
         nnoremap <M-a> <C-a>

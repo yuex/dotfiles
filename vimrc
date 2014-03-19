@@ -332,14 +332,44 @@
     "autocmd BufEnter *.html,*.css set tabstop=2 shiftwidth=2 softtabstop=2
 
 "quickmode
+    function SmartMove(moveToNext, moveToEnd, ...)
+        " if line number changed, use moveToEnd, otherwise use moveToNext
+        " will ensure cursor get changed to avoid deadlock
+        " a:type to deal with visualmode
+        if a:0 > 0
+            let a:type = a:1
+        endif
+        let prevpos = getpos('.')
+        let line = prevpos[1]
+        let col  = prevpos[2]
+
+        if exists("a:type")
+            let prefix = 'gv'
+        else
+            let prefix = ''
+        endif
+
+        if col ==# col('$')
+            exec "normal! " . prefix . a:moveToNext
+            return
+        endif
+
+        exec "normal! " . prefix . a:moveToNext
+        if line !=# line('.')
+            call setpos('.', prevpos)
+            exec "normal! " . prefix . a:moveToEnd
+            if prevpos ==# getpos('.')
+                exec "normal! " . prefix. a:moveToNext
+            endif
+        endif
+    endfunc
+
     "quickmotion
         "inoremap and cnoremap
         noremap! <C-a> <Home>
         noremap! <C-e> <End>
         noremap! <C-h> <Left>
         noremap! <C-l> <Right>
-        noremap! <Esc><C-h> <C-Left>
-        noremap! <Esc><C-l> <C-Right>
         noremap! <M-b> <S-Left>
         noremap! <M-f> <S-Right>
         noremap! <M-h> <BS>
@@ -347,11 +377,10 @@
 
     " quickinsert inoremap
         " it seems <C-Left> and <C-Right> in insert mode
-        inoremap <Esc><C-h> <C-o>B
-        inoremap <Esc><C-l> <C-o>E<Right>
-        " noremap! <S-Left> is enough for i-mode
-        "inoremap <M-f> <C-o>w
-        "inoremap <M-b> <C-o>b
+        inoremap <Esc><C-h> <C-o>:call SmartMove('B','gEl')<CR>
+        inoremap <Esc><C-l> <C-o>:call SmartMove('W','$l')<CR>
+        inoremap <M-b> <C-o>:call SmartMove('b','gel')<CR>
+        inoremap <M-f> <C-o>:call SmartMove('w','el')<CR>
 
         inoremap <C-a> <C-o>^
         inoremap <C-j> <C-o>g<Down>
@@ -397,6 +426,8 @@
         cnoremap <M-e> <C-o>el<C-c>
         cnoremap <Esc><C-j> <C-n>
         cnoremap <Esc><C-k> <C-p>
+        cnoremap <Esc><C-h> <C-o><C-Left><C-c>
+        cnoremap <Esc><C-l> <C-o><C-Right><C-c>
 
         cnoremap <C-u> <C-o>d^<C-c>
         cnoremap <M-u> <C-o>d$<C-c>
@@ -418,18 +449,22 @@
 
     " quicknormal
         "noremap
-            noremap <Esc><C-w> w
+        noremap <Esc><C-w> w
 
-        noremap <M-f> <S-Right>
-        noremap <M-b> <S-Left>
+        nnoremap <M-b> :<C-u>call SmartMove('b','gel')<CR>
+        nnoremap <M-f> :<C-u>call SmartMove('w','el')<CR>
+        vnoremap <M-b> <Esc>:<C-u>call SmartMove('b','gel',visualmode())<CR>
+        vnoremap <M-f> <Esc>:<C-u>call SmartMove('w','el',visualmode())<CR>
         noremap <C-a> ^
         noremap <C-e> <End>
         noremap <C-h> <Left>
         noremap <C-l> <Right>
         noremap <C-j> g<Down>
         noremap <C-k> g<Up>
-        noremap <Esc><C-h> <C-Left>
-        noremap <Esc><C-l> E<Right>
+        nnoremap <Esc><C-h> :<C-u>call SmartMove('B','gEl')<CR>
+        nnoremap <Esc><C-l> :<C-u>call SmartMove('W','El')<CR>
+        vnoremap <Esc><C-h> <Esc>:<C-u>call SmartMove('B','gEl',visualmode())<CR>
+        vnoremap <Esc><C-l> <Esc>:<C-u>call SmartMove('W','El',visualmode())<CR>
         noremap <Esc><C-b> <S-Left>
         noremap <Esc><C-f> <S-Right>
 

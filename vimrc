@@ -319,7 +319,10 @@
     " adjust makeprg according to filetype
     autocmd FileType tex set makeprg=pdflatex\ %
     autocmd FileType c set makeprg=gcc\ -Wall\ -o%<.o\ %;./%<.o
-    autocmd FileType html,css,c,cpp,yaml set tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType html,css,htmldjango set tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType c,cpp set tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2
+
     autocmd FileType make set noexpandtab
 
     autocmd BufRead,BufNewFile *.conf setfiletype conf

@@ -294,42 +294,38 @@
     map gf F
 
 " autocommand
-    " script auto-executable configs
-    " % is the filename of the file
-    autocmd BufNewFile *.py call append(0,"#!/usr/bin/env python")
-    autocmd FileType python set makeprg=python\ %
-
-    autocmd BufNewFile *.rb call append(0,"#!/usr/bin/env ruby")
-    autocmd FileType ruby set makeprg=ruby\ %
-
-    autocmd BufNewFile *.tcl call append(0,"#!/usr/bin/env tclsh")
-    autocmd FileType tcl set makeprg=tclsh\ %
-
-    autocmd BufNewFile *.sh call append(0,"#!/usr/bin/env sh")
-    autocmd FileType sh set makeprg=bash\ %
-
-    autocmd BufNewFile *.lisp call append(0,"#!/usr/bin/env clisp")
-    autocmd FileType lisp set makeprg=clisp\ %
-
-    autocmd BufWritePost *.sh,*.py,*.rb,*.tcl,*.lisp exec "!chmod a+x %"
-                \| exec "redraw"
-
-    autocmd BufEnter *.org setlocal filetype=org
-
-    " adjust makeprg according to filetype
-    autocmd FileType tex set makeprg=pdflatex\ %
-    autocmd FileType c set makeprg=gcc\ -Wall\ -o%<.o\ %;./%<.o
-    autocmd FileType html,css,htmldjango set tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType c,cpp set tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2
-
-    autocmd FileType make set noexpandtab
-
+    " set filetype for *.conf
     autocmd BufRead,BufNewFile *.conf setfiletype conf
 
-    "autocmd BufEnter * set tabstop=4 shiftwidth=4 softtabstop=4
-    "autocmd BufEnter *.c,*.h,*.cpp,*.cc set tabstop=2 shiftwidth=2 softtabstop=2
-    "autocmd BufEnter *.html,*.css set tabstop=2 shiftwidth=2 softtabstop=2
+    " make script executable
+    autocmd BufNewFile *.py call append(0,"#!/usr/bin/env python")
+    autocmd BufNewFile *.rb call append(0,"#!/usr/bin/env ruby")
+    autocmd BufNewFile *.tcl call append(0,"#!/usr/bin/env tclsh")
+    autocmd BufNewFile *.sh call append(0,"#!/usr/bin/env sh")
+    autocmd BufNewFile *.lisp call append(0,"#!/usr/bin/env clisp")
+
+    autocmd BufWritePost *.sh,*.py,*.rb,*.tcl,*.lisp
+                \  exec "!chmod a+x %"
+                \| exec "redraw"
+
+    " set makeprg
+    autocmd FileType python set makeprg=python\ %
+    autocmd FileType ruby set makeprg=ruby\ %
+    autocmd FileType tcl set makeprg=tclsh\ %
+    autocmd FileType sh set makeprg=bash\ %
+    autocmd FileType lisp set makeprg=clisp\ %
+    autocmd FileType tex set makeprg=pdflatex\ %
+    autocmd FileType c set makeprg=gcc\ -Wall\ -o%<.o\ %;./%<.o
+
+    " set indent
+    autocmd FileType python set tabstop=4 shiftwidth=4 softtabstop=4
+
+    autocmd FileType c,cpp set tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType html,css,htmldjango
+                \ set tabstop=2 shiftwidth=2 softtabstop=2
+
+    autocmd FileType make set noexpandtab
 
 "quickmode
     function SmartMove(moveToNext, moveToEnd, ...)

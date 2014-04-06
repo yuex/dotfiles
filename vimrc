@@ -1078,6 +1078,7 @@ if match(bundle_name, 'YankRing.vim') >= 0
 endif
 
 " tabular
+" align table
 if match(bundle_name, 'tabular') >= 0
     " :Tabularize /:/l1r0
     " algin by :, insert 1 space to left, and 0 to right.default to l1r1

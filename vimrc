@@ -234,10 +234,10 @@
             try
                 exec cmd
             catch
-                redraw
-                echohl ErrorMsg
-                echo matchstr(v:exception, '\(Vim(.*):\)\@<=.*')
-                echohl None
+                " one line echo
+                "echoerr matchstr(v:exception, '\(Vim(.*):\)\@<=.*')
+                echoerr v:exception
+                return
             endtry
         endif
     endfunc
@@ -633,23 +633,57 @@
             let cmdopen = a:type.'window'
             let cmdclose = a:type.'close'
             if !exists(flagname)
-                exec "let ".flagname." = 0 "
+                exec "let ".flagname." = 0"
             endif
             exec "let flag = ".flagname
             if flag == 0
+                " in the cmd invode window
+                exec "let ".flagname." = 1 "
                 exec cmdopen
+                " in the quickfix window
                 exec "let ".flagname." = 1 "
             elseif flag == 1
+                " in the cmd invode window
+                exec "let ".flagname." = 0 "
                 exec cmdclose
+                " in the quickfix window
                 exec "let ".flagname." = 0 "
             endif
-        endfun
-        nnoremap <Leader>td :vimgrep /TODO\\|FIXME\\|XXX/ %<CR>:call QuickfixToggle('c')<CR>
-        nnoremap <Leader>ld :lvimgrep /TODO\\|FIXME\\|XXX/ %<CR>:call QuickfixToggle('l')<CR>
-        nnoremap <Leader>tt :call QuickfixToggle('c')<CR>
+        endfunc
+        function QuickfixCompile(type)
+            let flagname = 'b:quickfix_' . a:type . '_compiled'
+            if !exists(flagname)
+                exec "let " . flagname . " = 0"
+            endif
+            exec "let flag = " . flagname
+            if flag == 1 || &ft ==# 'qf'
+                return
+            endif
+            if flag == 0
+                let grep_cmd = 'vimgrep /\vTODO|FIXME|XXX/ %'
+                if a:type ==# 'l'
+                    let grep_cmd = a:type . grep_cmd
+                endif
+                try
+                    exec grep_cmd
+                catch
+                    " e.g., not saved file
+                    echoerr v:exception
+                    return
+                endtry
+                exec "let " . flagname . " = 1"
+            endif
+        endfunc
+        "nnoremap <Leader>td :vimgrep /TODO\\|FIXME\\|XXX/ %<CR>
+                    "\:call QuickfixToggle('c')<CR>
+        "nnoremap <Leader>ld :lvimgrep /TODO\\|FIXME\\|XXX/ %<CR>
+                    "\:call QuickfixToggle('l')<CR>
+        nnoremap <Leader>tt :call QuickfixCompile('c')<CR>
+                    \:call QuickfixToggle('c')<CR>
+        nnoremap <Leader>ll :call QuickfixCompile('l')<CR>
+                    \:call QuickfixToggle('l')<CR>
         nnoremap <Leader>tn :cnext<CR>
         nnoremap <Leader>tp :cprev<CR>
-        nnoremap <Leader>ll :call QuickfixToggle('l')<CR>
         nnoremap <Leader>ln :lnext<CR>
         nnoremap <Leader>lp :lprev<CR>
 

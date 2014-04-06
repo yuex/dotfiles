@@ -495,57 +495,57 @@
 
         " search and visual select (..) and )..(
         " checkout vim-textobj-user
-        for c in add(split('(:),[:],{:},<:>,*:*,-:-,":"',','),"':'")
-            let [s,e] = split(c,':')
-            let switched = 0
-            while 1
-                let s_re = escape(s, '[\^$.*')
-                let e_re = escape(e, ']\^$.*')
-                let i_re = s_re.'\zs[^'.escape(e.s,'^]\').']*\ze'.e_re
-                let a_re = '\zs'.s_re.'[^'.escape(e.s,'^]\').']*'.e_re.'\ze'
-                let mycount = v:count > 1 ? v:count : ''
+        "for c in add(split('(:),[:],{:},<:>,*:*,-:-,":"',','),"':'")
+            "let [s,e] = split(c,':')
+            "let switched = 0
+            "while 1
+                "let s_re = escape(s, '[\^$.*')
+                "let e_re = escape(e, ']\^$.*')
+                "let i_re = s_re.'\zs[^'.escape(e.s,'^]\').']*\ze'.e_re
+                "let a_re = '\zs'.s_re.'[^'.escape(e.s,'^]\').']*'.e_re.'\ze'
+                "let mycount = v:count > 1 ? v:count : ''
 
-                " use \i* and \a* to search for next **
-                " use |i* and |a* to search for prev **
-                " preceding count is supported
-                exec "noremap \\i".s." ".mycount."/".i_re."<CR>"
-                exec 'noremap \|i'.s." ".mycount."?".i_re."<CR>"
-                exec "noremap \\a".s." ".mycount."/".a_re."<CR>"
-                exec 'noremap \|a'.s." ".mycount."?".a_re."<CR>"
+                "" use \i* and \a* to search for next **
+                "" use |i* and |a* to search for prev **
+                "" preceding count is supported
+                "exec "noremap \\i".s." ".mycount."/".i_re."<CR>"
+                "exec 'noremap \|i'.s." ".mycount."?".i_re."<CR>"
+                "exec "noremap \\a".s." ".mycount."/".a_re."<CR>"
+                "exec 'noremap \|a'.s." ".mycount."?".a_re."<CR>"
 
-                " self-defined text object
-                " va* and vi* to select between **
-                " I know it's some dirty hacks, but easy to be converted into a
-                " plugin or so. Maybe some time later when I get the mood
-                " it's actually some scripted version of following mappings
-                " vnoremap a* :<C-u>set nows<CR>v?\*<CR>o/\*<CR>:<C-u>set ws<CR>gv
-                " vnoremap i* :<C-u>set nows<CR>v?\*\zs?e+1<CR>o/\ze\*/e-1<CR>:<C-u>set ws<CR>gv
-                exec 'vnoremap a'.s.' '.
-                            \':<C-u>set nows<CR>
-                            \v?'.s_re.'<CR>
-                            \o/'.e_re.'<CR>
-                            \:<C-u>set ws<CR>
-                            \gv'
-                exec 'vnoremap i'.s.' '.
-                            \':<C-u>set nows<CR>
-                            \v?'.s_re.'<CR>l
-                            \o/'.e_re.'<CR>h
-                            \:<C-u>set ws<CR>
-                            \gv'
+                "" self-defined text object
+                "" va* and vi* to select between **
+                "" I know it's some dirty hacks, but easy to be converted into a
+                "" plugin or so. Maybe some time later when I get the mood
+                "" it's actually some scripted version of following mappings
+                "" vnoremap a* :<C-u>set nows<CR>v?\*<CR>o/\*<CR>:<C-u>set ws<CR>gv
+                "" vnoremap i* :<C-u>set nows<CR>v?\*\zs?e+1<CR>o/\ze\*/e-1<CR>:<C-u>set ws<CR>gv
+                "exec 'vnoremap a'.s.' '.
+                            "\':<C-u>set nows<CR>
+                            "\v?'.s_re.'<CR>
+                            "\o/'.e_re.'<CR>
+                            "\:<C-u>set ws<CR>
+                            "\gv'
+                "exec 'vnoremap i'.s.' '.
+                            "\':<C-u>set nows<CR>
+                            "\v?'.s_re.'<CR>l
+                            "\o/'.e_re.'<CR>h
+                            "\:<C-u>set ws<CR>
+                            "\gv'
 
-                " a simple check to support (:) and ):( automatically
-                " so you don't need to manually put ):( in the for loop
-                if s ==# e || switched
-                    break
-                else
-                    let [s,e] = [e,s]
-                    let switched = 1
-                endif
-            endw
-        endfor
-        for off in split('e:s:b','\zs')
-            exec "vnoremap v".off." //".off."<CR>"
-        endfor
+                "" a simple check to support (:) and ):( automatically
+                "" so you don't need to manually put ):( in the for loop
+                "if s ==# e || switched
+                    "break
+                "else
+                    "let [s,e] = [e,s]
+                    "let switched = 1
+                "endif
+            "endw
+        "endfor
+        "for off in split('e:s:b','\zs')
+            "exec "vnoremap v".off." //".off."<CR>"
+        "endfor
 
         " enable * and # in visual mode
         " Search for visual selected text, forwards or backwards.

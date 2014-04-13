@@ -279,6 +279,8 @@
     "nnoremap <M-r> :vertical resize 80<CR>
     inoremap <M-s> <C-o>:setlocal hlsearch!<CR>
     nnoremap <M-s> :setlocal hlsearch!<CR>
+    "poor man's nerdtree
+    "nnoremap <M-e> :Lexplore<CR>
     nnoremap <M-e> :NERDTree %:p:h<CR>
     autocmd FileType nerdtree nnoremap <buffer><M-e> :NERDTreeClose<CR>
     nnoremap <M-u> :UndotreeToggle<CR>

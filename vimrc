@@ -98,6 +98,7 @@
     " encoding
         set encoding=utf-8
         set fileencodings=ucs-bom,utf-8,default,chinese
+        set formatoptions+=mM
 
     " ruler = bottom hint message
         set ruler
@@ -713,6 +714,33 @@
     " strip space at the end of line
     nnoremap <Leader>fs :retab<CR>:%s/\s\+$//g<CR>``
     nnoremap <Leader>fc gg=G
+    nnoremap <Leader>ff :call AutoSpaceCJK('n')<CR>
+    vnoremap <Leader>ff :<C-u>call AutoSpaceCJK(visualmode())<CR>
+    function! AutoSpaceCJK(mode)
+        "let range = "'" . 'A-Z0-9a-z~!@#$%\^&*()_+`-=\[\]{}:;"<>,./?\\|'
+        let pat_range = '"'
+                    \. "A-Z0-9a-z~!@#$%^&*()=_+`[{}:;". "'<>,./?|"
+                    \. "\\-\\]\\\\"
+        let pat_no = '[^ ' . pat_range . ']'
+        let pat_ya =  '[' . pat_range . ']'
+
+        let range = ''
+
+        if a:mode == 'v' || a:mode ==# ''
+            let range = "'<,'>"
+        elseif a:mode ==# 'n'
+            let range = '.'
+        endif
+
+        "echom range
+        "echom range_no
+        "echom range_ya
+
+        "exec 'substitute/\v\S\zs(' . range_ya . '+)\ze\S/ \1 /g'
+        exec range . 'substitute/\v'. pat_no .'\zs(' . pat_ya . ')\ze/ \1/ge'
+        exec range . 'substitute/\v\zs('. pat_ya .')\ze' . pat_no . '/\1 /ge'
+        redraw!
+    endfunc
 
     " zz, zt, zb, place current line on screen
         for key in ['z','t','b']

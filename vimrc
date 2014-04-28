@@ -131,7 +131,8 @@
         set foldopen+=insert
         set autowrite
         set list
-        set listchars=tab:,.,trail:.,extends:#,nbsp:.
+        "set listchars=tab:,.,trail:.,extends:#,nbsp:.
+        set listchars=tab:×·,trail:·,extends:#,nbsp:.
 
     " modeline example
         " // vim: set ts=8 sts=4 sd=4 noexpandtab:

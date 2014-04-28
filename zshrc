@@ -158,4 +158,4 @@ $(git_prompt_info)%(!.#.») '
 
 setprompt
 
-source .zshrc-export
+source $HOME/.zshrc-export

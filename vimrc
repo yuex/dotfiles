@@ -1,4 +1,9 @@
-" vundle
+" Name:         Vim Configuration of yuex
+" Language:     vimscript
+" Maintainer:   yuex <yuecn41@gmail.com>
+" Source:       http://github.com/yuex/dotfiles
+
+" vundle {{{
     " :BundleLis           - Brief help
     " :BundleList          - list configured bundles
     " :BundleInstall(!)    - install(update) bundles
@@ -12,164 +17,155 @@
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
     filetype plugin indent on
+
     Bundle 'gmarik/vundle'
+" general {{{
+    Bundle 'kien/ctrlp.vim'
+    Bundle 'scrooloose/nerdtree'
+    Bundle 'jistr/vim-nerdtree-tabs'
+    Bundle 'project.tar.gz'
+    Bundle 'sessionman.vim'
 
-    " general
-        Bundle 'kien/ctrlp.vim'
-        Bundle 'scrooloose/nerdtree'
-        Bundle 'jistr/vim-nerdtree-tabs'
-        Bundle 'project.tar.gz'
-        Bundle 'sessionman.vim'
+    "Bundle 'Townk/vim-autoclose'
+    Bundle 'Raimondi/delimitMate'
+    Bundle 'tpope/vim-surround'
+    Bundle 'kana/vim-textobj-user'
+    Bundle 'mbbill/undotree'
+    "Bundle 'YankRing.vim'
+    Bundle 'godlygeek/tabular'
 
-        "Bundle 'Townk/vim-autoclose'
-        Bundle 'Raimondi/delimitMate'
-        Bundle 'tpope/vim-surround'
-        Bundle 'kana/vim-textobj-user'
-        Bundle 'mbbill/undotree'
-        "Bundle 'YankRing.vim'
-        Bundle 'godlygeek/tabular'
+    Bundle 'Lokaltog/vim-easymotion'
+    "Bundle 'yuex/vim-easymotion'
+    Bundle 'matchit.zip'
 
-        Bundle 'Lokaltog/vim-easymotion'
-        "Bundle 'yuex/vim-easymotion'
-        Bundle 'matchit.zip'
-
-        Bundle 'Lokaltog/vim-powerline'
-        Bundle 'altercation/vim-colors-solarized'
-        Bundle 'mileszs/ack.vim'
-
-    " programming
-        " git integration
-        Bundle 'tpope/vim-fugitive'
-        " automatic syntax checker
-        Bundle 'scrooloose/syntastic'
-        Bundle 'scrooloose/nerdcommenter'
-        Bundle 'majutsushi/tagbar'
-        Bundle 'Yggdroot/indentLine'
-        "Bundle 'willthefrog/indentLine'
-        " use astyle for C#/C++/C/Java, jsbeautify for Javascript
-        " autopep8 for python, tidy for HTML/XHTML/XML
-        "Bundle 'Chiel92/vim-autoformat'
-        "Bundle 'einars/js-beautify'
-
-    " snippet and autocomplete
-        "Bundle 'Shougo/neocomplcache'
-        "Bundle 'Shougo/neosnippet'
-        " snipMate cant be configured to disable completion after space(\s), first of line(^), also in confilict with supertab
-        "Bundle 'snipMate'
-        "Bundle 'honza/snipmate-snippets'
-        " code semantic and fuzzy completion
-        Bundle 'Valloric/YouCompleteMe'
-        " tab complete all, (C-xC-o, C-xC-k, etc), including English word
-        "Bundle 'ervandew/supertab'
-        "Bundle 'Rip-Rip/clang_complete'
-        "let g:SuperTabDefaultCompletionType='context'
-
-    " HTML
-        Bundle 'HTML-AutoCloseTag'
-
-    " notetaking
-        "Bundle 'vimwiki/vimwiki'
-        Bundle 'yuex/vimwiki'
-        Bundle 'aaronbieber/quicktask'
-        Bundle 'VOoM'
-        Bundle 'plasticboy/vim-markdown'
-        Bundle 'VimOrganizer'
-        Bundle 'utl.vim'
-        " depends on gem github-markup tilt redcarpet but it doesn't work :(.
-        " Maybe after I learned myself a byte of ruby to fix it
-        "Bundle 'matthias-guenther/hammer.vim'
-        " real-time preview
-        "Bundle 'suan/vim-instant-markdown'
-        "Bundle 'jtratner/vim-flavored-markdown'
-        "Bundle 'samsonw/vim-task'
-        " provide calendar support in vimwiki
-        "Bundle 'mattn/calendar-vim'
+    Bundle 'Lokaltog/vim-powerline'
+    Bundle 'altercation/vim-colors-solarized'
+    Bundle 'mileszs/ack.vim'
+" }}}
+" programming {{{
+    " git integration
+    Bundle 'tpope/vim-fugitive'
+    " automatic syntax checker
+    Bundle 'scrooloose/syntastic'
+    Bundle 'scrooloose/nerdcommenter'
+    Bundle 'majutsushi/tagbar'
+    Bundle 'Yggdroot/indentLine'
+    "Bundle 'willthefrog/indentLine'
+    " use astyle for C#/C++/C/Java, jsbeautify for Javascript
+    " autopep8 for python, tidy for HTML/XHTML/XML
+    "Bundle 'Chiel92/vim-autoformat'
+    "Bundle 'einars/js-beautify'
+" }}}
+" snippet and autocomplete {{{
+    "Bundle 'Shougo/neocomplcache'
+    "Bundle 'Shougo/neosnippet'
+    " snipMate cant be configured to disable completion after space(\s), first of line(^), also in confilict with supertab
+    "Bundle 'snipMate'
+    "Bundle 'honza/snipmate-snippets'
+    " code semantic and fuzzy completion
+    Bundle 'Valloric/YouCompleteMe'
+    " tab complete all, (C-xC-o, C-xC-k, etc), including English word
+    "Bundle 'ervandew/supertab'
+    "Bundle 'Rip-Rip/clang_complete'
+    "let g:SuperTabDefaultCompletionType='context'
+    Bundle 'HTML-AutoCloseTag'
+"}}}
+" notetaking {{{
+    "Bundle 'vimwiki/vimwiki'
+    Bundle 'yuex/vimwiki'
+    Bundle 'aaronbieber/quicktask'
+    Bundle 'VOoM'
+    Bundle 'plasticboy/vim-markdown'
+    Bundle 'VimOrganizer'
+    Bundle 'utl.vim'
+    " depends on gem github-markup tilt redcarpet but it doesn't work :(.
+    " Maybe after I learned myself a byte of ruby to fix it
+    "Bundle 'matthias-guenther/hammer.vim'
+    " real-time preview
+    "Bundle 'suan/vim-instant-markdown'
+    "Bundle 'jtratner/vim-flavored-markdown'
+    "Bundle 'samsonw/vim-task'
+    " provide calendar support in vimwiki
+    "Bundle 'mattn/calendar-vim'
+" }}}
 
     let bundle_name = map(copy(g:bundles), 'v:val.name')
     "let g:bundle_name = bundle_name
-
-" general setting
-    " spell checking and dictionary completion
-        set spell spelllang=en
-        set dictionary=/usr/local/plan9/lib/words
-        set iskeyword-=_
-        "set complete-=k complete+=k
-
-    " encoding
-        set encoding=utf-8
-        set fileencodings=ucs-bom,utf-8,default,chinese
-        set formatoptions+=mM
-
-    " ruler = bottom hint message
-        set ruler
-        set number
-        set showcmd
-        set showmode
-        set cursorline  " hightlight current line
-
-    " search options
-        set hlsearch    " disable with :nohl
-        set ignorecase  " dont differ between case
-        set smartcase   " override ignorecase when uppercase occurs
-        set incsearch   " incremental search
-        set wrapscan    " wrapscan = wrap to top when reach end
-
-    " screen scroll options
-        set scrolljump=5        " lines to scroll when cursor leaves screen
-        set scrolloff=3        " minimum lines to keep around the cursor
-
-    " format options
-        "set nowrap
-        set autoindent
-        set virtualedit=onemore
-        "set smartindent
-        set shiftwidth=4
-        set tabstop=4
-        set softtabstop=4
-        set expandtab
-        set foldmethod=indent
-        set foldopen+=insert
-        set autowrite
-        set list
-        "set listchars=tab:,.,trail:.,extends:#,nbsp:.
-        set listchars=tab:×·,trail:·,extends:#,nbsp:.
-
-    " modeline example
-        " // vim: set ts=8 sts=4 sd=4 noexpandtab:
-        " put it in any file, comment it out, modeline will overwrite settings in vim rc
-
-    " color shceme options
-        set bg=dark
-        "set t_Co=256
-        syntax on
-        " solarized needs termianl palette configured properly
-        " checkout
-        colorscheme solarized
-        "let g:solarized_termcolors=256
-        "let g:solarized_termtrans=1
-        let g:solarized_contrast="high"
-        let g:solarized_visibility="high"
-
-    " fast <esc> from interleave event, delay caused by enable meta key
-    " C-c get no delay
-        "if ! has('gui_running')
-            "set ttimeoutlen=10
-            "augroup FastEscape
-                "autocmd!
-                "au InsertEnter * set timeoutlen=0
-                "au InsertLeave * set timeoutlen=1000
-            "augroup END
-        "endif
-
-" keymapping
-" remap \ to ,
+" }}}
+" general options {{{
+" editing {{{
+    set autowrite
+    set virtualedit=onemore
+    set formatoptions+=mM
+    set iskeyword-=_
+" }}}
+" word {{{
+    set spell spelllang=en
+    set dictionary=/usr/local/plan9/lib/words
+    "set complete-=k complete+=k
+" }}}
+" encoding {{{
+    set encoding=utf-8
+    set fileencodings=ucs-bom,utf-8,default,chinese
+" }}}
+" ruler and status line {{{
+    set ruler
+    set number
+    set showcmd
+    set showmode
+    set cursorline  " hightlight current line
+" }}}
+" search {{{
+    set hlsearch    " disable with :nohl
+    set ignorecase  " dont differ between case
+    set smartcase   " override ignorecase when uppercase occurs
+    set incsearch   " incremental search
+    set wrapscan    " wrapscan = wrap to top when reach end
+" }}}
+" screen scroll {{{
+    set scrolljump=5        " lines to scroll when cursor leaves screen
+    set scrolloff=3        " minimum lines to keep around the cursor
+" }}}
+" indent {{{
+    "set nowrap
+    set autoindent
+    "set smartindent
+    set shiftwidth=4
+    set tabstop=4
+    set softtabstop=4
+    set expandtab
+" }}}
+" fold {{{
+    set foldmethod=indent
+    set foldopen+=insert
+" }}}
+" listchars {{{
+    "set listchars=tab:,.,trail:.,extends:#,nbsp:.
+    set listchars=tab:×·,trail:·,extends:#,nbsp:.
+" }}}
+" color scheme {{{
+    set bg=dark
+    "set t_Co=256
+    syntax on
+    " solarized needs termianl palette configured properly
+    " checkout
+    colorscheme solarized
+    "let g:solarized_termcolors=256
+    "let g:solarized_termtrans=1
+    let g:solarized_contrast="high"
+    let g:solarized_visibility="high"
+" }}}
+" }}}
+" keymapping {{{
+" leader {{{
     let mapleader = ';'
     let maplocalleader = ','
     noremap <Esc>; :
     inoremap <Esc>; <C-o>:
     noremap \ ;
     noremap <C-\> ,
-
+" }}}
+" meta key {{{
 " vim hacks fix meta-keys which generate <Esc>a .. <Esc>z
     let c = 'a'
     while c <= 'z'
@@ -183,35 +179,24 @@
         exec "inoremap \e".c." <M-".c.">"
         let c = nr2char(1+char2nr(c))
     endw
-
-" fold level
+" }}}
+" folding level {{{
     for lvl in range(0,9)
-        exec "nnoremap <Leader>z".lvl." :set foldlevel=".lvl."<CR>"
+        exec "nnoremap <unique> <Leader>z".lvl." :set foldlevel=".lvl."<CR>"
     endfor
-
-" wrapper of command-mode commands
-    " q: ex-command
-    "nnoremap q: q:i
-    "nnoremap q/ q/i
-    "nnoremap q? q?i
-
-    " change working directory
-    cnoremap cwd lcd %:p:h
-    cnoremap cd. lcd %:p:h
-
-    " when u forget to sudo.. really write the file
-    cnoremap w!! w !sudo tee % >/dev/null
-
-" extra keybinding
-    " quick :make
-    nnoremap <silent> <F5> :make<CR>:redraw
-
-    " hack for python2 on archlinux
-    nnoremap <silent> <F6> :set makeprg=python2\ %<CR>:make<CR>
-
-    " quickquit
+" }}}
+" change cd {{{
+    cnoremap <unique> cwd lcd %:p:h
+    cnoremap <unique> cd. lcd %:p:h
+" }}}
+" sudo {{{
+" when u forget to sudo.. really write the file
+    cnoremap <unique> w!! w !sudo tee % >/dev/null
+" }}}
+" smartquit {{{
     "nnoremap <C-c> :confirm q<CR>
     "nnoremap <C-c> :q<CR>
+    " function SmartQuit()  {{{
     function SmartQuit()
         if !&modified
             exec "quit"
@@ -243,65 +228,58 @@
             endtry
         endif
     endfunc
-    nnoremap <C-c> :call SmartQuit()<CR>
-
-" quicktabpage
+    " }}}
+    nnoremap <unique> <C-c> :call SmartQuit()<CR>
+" }}}
+" tabpage {{{
     " move to previous or next tab, <Esc> for <M-
     " XXX: use dict to implement this kind mapping. map-nvo and map-i
     " XXX: tips for easy memorizing. <Left> and <Right> are intuitive. for Up and
     " Down, note that some laptop keyboard designs squeeze <Home> and <End>
     " to <Up> and <Down>, <Home> for create, <End> for close
     " XXX: <Esc><C-PageUp/PageDown> and <Esc><Home>/<End> doesn't work :(
-    nnoremap <silent> <Esc><Left>  :tabprevious<CR>
-    nnoremap <silent> <Esc><Right> :tabnext<CR>
-    nnoremap <silent> <Esc><Down>    :tabnew<CR>
-    nnoremap <silent> <Esc><Up>  :tabclose<CR>
-    inoremap <Esc><Left>  <C-o>:tabprevious<CR>
-    inoremap <Esc><Right> <C-o>:tabnext<CR>
-    inoremap <Esc><Up>    <C-o>:tabnew<CR>
-    inoremap <Esc><Down>  <C-o>:tabclose<CR>
+    nnoremap <unique> <silent> <Esc><Left>  :tabprevious<CR>
+    nnoremap <unique> <silent> <Esc><Right> :tabnext<CR>
+    nnoremap <unique> <silent> <Esc><Down>    :tabnew<CR>
+    nnoremap <unique> <silent> <Esc><Up>  :tabclose<CR>
+    inoremap <unique> <Esc><Left>  <C-o>:tabprevious<CR>
+    inoremap <unique> <Esc><Right> <C-o>:tabnext<CR>
+    inoremap <unique> <Esc><Up>    <C-o>:tabnew<CR>
+    inoremap <unique> <Esc><Down>  <C-o>:tabclose<CR>
     " move tab left or right
-    nnoremap <Esc><PageUp>   :tabmove -1<CR>
-    nnoremap <Esc><PageDown> :tabmove +1<CR>
-    inoremap <Esc><PageUp>   <C-o>:tabmove -1<CR>
-    inoremap <Esc><PageDown> <C-o>:tabmove +1<CR>
+    nnoremap <unique> <Esc><PageUp>   :tabmove -1<CR>
+    nnoremap <unique> <Esc><PageDown> :tabmove +1<CR>
+    inoremap <unique> <Esc><PageUp>   <C-o>:tabmove -1<CR>
+    inoremap <unique> <Esc><PageDown> <C-o>:tabmove +1<CR>
     " move to tab #1-#9, #0 is last"
-    nnoremap <M-0> :tablast<CR>
-    inoremap <M-0> <C-o>:tablast<CR>
+    nnoremap <unique> <M-0> :tablast<CR>
+    inoremap <unique> <M-0> <C-o>:tablast<CR>
     let c = '1'
     while c <= '9'
-        exec "nnoremap <M-".c."> :tabnext ".c."<CR>"
-        exec "inoremap <M-".c."> <C-o>:tabnext ".c."<CR>"
+        exec "nnoremap <unique> <M-".c."> :tabnext ".c."<CR>"
+        exec "inoremap <unique> <M-".c."> <C-o>:tabnext ".c."<CR>"
         let c = nr2char(1+char2nr(c))
     endw
-
-" toggle
-    inoremap <M-m> <C-o>:setlocal number!<CR>
-    nnoremap <M-m> :setlocal number!<CR>
+" }}}
+" toggle options {{{
+    inoremap <unique> <M-m> <C-o>:setlocal number!<CR>
+    nnoremap <unique> <M-m> :setlocal number!<CR>
     "nnoremap <M-r> :vertical resize 80<CR>
-    inoremap <M-s> <C-o>:setlocal hlsearch!<CR>
-    nnoremap <M-s> :setlocal hlsearch!<CR>
-    "poor man's nerdtree
-    "nnoremap <M-e> :Lexplore<CR>
-    nnoremap <M-e> :NERDTree %:p:h<CR>
-    autocmd FileType nerdtree nnoremap <buffer><M-e> :NERDTreeClose<CR>
-    nnoremap <M-u> :UndotreeToggle<CR>
-    nnoremap <M-g> <Plug>ToggleProject
-    " yankring
-    nnoremap <M-y> :YRShow<CR>
-
-" unix-like n- and v-motion
+    inoremap <unique> <M-s> <C-o>:setlocal hlsearch!<CR>
+    nnoremap <unique> <M-s> :setlocal hlsearch!<CR>
+" }}}
+" jkTF motion {{{
     " go as u see
-    noremap j gj
-    noremap k gk
-    map gt T
-    map gf F
-
-" autocommand
+    noremap <unique> j gj
+    noremap <unique> k gk
+    map <unique> gt T
+    map <unique> gf F
+" }}}
+" }}}
+" autocommand {{{
     " set filetype for *.conf
-    autocmd BufRead,BufNewFile *.conf setfiletype conf
-
-    " make script executable
+    "autocmd BufRead,BufNewFile *.conf setfiletype conf
+" autocmd executable {{{
     autocmd BufNewFile *.py call append(0,"#!/usr/bin/env python")
     autocmd BufNewFile *.rb call append(0,"#!/usr/bin/env ruby")
     autocmd BufNewFile *.tcl call append(0,"#!/usr/bin/env tclsh")
@@ -311,8 +289,13 @@
     autocmd BufWritePost *.sh,*.py,*.rb,*.tcl,*.lisp
                 \  exec "!chmod a+x %"
                 \| exec "redraw"
-
-    " set makeprg
+" }}}
+" autocmd make {{{
+    " quick :make
+    nnoremap <unique><silent> <F5> :make!<CR>
+    " hack for python2 on archlinux
+    autocmd FileType python
+                \ nnoremap <unique><silent><buffer> <F6> :!python2 %<CR>
     autocmd FileType python set makeprg=python\ %
     autocmd FileType ruby set makeprg=ruby\ %
     autocmd FileType tcl set makeprg=tclsh\ %
@@ -320,18 +303,19 @@
     autocmd FileType lisp set makeprg=clisp\ %
     autocmd FileType tex set makeprg=pdflatex\ %
     autocmd FileType c set makeprg=gcc\ -Wall\ -o%<.o\ %;./%<.o
-
-    " set indent
+" }}}
+" autocmd indent {{{
     autocmd FileType python set tabstop=4 shiftwidth=4 softtabstop=4
-
     autocmd FileType c,cpp set tabstop=2 shiftwidth=2 softtabstop=2
     autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2
     autocmd FileType html,css,htmldjango
                 \ set tabstop=2 shiftwidth=2 softtabstop=2
-
     autocmd FileType make set noexpandtab
-
-"quickmode
+" }}}
+" }}}
+" hacks {{{
+" quickmotion {{{
+    " function SmartMove() {{{
     function SmartMove(moveToNext, moveToEnd, ...)
         " if line number changed, use moveToEnd, otherwise use moveToNext
         " will ensure cursor get changed to avoid deadlock
@@ -363,360 +347,354 @@
             endif
         endif
     endfunc
+    " }}}
+    " common motion {{{
+    "noremap! <unique> <C-a> <Home>
+    "noremap! <unique> <C-e> <End>
+    "noremap! <unique> <C-h> <Left>
+    "noremap! <unique> <C-l> <Right>
+    "noremap! <unique> <M-b> <S-Left>
+    "noremap! <unique> <M-f> <S-Right>
+    "noremap! <unique> <M-h> <BS>
+    "noremap! <unique> <M-l> <Del>
+    " }}}
+    " quickinsert inoremap {{{
+    " it seems <C-Left> and <C-Right> in insert mode
+    inoremap <unique> <C-a> <C-o>^
+    inoremap <unique> <C-e> <End>
+    inoremap <unique> <C-h> <Left>
+    inoremap <unique> <C-l> <Right>
+    inoremap <unique> <M-b> <C-o>:call SmartMove('b','gel')<CR>
+    inoremap <unique> <M-f> <C-o>:call SmartMove('w','el')<CR>
+    inoremap <unique> <M-h> <BS>
+    inoremap <unique> <M-l> <Del>
 
-    "quickmotion
-        "inoremap and cnoremap
-        noremap! <C-a> <Home>
-        noremap! <C-e> <End>
-        noremap! <C-h> <Left>
-        noremap! <C-l> <Right>
-        noremap! <M-b> <S-Left>
-        noremap! <M-f> <S-Right>
-        noremap! <M-h> <BS>
-        noremap! <M-l> <Del>
+    inoremap <unique> <Esc><C-h> <C-o>:call SmartMove('B','gEl')<CR>
+    inoremap <unique> <Esc><C-l> <C-o>:call SmartMove('W','$l')<CR>
 
-    " quickinsert inoremap
-        " it seems <C-Left> and <C-Right> in insert mode
-        inoremap <Esc><C-h> <C-o>:call SmartMove('B','gEl')<CR>
-        inoremap <Esc><C-l> <C-o>:call SmartMove('W','$l')<CR>
-        inoremap <M-b> <C-o>:call SmartMove('b','gel')<CR>
-        inoremap <M-f> <C-o>:call SmartMove('w','el')<CR>
+    inoremap <unique> <C-j> <C-o>g<Down>
+    inoremap <unique> <C-k> <C-o>g<Up>
+    inoremap <unique> <M-e> <C-o>e<Right>
+    inoremap <unique> <Esc><C-j> <C-o>}
+    inoremap <unique> <Esc><C-k> <C-o>{
 
-        inoremap <C-a> <C-o>^
-        inoremap <C-j> <C-o>g<Down>
-        inoremap <C-k> <C-o>g<Up>
-        inoremap <M-e> <C-o>e<Right>
-        inoremap <Esc><C-j> <C-o>}
-        inoremap <Esc><C-k> <C-o>{
+    inoremap <unique> <C-u> <C-o>d^
+    inoremap <unique> <M-u> <C-o>d$
+    inoremap <unique> <Esc><C-u> <C-o>d0
+    "inoremap <unique> <Esc><C-k> <C-o>d$
+    inoremap <unique> <C-w> <C-o>db
+    inoremap <unique> <M-d> <C-o>de
+    inoremap <unique> <M-w> <C-o>de
+    inoremap <unique> <C-y> <C-r>-
+    inoremap <unique> <C-s> <C-o>d
+    inoremap <unique> <C-s>u <C-o>u
 
-        inoremap <C-u> <C-o>d^
-        inoremap <M-u> <C-o>d$
-        inoremap <Esc><C-u> <C-o>d0
-        inoremap <Esc><C-k> <C-o>d$
-        inoremap <C-w> <C-o>db
-        inoremap <M-d> <C-o>de
-        inoremap <M-w> <C-o>de
-        inoremap <C-y> <C-r>-
-        inoremap <C-s> <C-o>d
-        inoremap <C-s>u <C-o>u
+    inoremap <unique> <M-a> <C-o><C-a>
+    inoremap <unique> <M-x> <C-o><C-x>
 
-        inoremap <Esc>, <C-d>
-        inoremap <Esc>. <C-t>
-        inoremap <M-a> <C-o><C-a>
-        inoremap <M-x> <C-o><C-x>
+    inoremap <unique> <M-v> <C-o>v
+    " }}}
+    " quickcmd {{{
+    "cnoremap <C-o> <C-f>, set cedit=
+    set cedit=<C-o>
+    set cmdwinheight=3
+    noremap : :<C-o><C-c>
 
-        inoremap <M-v> <C-o>v
+    cnoremap <unique> <C-a> <C-o>^<C-c>
+    cnoremap <unique> <C-e> <End>
+    cnoremap <unique> <C-h> <Left>
+    cnoremap <unique> <C-l> <Right>
+    cnoremap <unique> <M-b> <C-o>b<C-c>
+    cnoremap <unique> <M-f> <C-o>w<C-c>
+    cnoremap <unique> <M-h> <BS>
+    cnoremap <unique> <M-l> <Del>
 
-    " quickcmd
-        "cnoremap <C-o> <C-f>, set cedit=
-        set cedit=<C-o>
-        set cmdwinheight=3
-        noremap : :<C-o><C-c>
-        cnoremap <M-n> <Down>
-        cnoremap <M-p> <Up>
-        cnoremap <M-j> <Down>
-        cnoremap <M-k> <Up>
-        " noremap! <S-Left> isn't enough for c-mode
-        cnoremap <M-f> <C-o>w<C-c>
-        cnoremap <M-b> <C-o>b<C-c>
+    cnoremap <unique> <M-n> <Down>
+    cnoremap <unique> <M-p> <Up>
+    cnoremap <unique> <M-j> <Down>
+    cnoremap <unique> <M-k> <Up>
+    " noremap! <S-Left> isn't enough for c-mode
 
-        cnoremap <C-a> <C-o>^<C-c>
-        cnoremap <C-j> <C-n>
-        cnoremap <C-k> <C-p>
-        cnoremap <M-e> <C-o>el<C-c>
-        cnoremap <Esc><C-j> <C-n>
-        cnoremap <Esc><C-k> <C-p>
-        cnoremap <Esc><C-h> <C-o><C-Left><C-c>
-        cnoremap <Esc><C-l> <C-o><C-Right><C-c>
+    cnoremap <unique> <C-j> <C-n>
+    cnoremap <unique> <C-k> <C-p>
+    cnoremap <unique> <M-e> <C-o>el<C-c>
+    cnoremap <unique> <Esc><C-h> <C-o><C-Left><C-c>
+    cnoremap <unique> <Esc><C-l> <C-o><C-Right><C-c>
 
-        cnoremap <C-u> <C-o>d^<C-c>
-        cnoremap <M-u> <C-o>d$<C-c>
-        cnoremap <Esc><C-u> <C-o>d0<C-c>
-        cnoremap <Esc><C-u> <C-o>d$<C-c>
-        cnoremap <C-w> <C-o>db<C-c>
-        cnoremap <M-d> <C-o>de<C-c>
-        cnoremap <M-w> <C-o>de<C-c>
-        cnoremap <C-y> <C-r>-
-        cnoremap <C-s> <C-o>d
+    cnoremap <unique> <C-u> <C-o>d^<C-c>
+    cnoremap <unique> <M-u> <C-o>d$<C-c>
+    cnoremap <unique> <Esc><C-u> <C-o>d0<C-c>
+    cnoremap <unique> <Esc><C-k> <C-o>d$<C-c>
+    cnoremap <unique> <C-w> <C-o>db<C-c>
+    cnoremap <unique> <M-d> <C-o>de<C-c>
+    cnoremap <unique> <M-w> <C-o>de<C-c>
+    cnoremap <unique> <C-y> <C-r>-
+    cnoremap <unique> <C-s> <C-o>d
 
+    cnoremap <unique> <M-a> <C-o><C-a><C-c>
+    cnoremap <unique> <M-x> <C-o><C-x><C-c>
+    "cnoremap <C-w> <C-c><C-w>
+    " }}}
+    " quicknormal {{{
+    noremap <unique> <C-a> ^
+    noremap <unique> <C-e> <End>
+    noremap <unique> <C-h> <Left>
+    noremap <unique> <C-l> <Right>
+    noremap <unique> <C-j> g<Down>
+    noremap <unique> <C-k> g<Up>
+    noremap <unique> <Esc><C-b> <S-Left>
+    noremap <unique> <Esc><C-f> <S-Right>
+    noremap <unique> <Esc><C-w> w
+    noremap <unique> <Esc><C-e> e
+    noremap <unique> <Esc><C-j> }
+    noremap <unique> <Esc><C-k> {
 
-        " use <c-d> and <c-t> in i-mode to keep cursor's position
-        cnoremap <Esc>, <C-o>i<C-d><C-c>
-        cnoremap <Esc>. <C-o>i<C-t><C-c>
-        cnoremap <M-a> <C-o><C-a><C-c>
-        cnoremap <M-x> <C-o><C-x><C-c>
-        "cnoremap <C-w> <C-c><C-w>
+    nnoremap <unique> <M-b> :<C-u>call SmartMove('b','gel')<CR>
+    nnoremap <unique> <M-f> :<C-u>call SmartMove('w','el')<CR>
+    nnoremap <unique> <Esc><C-h> :<C-u>call SmartMove('B','gEl')<CR>
+    nnoremap <unique> <Esc><C-l> :<C-u>call SmartMove('W','El')<CR>
+    vnoremap <unique> <M-b> <Esc>:<C-u>call SmartMove('b','gel',visualmode())<CR>
+    vnoremap <unique> <M-f> <Esc>:<C-u>call SmartMove('w','el',visualmode())<CR>
+    vnoremap <unique> <Esc><C-h> <Esc>:<C-u>call SmartMove('B','gEl',visualmode())<CR>
+    vnoremap <unique> <Esc><C-l> <Esc>:<C-u>call SmartMove('W','El',visualmode())<CR>
 
-    " quicknormal
-        "noremap
-        noremap <Esc><C-w> w
+    nnoremap <unique> Y y$
 
-        nnoremap <M-b> :<C-u>call SmartMove('b','gel')<CR>
-        nnoremap <M-f> :<C-u>call SmartMove('w','el')<CR>
-        vnoremap <M-b> <Esc>:<C-u>call SmartMove('b','gel',visualmode())<CR>
-        vnoremap <M-f> <Esc>:<C-u>call SmartMove('w','el',visualmode())<CR>
-        noremap <C-a> ^
-        noremap <C-e> <End>
-        noremap <C-h> <Left>
-        noremap <C-l> <Right>
-        noremap <C-j> g<Down>
-        noremap <C-k> g<Up>
-        nnoremap <Esc><C-h> :<C-u>call SmartMove('B','gEl')<CR>
-        nnoremap <Esc><C-l> :<C-u>call SmartMove('W','El')<CR>
-        vnoremap <Esc><C-h> <Esc>:<C-u>call SmartMove('B','gEl',visualmode())<CR>
-        vnoremap <Esc><C-l> <Esc>:<C-u>call SmartMove('W','El',visualmode())<CR>
-        noremap <Esc><C-b> <S-Left>
-        noremap <Esc><C-f> <S-Right>
+    nnoremap <unique> <M-a> <C-a>
+    nnoremap <unique> <M-x> <C-x>
 
-        noremap <Esc><C-e> e
-        noremap <Esc><C-j> }
-        noremap <Esc><C-k> {
+    noremap <unique> <M-h> X
+    noremap <unique> <M-l> x
+    " }}}
+" }}}"
+" quick shift {{{
+    vnoremap <unique> <Esc>, <gv
+    vnoremap <unique> <Esc>. >gv
+    vnoremap <unique> < <gv
+    vnoremap <unique> > >gv
+    " use <c-d> and <c-t> in i-mode to keep cursor's position
+    inoremap <unique> <Esc>, <C-d>
+    inoremap <unique> <Esc>. <C-t>
+    nnoremap <unique> <Esc>, a<C-d><Esc>
+    nnoremap <unique> <Esc>. a<C-t><Esc>
+    cnoremap <unique> <Esc>, <C-o>i<C-d><C-c>
+    cnoremap <unique> <Esc>. <C-o>i<C-t><C-c>
+" }}}
+" quicksearch, easysearch {{{
+    " function Searchlist() {{{
+    " search result to list
+    function Searchlist(pattern, flag)
+        let @/ = a:pattern
+        exec 'lvimgrep /'.a:pattern.'/'.a:flag.' %'
+        call QuickfixToggle('l')
+    endfun
+    " }}}
+    " search and visual select (..) and )..( {{{
+    " checkout vim-textobj-user
+    "for c in add(split('(:),[:],{:},<:>,*:*,-:-,":"',','),"':'")
+        "let [s,e] = split(c,':')
+        "let switched = 0
+        "while 1
+            "let s_re = escape(s, '[\^$.*')
+            "let e_re = escape(e, ']\^$.*')
+            "let i_re = s_re.'\zs[^'.escape(e.s,'^]\').']*\ze'.e_re
+            "let a_re = '\zs'.s_re.'[^'.escape(e.s,'^]\').']*'.e_re.'\ze'
+            "let mycount = v:count > 1 ? v:count : ''
 
-        " use <c-d> and <c-t> in i-mode to keep cursor's position
-        nnoremap <Esc>, a<C-d><Esc>
-        nnoremap <Esc>. a<C-t><Esc>
-        nnoremap Y y$
+            "" use \i* and \a* to search for next **
+            "" use |i* and |a* to search for prev **
+            "" preceding count is supported
+            "exec "noremap \\i".s." ".mycount."/".i_re."<CR>"
+            "exec 'noremap \|i'.s." ".mycount."?".i_re."<CR>"
+            "exec "noremap \\a".s." ".mycount."/".a_re."<CR>"
+            "exec 'noremap \|a'.s." ".mycount."?".a_re."<CR>"
 
-        nnoremap <M-a> <C-a>
-        nnoremap <M-x> <C-x>
+            "" self-defined text object
+            "" va* and vi* to select between **
+            "" I know it's some dirty hacks, but easy to be converted into a
+            "" plugin or so. Maybe some time later when I get the mood
+            "" it's actually some scripted version of following mappings
+            "" vnoremap a* :<C-u>set nows<CR>v?\*<CR>o/\*<CR>:<C-u>set ws<CR>gv
+            "" vnoremap i* :<C-u>set nows<CR>v?\*\zs?e+1<CR>o/\ze\*/e-1<CR>:<C-u>set ws<CR>gv
+            "exec 'vnoremap a'.s.' '.
+                        "\':<C-u>set nows<CR>
+                        "\v?'.s_re.'<CR>
+                        "\o/'.e_re.'<CR>
+                        "\:<C-u>set ws<CR>
+                        "\gv'
+            "exec 'vnoremap i'.s.' '.
+                        "\':<C-u>set nows<CR>
+                        "\v?'.s_re.'<CR>l
+                        "\o/'.e_re.'<CR>h
+                        "\:<C-u>set ws<CR>
+                        "\gv'
 
-        noremap <M-h> X
-        noremap <M-l> x
+            "" a simple check to support (:) and ):( automatically
+            "" so you don't need to manually put ):( in the for loop
+            "if s ==# e || switched
+                "break
+            "else
+                "let [s,e] = [e,s]
+                "let switched = 1
+            "endif
+        "endw
+    "endfor
+    "for off in split('e:s:b','\zs')
+        "exec "vnoremap v".off." //".off."<CR>"
+    "endfor
+    " }}}
+    " visual mode * and # {{{
+    " Search for visual selected text, forwards or backwards.
+    " visual select text, use * for forwards and # for backwards searching
+    " n and N to go next and prev
+    " stolen from http://vim.wikia.com/wiki/Search_for_visually_selected_text
+    vnoremap <unique><silent> * :<C-U>
+      \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+      \gvy/<C-R><C-R>=substitute(
+      \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+      \gV:call setreg('"', old_reg, old_regtype)<CR>
+    vnoremap <unique><silent> # :<C-U>
+      \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+      \gvy?<C-R><C-R>=substitute(
+      \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+      \gV:call setreg('"', old_reg, old_regtype)<CR>
+    " }}}
+" }}}"
+" quickpaste, quickcopy {{{
+    "set pastetoggle=<Esc><C-p>
+    set pastetoggle=<M-p>
+    vnoremap <unique> <Esc><C-y> "+y
+    nnoremap <unique> <Esc><C-y> "+yy
+    " paste before the curor
+    nnoremap <unique> <Esc><C-v> "+P
+    " paste after the curor, rare case
+    "nnoremap <unique> <Esc><C-p> "+p
+    inoremap <unique> <Esc><C-v> <C-o>"+P
+" }}}
+" quickwindow {{{
+    "nnoremap <C-w><C-m> :vnew<CR>
+    "nnoremap <C-w>m     :vnew<CR>
+    noremap <unique> <C-w><C-n>\|     :vnew<CR>
+    noremap <unique> <C-w><C-n>_     :new<CR>
+    noremap <unique> <C-w>_ <C-w><C-s>
+    noremap <unique> <C-w>\| <C-w><C-v>
+    noremap <unique> <C-w>== <C-w>=
+    noremap <unique> <C-w>=_ <C-w>_
+    noremap <unique> <C-w>=\| <C-w>\|
 
-        " quickvisual "
-        vnoremap <Esc>, <gv
-        vnoremap <Esc>. >gv
-        vnoremap < <gv
-        vnoremap > >gv
+    "noremap! <M-w> <C-c><C-w>w
+    "noremap! <M-r> <C-c><C-w>W
+    "noremap! <M-o> <C-c><C-w><C-p>
+    noremap <unique> <M-w> <C-w>w
+    noremap <unique> <M-r> <C-w>W
+    noremap <unique> <M-o> <C-w><C-p>
+    noremap <unique> <C-w><C-o> <C-w><C-p>
+    noremap <unique> <C-w><M-o> <C-w><C-o>
 
-    " quicksearch, easysearch
-        " search result to list
-        function Searchlist(pattern, flag)
-            let @/ = a:pattern
-            exec 'lvimgrep /'.a:pattern.'/'.a:flag.' %'
-            call QuickfixToggle('l')
-        endfun
+    noremap <unique> <C-w>+ 5<C-w>+
+    noremap <unique> <C-w>- 5<C-w>-
+    noremap <unique> <C-w>< 5<C-w>>
+    noremap <unique> <C-w>> 5<C-w><
 
-        " search and visual select (..) and )..(
-        " checkout vim-textobj-user
-        "for c in add(split('(:),[:],{:},<:>,*:*,-:-,":"',','),"':'")
-            "let [s,e] = split(c,':')
-            "let switched = 0
-            "while 1
-                "let s_re = escape(s, '[\^$.*')
-                "let e_re = escape(e, ']\^$.*')
-                "let i_re = s_re.'\zs[^'.escape(e.s,'^]\').']*\ze'.e_re
-                "let a_re = '\zs'.s_re.'[^'.escape(e.s,'^]\').']*'.e_re.'\ze'
-                "let mycount = v:count > 1 ? v:count : ''
-
-                "" use \i* and \a* to search for next **
-                "" use |i* and |a* to search for prev **
-                "" preceding count is supported
-                "exec "noremap \\i".s." ".mycount."/".i_re."<CR>"
-                "exec 'noremap \|i'.s." ".mycount."?".i_re."<CR>"
-                "exec "noremap \\a".s." ".mycount."/".a_re."<CR>"
-                "exec 'noremap \|a'.s." ".mycount."?".a_re."<CR>"
-
-                "" self-defined text object
-                "" va* and vi* to select between **
-                "" I know it's some dirty hacks, but easy to be converted into a
-                "" plugin or so. Maybe some time later when I get the mood
-                "" it's actually some scripted version of following mappings
-                "" vnoremap a* :<C-u>set nows<CR>v?\*<CR>o/\*<CR>:<C-u>set ws<CR>gv
-                "" vnoremap i* :<C-u>set nows<CR>v?\*\zs?e+1<CR>o/\ze\*/e-1<CR>:<C-u>set ws<CR>gv
-                "exec 'vnoremap a'.s.' '.
-                            "\':<C-u>set nows<CR>
-                            "\v?'.s_re.'<CR>
-                            "\o/'.e_re.'<CR>
-                            "\:<C-u>set ws<CR>
-                            "\gv'
-                "exec 'vnoremap i'.s.' '.
-                            "\':<C-u>set nows<CR>
-                            "\v?'.s_re.'<CR>l
-                            "\o/'.e_re.'<CR>h
-                            "\:<C-u>set ws<CR>
-                            "\gv'
-
-                "" a simple check to support (:) and ):( automatically
-                "" so you don't need to manually put ):( in the for loop
-                "if s ==# e || switched
-                    "break
-                "else
-                    "let [s,e] = [e,s]
-                    "let switched = 1
-                "endif
-            "endw
-        "endfor
-        "for off in split('e:s:b','\zs')
-            "exec "vnoremap v".off." //".off."<CR>"
-        "endfor
-
-        " enable * and # in visual mode
-        " Search for visual selected text, forwards or backwards.
-        " visual select text, use * for forwards and # for backwards searching
-        " n and N to go next and prev
-        " stole from http://vim.wikia.com/wiki/Search_for_visually_selected_text
-        vnoremap <silent> * :<C-U>
-          \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-          \gvy/<C-R><C-R>=substitute(
-          \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-          \gV:call setreg('"', old_reg, old_regtype)<CR>
-        vnoremap <silent> # :<C-U>
-          \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-          \gvy?<C-R><C-R>=substitute(
-          \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-          \gV:call setreg('"', old_reg, old_regtype)<CR>
-
-    " quickpaste, quickcopy
-        "set pastetoggle=<Esc><C-p>
-        set pastetoggle=<M-p>
-        vnoremap <Esc><C-y> "+y
-        nnoremap <Esc><C-y> "+yy
-        " paste before the curor
-        nnoremap <Esc><C-v> "+P
-        " paste after the curor, rare case
-        "nnoremap <Esc><C-p> "+p
-        inoremap <Esc><C-v> <C-o>"+P
-
-    " quickwindow
-        "nnoremap <C-w><C-m> :vnew<CR>
-        "nnoremap <C-w>m     :vnew<CR>
-        noremap <C-w><C-n>\|     :vnew<CR>
-        noremap <C-w><C-n>_     :new<CR>
-        noremap <C-w>_ <C-w><C-s>
-        noremap <C-w>\| <C-w><C-v>
-        noremap <C-w>== <C-w>=
-        noremap <C-w>=_ <C-w>_
-        noremap <C-w>=\| <C-w>\|
-
-        "noremap! <M-w> <C-c><C-w>w
-        "noremap! <M-r> <C-c><C-w>W
-        "noremap! <M-o> <C-c><C-w><C-p>
-        noremap <M-w> <C-w>w
-        noremap <M-r> <C-w>W
-        noremap <M-o> <C-w><C-p>
-        noremap <C-w><C-o> <C-w><C-p>
-        noremap <C-w><M-o> <C-w><C-o>
-
-        noremap <C-w>+ 5<C-w>+
-        noremap <C-w>- 5<C-w>-
-        noremap <C-w>< 5<C-w>>
-        noremap <C-w>> 5<C-w><
-
-        noremap <C-w>o <C-w>w
-        noremap <C-w>O <C-w>W
-        noremap <C-w><C-t> <C-w>T
-
-    " mottos"
-        let g:mottos_prompt = "省» "
-        noremap <silent> <C-s>
-                    \ :<C-u>echoh Question
-                    \\| echo g:mottos_prompt.substitute(system('mottos',&winwidth-strlen(g:mottos_prompt)),'','','')
-                    \\| echoh None<CR>
-
-            "inoremap <Esc><C-k> <C-o>d<End>
-
-            "inoremap <C-d> <C-o>w
-
-            "noremap <Esc><C-e> e
-            "noremap <Esc><C-g><Esc><C-e> ge
-            "inoremap <C-g><C-h> <C-o>F
-            "inoremap <C-g><C-l> <C-o>f
-
-            "inoremap <Esc><C-t> <C-d>
-
-            " insert mode quick deletion
-
-            "inoremap <C-s><C-y> <C-o>P
-            "inoremap <C-s><C-j> <C-o>J
-
-    " quickfix
-        " todo, fixme, and xxx vimgrep
-        function QuickfixToggle(type)
-            let flagname = 'b:quickfix_'.a:type.'_opened'
-            let cmdopen = a:type.'window'
-            let cmdclose = a:type.'close'
-            if !exists(flagname)
-                exec "let ".flagname." = 0"
+    noremap <unique> <C-w>o <C-w>w
+    noremap <unique> <C-w>O <C-w>W
+    noremap <unique> <C-w><C-t> <C-w>T
+" }}}
+" mottos" {{{
+    let g:mottos_prompt = "省» "
+    noremap <unique><silent> <C-s>
+                \ :<C-u>echoh Question
+                \\| echo g:mottos_prompt.substitute(system('mottos',&winwidth-strlen(g:mottos_prompt)),'','','')
+                \\| echoh None<CR>
+" }}}
+" quickfix {{{
+    " function QuickfixToggle() {{{
+    " todo, fixme, and xxx vimgrep
+    function QuickfixToggle(type)
+        let flagname = 'b:quickfix_'.a:type.'_opened'
+        let cmdopen = a:type.'window'
+        let cmdclose = a:type.'close'
+        if !exists(flagname)
+            exec "let ".flagname." = 0"
+        endif
+        exec "let flag = ".flagname
+        if flag == 0
+            " in the cmd invode window
+            exec "let ".flagname." = 1 "
+            exec cmdopen
+            " in the quickfix window
+            exec "let ".flagname." = 1 "
+        elseif flag == 1
+            " in the cmd invode window
+            exec "let ".flagname." = 0 "
+            exec cmdclose
+            " in the quickfix window
+            exec "let ".flagname." = 0 "
+        endif
+    endfunc
+    " }}}
+    " function QuickfixCompile() {{{
+    function QuickfixCompile(type)
+        let flagname = 'b:quickfix_' . a:type . '_compiled'
+        if !exists(flagname)
+            exec "let " . flagname . " = 0"
+        endif
+        exec "let flag = " . flagname
+        if flag == 1 || &ft ==# 'qf'
+            return
+        endif
+        if flag == 0
+            let grep_cmd = 'vimgrep /\vTODO|FIXME|XXX/ %'
+            if a:type ==# 'l'
+                let grep_cmd = a:type . grep_cmd
             endif
-            exec "let flag = ".flagname
-            if flag == 0
-                " in the cmd invode window
-                exec "let ".flagname." = 1 "
-                exec cmdopen
-                " in the quickfix window
-                exec "let ".flagname." = 1 "
-            elseif flag == 1
-                " in the cmd invode window
-                exec "let ".flagname." = 0 "
-                exec cmdclose
-                " in the quickfix window
-                exec "let ".flagname." = 0 "
-            endif
-        endfunc
-        function QuickfixCompile(type)
-            let flagname = 'b:quickfix_' . a:type . '_compiled'
-            if !exists(flagname)
-                exec "let " . flagname . " = 0"
-            endif
-            exec "let flag = " . flagname
-            if flag == 1 || &ft ==# 'qf'
+            try
+                exec grep_cmd
+            catch
+                " e.g., not saved file
+                echoerr v:exception
                 return
-            endif
-            if flag == 0
-                let grep_cmd = 'vimgrep /\vTODO|FIXME|XXX/ %'
-                if a:type ==# 'l'
-                    let grep_cmd = a:type . grep_cmd
-                endif
-                try
-                    exec grep_cmd
-                catch
-                    " e.g., not saved file
-                    echoerr v:exception
-                    return
-                endtry
-                exec "let " . flagname . " = 1"
-            endif
-        endfunc
-        "nnoremap <Leader>td :vimgrep /TODO\\|FIXME\\|XXX/ %<CR>
-                    "\:call QuickfixToggle('c')<CR>
-        "nnoremap <Leader>ld :lvimgrep /TODO\\|FIXME\\|XXX/ %<CR>
-                    "\:call QuickfixToggle('l')<CR>
-        nnoremap <Leader>tt :call QuickfixCompile('c')<CR>
-                    \:call QuickfixToggle('c')<CR>
-        nnoremap <Leader>ll :call QuickfixCompile('l')<CR>
-                    \:call QuickfixToggle('l')<CR>
-        nnoremap <Leader>tn :cnext<CR>
-        nnoremap <Leader>tp :cprev<CR>
-        nnoremap <Leader>ln :lnext<CR>
-        nnoremap <Leader>lp :lprev<CR>
-
-    " quick deletion using <C-s>
-        "inoremap <C-s><C-a> <C-o>d<Home>
-        "inoremap <C-s><C-e> <C-o>d<End>
-        "inoremap <C-s><C-w> <C-o>dB
-        "inoremap <C-s><C-d> <C-o>dW
-        "inoremap <C-s><M-w> <C-o>dB
-        "inoremap <C-s><M-d> <C-o>dW
-        "inoremap <C-s><Esc>e <C-o>de
-        "inoremap <C-s><Esc><C-e> <C-o>dge
-        "inoremap <C-s><C-f> <C-o>dw
-        "inoremap <C-s><C-b> <C-o>db
-        "inoremap <C-s><C-u> <C-o>d^
-        "inoremap <C-s><C-k> <C-o>d$
-        "inoremap <C-s><C-d> <C-o>d
-        "inoremap <C-s>u <C-o>u
-        "inoremap <C-s><C-y> <C-o>P
-        "inoremap <C-s><C-j> <C-o>J
-        "inoremap <C-q> <BS>
-        "inoremap <M-q> <Del>
-        "inoremap <Esc><C-q> <Del>
-
-    " strip space at the end of line
-    nnoremap <Leader>fs :retab<CR>:%s/\s\+$//g<CR>``
-    nnoremap <Leader>fc gg=G
-    nnoremap <Leader>ff :call AutoSpaceCJK('n')<CR>
-    vnoremap <Leader>ff :<C-u>call AutoSpaceCJK(visualmode())<CR>
+            endtry
+            exec "let " . flagname . " = 1"
+        endif
+    endfunc
+    " }}}
+    "nnoremap <unique> <Leader>td :vimgrep /TODO\\|FIXME\\|XXX/ %<CR>
+                "\ :call QuickfixToggle('c')<CR>
+    "nnoremap <unique> <Leader>ld :lvimgrep /TODO\\|FIXME\\|XXX/ %<CR>
+                "\ :call QuickfixToggle('l')<CR>
+    nnoremap <unique> <Leader>tt :call QuickfixCompile('c')<CR>
+                \ :call QuickfixToggle('c')<CR>
+    nnoremap <unique> <Leader>ll :call QuickfixCompile('l')<CR>
+                \ :call QuickfixToggle('l')<CR>
+    nnoremap <unique> <Leader>tn :cnext<CR>
+    nnoremap <unique> <Leader>tp :cprev<CR>
+    nnoremap <unique> <Leader>ln :lnext<CR>
+    nnoremap <unique> <Leader>lp :lprev<CR>
+" }}}
+" quick deletion using <C-s> {{{
+    "inoremap <unique> <C-s><C-a> <C-o>d<Home>
+    "inoremap <unique> <C-s><C-e> <C-o>d<End>
+    "inoremap <unique> <C-s><C-w> <C-o>dB
+    "inoremap <unique> <C-s><C-d> <C-o>dW
+    "inoremap <unique> <C-s><M-w> <C-o>dB
+    "inoremap <unique> <C-s><M-d> <C-o>dW
+    "inoremap <unique> <C-s><Esc>e <C-o>de
+    "inoremap <unique> <C-s><Esc><C-e> <C-o>dge
+    "inoremap <unique> <C-s><C-f> <C-o>dw
+    "inoremap <unique> <C-s><C-b> <C-o>db
+    "inoremap <unique> <C-s><C-u> <C-o>d^
+    "inoremap <unique> <C-s><C-k> <C-o>d$
+    "inoremap <unique> <C-s><C-d> <C-o>d
+    "inoremap <unique> <C-s>u <C-o>u
+    "inoremap <unique> <C-s><C-y> <C-o>P
+    "inoremap <unique> <C-s><C-j> <C-o>J
+    "inoremap <unique> <C-q> <BS>
+    "inoremap <unique> <M-q> <Del>
+    "inoremap <unique> <Esc><C-q> <Del>
+" }}}
+" strip space at the end of line {{{
+    " functoin AutoSpaceCJK() {{{
     function! AutoSpaceCJK(mode)
         "let range = "'" . 'A-Z0-9a-z~!@#$%\^&*()_+`-=\[\]{}:;"<>,./?\\|'
         let pat_range = '"'
@@ -742,36 +720,44 @@
         exec range . 'substitute/\v\zs('. pat_ya .')\ze' . pat_no . '/\1 /ge'
         redraw!
     endfunc
-
-    " zz, zt, zb, place current line on screen
-        for key in ['z','t','b']
-            exec "inoremap <C-z><C-".key."> <C-o>z".key
-            exec "inoremap <C-z>".key." <C-o>z".key
-        endfor
-        for key in ['H','L','M']
-            exec "inoremap <C-z>".key." <C-o>".key
-        endfor
-        nnoremap zh zt
-        nnoremap zl zb
-        vnoremap zh zt
-        vnoremap zl zb
-        inoremap <C-z>h <C-o>zt
-        inoremap <C-z>l <C-o>zb
-        inoremap <C-z><C-h> <C-o>zt
-        inoremap <C-z><C-l> <C-o>zb
-
-    "" zR, zC, zO, fold
-        "for key in ['R','M','O','r','m','o']
-            "exec "inoremap <C-z>".key." <C-o>z".key
-        "endfor
-
+    " }}}
+    nnoremap <unique> <Leader>fs :retab<CR>:%s/\s\+$//g<CR>``
+    nnoremap <unique> <Leader>fc gg=G
+    nnoremap <unique> <Leader>ff :call AutoSpaceCJK('n')<CR>
+    vnoremap <unique> <Leader>ff :<C-u>call AutoSpaceCJK(visualmode())<CR>
+" }}}
+" zz, zt, zb, place current line on screen {{{
+    for key in ['z','t','b']
+        exec "inoremap <unique> <C-z><C-".key."> <C-o>z".key
+        exec "inoremap <unique> <C-z>".key." <C-o>z".key
+    endfor
+    for key in ['H','L','M']
+        exec "inoremap <unique> <C-z>".key." <C-o>".key
+    endfor
+    nnoremap <unique> zh zt
+    nnoremap <unique> zl zb
+    vnoremap <unique> zh zt
+    vnoremap <unique> zl zb
+    inoremap <unique> <C-z>h <C-o>zt
+    inoremap <unique> <C-z>l <C-o>zb
+    inoremap <unique> <C-z><C-h> <C-o>zt
+    inoremap <unique> <C-z><C-l> <C-o>zb
+" }}}
+" exec function in insert mode {{{
     " insert mode <C-r>=Funcexec(cmd)
     " used to execute normal commands in insert mode without leaving
     function Funcexec(cmd)
         exec a:cmd
     endfun
-
-" easymotion and insert mode motion
+" }}}
+" }}}
+" plugins {{{
+" project.tar.gz {{{
+if match(bundle_name, 'project.tar.gz') >= 0
+    nnoremap <unique> <M-g> <Plug>ToggleProject
+endif
+" }}}
+" easymotion and insert mode motion {{{
 if match(bundle_name, 'vim-easymotion') >= 0
     " to have more choice for insert mode eaasymotion
     " for exmaple, <M-o>ge, <M-o>gE
@@ -788,15 +774,15 @@ if match(bundle_name, 'vim-easymotion') >= 0
     imap <C-f> <C-o>f
     imap <C-b> <C-o>T
     for key in ['w','b','e',"ge"]
-        exec "map ".key." <Plug>(easymotion-iskeyword-".key.")"
+        exec "map <unique> ".key." <Plug>(easymotion-iskeyword-".key.")"
         if strlen(key) != 1 || key < 'a' || key > 'z'
             continue
         endif
-        exec "imap <Esc><C-".key."> <C-o><Plug>(easymotion-iskeyword-".key.")"
+        exec "imap <unique> <Esc><C-".key."> <C-o><Plug>(easymotion-iskeyword-".key.")"
     endfor
     for key in ['j','k']
-        exec "map <M-".key."> <Plug>(easymotion-".key.")"
-        exec "imap <M-".key."> <C-o><Plug>(easymotion-".key.")"
+        exec "map  <unique> <M-".key."> <Plug>(easymotion-".key.")"
+        exec "imap <unique> <M-".key."> <C-o><Plug>(easymotion-".key.")"
     endfor
     "for key in ['t','T','f','F','w','b','e','W','B','E',"ge","gE"]
         "let act = key
@@ -805,19 +791,17 @@ if match(bundle_name, 'vim-easymotion') >= 0
             "let act = "iskeyword-".key
         "endif
 
-        "exec "map ".key." <Plug>(easymotion-".act.")"
+        "exec "map <unique> ".key." <Plug>(easymotion-".act.")"
 
         "if strlen(key) != 1 || key < 'a' || key > 'z'
             "continue
         "else
-            "exec "imap <Esc><C-".key."> <C-o><Plug>(easymotion-".act.")"
+            "exec "imap <unique> <Esc><C-".key."> <C-o><Plug>(easymotion-".act.")"
         "endif
     "endfor
-    "noremap <C-f> t
-    "noremap <C-b> T
 endif
-
-" vim-textobj-user
+" }}}
+" vim-textobj-user {{{
 if match(bundle_name, 'vim-textobj-user') >= 0
     call textobj#user#plugin('php', {
         \   'code': {
@@ -837,10 +821,10 @@ if match(bundle_name, 'vim-textobj-user') >= 0
         \   },
         \ })
 endif
-
-" indentLine
+" }}}
+" indentLine {{{
 if match(bundle_name, 'indentLine') >= 0
-    nnoremap <Leader>il :IndentLinesToggle<CR>
+    nnoremap <unique> <Leader>il :IndentLinesToggle<CR>
     "let g:indentLine_enabled = 1
     let g:indentLine_showFirstIndentLevel = 1
     let g:indentLine_char = '│'
@@ -850,23 +834,24 @@ if match(bundle_name, 'indentLine') >= 0
     let g:indentLine_fileTypeExclude = []
     let g:indentLine_fileType = ['c','cpp','python']
 endif
-
-" quicktask
+" }}}
+" quicktask {{{
 if match(bundle_name, 'quicktask') >= 0
     let g:quicktask_snip_path= '~/snips'
     let g:quicktask_snip_default_filetype = 'markdown'
-    nnoremap <Leader>ti Go# vim:ft=quicktask<Esc><C-o>
+    nnoremap <unique> <Leader>ti Go# vim:ft=quicktask<Esc><C-o>
 endif
-
-" hammer, poor man's hammer
+" }}}
+" hammer {{{
+" poor man's hammer
     "autocmd FileType vimwiki,markdown nnoremap <Leader>hh
-    autocmd FileType * nnoremap <Leader>hh
+    autocmd FileType vimwiki,markdown nnoremap <buffer> <Leader>hh
                 \ :silent !hammer "%" > "/tmp/%:t.html"<CR>
                 \ :silent !xdg-open "/tmp/%:t.html"<CR>
                 \ :redraw!<CR>
-    "nnoremap <Leader>hh :Hammer<CR>
-
-" vimwiki
+    "nnoremap <unique> <Leader>hh :Hammer<CR>
+" }}}
+" vimwiki {{{
 if match(bundle_name, 'vimwiki') >= 0
     " use :hammer to have a quick preview of markdown
     " use pandoc to convert markdown to html in batch es
@@ -877,18 +862,18 @@ if match(bundle_name, 'vimwiki') >= 0
     "let g:vimwiki_header_mode = 1
     let g:vimwiki_autowriteall = 1
     let g:vimwiki_folding = 'expr'
-    autocmd FileType vimwiki set foldlevel=1
+    autocmd FileType vimwiki setlocal foldlevel=1
     " followning <CR> nmap breaks jumping in error window
-    "autocmd FileType vimwiki nmap <CR> <Plug>VimwikiFollowLink
-    "autocmd FileType vimwiki nmap <BS> <Plug>VimwikiGoBackLink
-    autocmd FileType vimwiki nmap <C-n> <Plug>VimwikiNextLink
-    autocmd FileType vimwiki nmap <C-p> <Plug>VimwikiPrevLink
-    nnoremap <Leader>vi :VimwikiGenerateLinks<CR>
-    nnoremap <Leader>vg :VimwikiGoto<Space>
-    nnoremap <Leader>vs :VimwikiSearch<Space>
-    nnoremap <Leader>vb :VimwikiBacklinks<CR>
-    nnoremap <Leader>vh :VimwikiAll2HTML<CR>
-    nnoremap <Leader>vt :VimwikiTable<Space>
+    "autocmd FileType vimwiki nmap <unique> <CR> <Plug>VimwikiFollowLink
+    "autocmd FileType vimwiki nmap <unique> <BS> <Plug>VimwikiGoBackLink
+    autocmd FileType vimwiki nmap <buffer> <C-n> <Plug>VimwikiNextLink
+    autocmd FileType vimwiki nmap <buffer> <C-p> <Plug>VimwikiPrevLink
+    nnoremap <unique> <Leader>vi :VimwikiGenerateLinks<CR>
+    nnoremap <unique> <Leader>vg :VimwikiGoto<Space>
+    nnoremap <unique> <Leader>vs :VimwikiSearch<Space>
+    nnoremap <unique> <Leader>vb :VimwikiBacklinks<CR>
+    nnoremap <unique> <Leader>vh :VimwikiAll2HTML<CR>
+    nnoremap <unique> <Leader>vt :VimwikiTable<Space>
                 "\| iunmap <buffer> <CR>
 
     "autocmd BufEnter * nmap <buffer> <BS> <Plug>VimwikiGoBackLink
@@ -911,8 +896,8 @@ if match(bundle_name, 'vimwiki') >= 0
     autocmd FileType vimwiki inoremap <buffer> <C-G><C-K> <C-O>:VimwikiListChangeMarker prev i<CR>
     autocmd FileType vimwiki inoremap <buffer> <C-G><C-M> <Esc>:call vimwiki#lst#toggle_list_item()<CR>
 endif
-
-" VOoM
+" }}}
+" VOoM {{{
 if match(bundle_name, 'VOoM') >= 0
     autocmd FileType voomtree nnoremap <buffer> j j:<C-u>call Voom_TreeSelect(1)<CR>
     autocmd FileType voomtree nnoremap <buffer> k k:<C-u>call Voom_TreeSelect(1)<CR>
@@ -976,8 +961,8 @@ if match(bundle_name, 'VOoM') >= 0
                 \'vimwiki':'markdown',
                 \}
 endif
-
-" YouCompleteMe
+" }}}
+" YouCompleteMe {{{
 if match(bundle_name, 'YouCompleteMe') >= 0
     let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
     let g:ycm_filetype_blacklist = {}
@@ -987,16 +972,16 @@ if match(bundle_name, 'YouCompleteMe') >= 0
     " binding to <C-u> :(
     "inoremap <Space> <Space><C-o><Esc>
 endif
-
-" ctrlp
+" }}}
+" ctrlp {{{
 if match(bundle_name, 'ctrlp') >= 0
     let g:ctrlp_map = '<Leader><Leader>'
     "nnoremap <Leader>p :CtrlP<CR>
-    nnoremap <Leader>pp :CtrlP<CR>
-    nnoremap <Leader>pb :CtrlPBuffer<CR>
-    nnoremap <Leader>pm :CtrlPMRU<CR>
-    nnoremap <Leader>bb :CtrlPBuffer<CR>
-    nnoremap <Leader>mm :CtrlPMRU<CR>
+    nnoremap <unique> <Leader>pp :CtrlP<CR>
+    nnoremap <unique> <Leader>pb :CtrlPBuffer<CR>
+    nnoremap <unique> <Leader>pm :CtrlPMRU<CR>
+    nnoremap <unique> <Leader>bb :CtrlPBuffer<CR>
+    nnoremap <unique> <Leader>mm :CtrlPMRU<CR>
     let g:ctrlp_working_path_mode = 2
     let g:ctrlp_custom_ignore = {
         \ 'dir':  '\.git$\|\.hg$\|\.svn$',
@@ -1010,23 +995,23 @@ if match(bundle_name, 'ctrlp') >= 0
         \ 'fallback': 'find %s -type f'
     \ }
 endif
-
-" vim-fugitive
+" }}}
+" vim-fugitive {{{
 if match(bundle_name, 'vim-fugitive') >= 0
-    nnoremap <Leader>gs :Gstatus<CR>
-    nnoremap <Leader>gc :Gcommit<CR>
-    nnoremap <Leader>ga :Gcommit -a<CR>
-    nnoremap <Leader>gp :Git push<CR>
-    nnoremap <Leader>gd :Gdiff<CR>
+    nnoremap <unique> <Leader>gs :Gstatus<CR>
+    nnoremap <unique> <Leader>gc :Gcommit<CR>
+    nnoremap <unique> <Leader>ga :Gcommit -a<CR>
+    nnoremap <unique> <Leader>gp :Git push<CR>
+    nnoremap <unique> <Leader>gd :Gdiff<CR>
 endif
-
-" delimitMate
+" }}}
+" delimitMate {{{
 if match(bundle_name, 'delimitMate') >= 0
     "set matchpairs+=<:>
     let delimitMate_expand_space = 1
     let delimitMate_expand_cr = 1
-    imap <C-g><C-l> <Plug>delimitMateS-Tab
-    imap <C-g><C-g> <Plug>delimitMateJumpMany
+    imap <unique> <C-g><C-l> <Plug>delimitMateS-Tab
+    imap <unique> <C-g><C-g> <Plug>delimitMateJumpMany
     autocmd FileType tex let b:delimitMate_quotes = "\" ' ` $"
     "imap <Space> <Plug>delimitMateSpace
     "autocmd FileType vimwiki let b:delimitMate_matchpairs=&matchpairs
@@ -1034,27 +1019,27 @@ if match(bundle_name, 'delimitMate') >= 0
     "autocmd FileType vimwiki let b:delimitMate_nesting_quotes = ['"','*','-',"'",'`']
     "autocmd FileType c,cpp,java let b:delimitMate_matchpairs=&matchpairs.",=:;"
 endif
-
-" matchit.zip
+" }}}
+" matchit.zip {{{
 if match(bundle_name, 'matchit.zip') >= 0
     "let b:match_words = '<:>,\<if\>:\<else\>:\<endif\>'
 endif
-
-" vim-powerline
+" }}}
+" vim-powerline {{{
 if match(bundle_name, 'vim-powerline') >= 0
     set laststatus=2
     let g:Powerline_symbols = 'fancy'
     let g:Powerline_stl_path_style = 'short'
 endif
-
-" tagbar
+" }}}
+" tagbar {{{
 if match(bundle_name, 'tagbar') >= 0
     let g:tagbar_sort = 0
     "autocmd Filetype tagbar,c,cpp,python,ruby,vim nnoremap <buffer> <Tab> :TagbarToggle<CR>
     " following 3 lines make tagbar autofocus only when using :TagbarToggle, 
     " but not when using :TagOpen
     let g:tagbar_autofocus = 0
-    nnoremap <silent> <M-p> :TagbarToggle<CR>
+    nnoremap <unique> <silent> <M-p> :TagbarToggle<CR>
     autocmd Filetype c,cpp,python :TagbarOpen
     autocmd Filetype tagbar nmap <buffer> <C-j> jp
     autocmd Filetype tagbar nmap <buffer> <C-k> kp
@@ -1092,28 +1077,31 @@ if match(bundle_name, 'tagbar') >= 0
             \ },
         \ }
 endif
-
-" nerdcommenter
+" }}}
+" nerdcommenter {{{
 if match(bundle_name, 'nerdcommenter') >= 0
     "nerdcommenter defined key map, replicated here to avoid overwrite
-    "nnoremap <Leader>cc <Plug><NERDCommenterNested
-    "nnoremap <Leader>ca <Plug><NERDCommenterAltDelims
-    "nnoremap <Leader>cu <Plug><NERDCommenterUncomment
-    "nnoremap <Leader>cb <Plug><NERDCommenterAlignBoth
-    "nnoremap <Leader>cl <Plug><NERDCommenterAlignLeft
-    "nnoremap <Leader>cA <Plug><NERDCommenterAppend
-    "nnoremap <Leader>cy <Plug><NERDCommenterYank
-    "nnoremap <Leader>cs <Plug><NERDCommenterSexy
-    "nnoremap <Leader>ci <Plug><NERDCommenterInvert
-    "nnoremap <Leader>c$ <Plug><NERDCommenterToEOL
-    "nnoremap <Leader>cm <Plug><NERDCommenterMinimal
-    "nnoremap <Leader>cn <Plug><NERDCommenterNested
-    "nnoremap <Leader>c<space> <Plug><NERDCommenterToggle
+    "nnoremap <unique> <Leader>cc <Plug><NERDCommenterNested
+    "nnoremap <unique> <Leader>ca <Plug><NERDCommenterAltDelims
+    "nnoremap <unique> <Leader>cu <Plug><NERDCommenterUncomment
+    "nnoremap <unique> <Leader>cb <Plug><NERDCommenterAlignBoth
+    "nnoremap <unique> <Leader>cl <Plug><NERDCommenterAlignLeft
+    "nnoremap <unique> <Leader>cA <Plug><NERDCommenterAppend
+    "nnoremap <unique> <Leader>cy <Plug><NERDCommenterYank
+    "nnoremap <unique> <Leader>cs <Plug><NERDCommenterSexy
+    "nnoremap <unique> <Leader>ci <Plug><NERDCommenterInvert
+    "nnoremap <unique> <Leader>c$ <Plug><NERDCommenterToEOL
+    "nnoremap <unique> <Leader>cm <Plug><NERDCommenterMinimal
+    "nnoremap <unique> <Leader>cn <Plug><NERDCommenterNested
+    "nnoremap <unique> <Leader>c<space> <Plug><NERDCommenterToggle
 endif
-
-" nerdtree
+" }}}
+" nerdtree {{{
 if match(bundle_name, 'nerdtree') >= 0
     "nnoremap <leader>e :NERDTreeTabsOpen<CR>:NERDTreeSteppedClose<CR>:NERDTreeFind<CR>
+
+    nnoremap <unique> <M-e> :NERDTree %:p:h<CR>
+    autocmd FileType nerdtree nnoremap <buffer> <M-e> :NERDTreeClose<CR>
 
     let NERDTreeShowBookmarks=1
     let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
@@ -1124,14 +1112,16 @@ if match(bundle_name, 'nerdtree') >= 0
     let NERDTreeKeepTreeInNewTab=1
     let g:nerdtree_tabs_open_on_gui_startup=0
 endif
-
-" undotree
+" }}}
+" undotree {{{
 if match(bundle_name, 'undotree') >= 0
+    nnoremap <unique> <M-u> :UndotreeToggle<CR>
     let g:undotree_SetFocusWhenToggle=1
 endif
-
-" YankRing.vim
+" }}}
+" YankRing.vim {{{
 if match(bundle_name, 'YankRing.vim') >= 0
+    nnoremap <unique> <M-y> :YRShow<CR>
     "let g:yankring_replace_n_pkey = '<M-p>'
     "let g:yankring_replace_n_nkey = '<M-n>'
     "let g:yankring_zap_keys = '/ ?'
@@ -1141,34 +1131,34 @@ if match(bundle_name, 'YankRing.vim') >= 0
         "nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
     "endfunction
 endif
-
-" tabular
+" }}}
+" tabular {{{
 " align table
 if match(bundle_name, 'tabular') >= 0
     " :Tabularize /:/l1r0
     " algin by :, insert 1 space to left, and 0 to right.default to l1r1
-    "nnoremap <Leader>a& :Tabularize /&<CR>
-    "vmap <Leader>a& :Tabularize /&<CR>
-    "nnoremap <Leader>a= :Tabularize /=<CR>
-    "vmap <Leader>a= :Tabularize /=<CR>
-    "nnoremap <Leader>a: :Tabularize /:<CR>
-    "vmap <Leader>a: :Tabularize /:<CR>
-    "nnoremap <Leader>a:: :Tabularize /:\zs<CR>
-    "vmap <Leader>a:: :Tabularize /:\zs<CR>
-    "nnoremap <Leader>a, :Tabularize /,<CR>
-    "vmap <Leader>a, :Tabularize /,<CR>
-    "nnoremap <Leader>a<Bar> :Tabularize /<Bar><CR>
-    "vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+    "nnoremap <unique> <Leader>a& :Tabularize /&<CR>
+    "vnoremap <unique> <Leader>a& :Tabularize /&<CR>
+    "nnoremap <unique> <Leader>a= :Tabularize /=<CR>
+    "vnoremap <unique> <Leader>a= :Tabularize /=<CR>
+    "nnoremap <unique> <Leader>a: :Tabularize /:<CR>
+    "vnoremap <unique> <Leader>a: :Tabularize /:<CR>
+    "nnoremap <unique> <Leader>a:: :Tabularize /:\zs<CR>
+    "vnoremap <unique> <Leader>a:: :Tabularize /:\zs<CR>
+    "nnoremap <unique> <Leader>a, :Tabularize /,<CR>
+    "vnoremap <unique> <Leader>a, :Tabularize /,<CR>
+    "nnoremap <unique> <Leader>a<Bar> :Tabularize /<Bar><CR>
+    "vnoremap <unique> <Leader>a<Bar> :Tabularize /<Bar><CR>
 endif
-
-" sessionman.vim
+" }}}
+" sessionman.vim {{{
 if match(bundle_name, 'sessionman.vim') >= 0
     set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
     nnoremap <leader>sl :SessionList<CR>
     nnoremap <leader>ss :SessionSave<CR>
 endif
-
-" cscope conf
+" }}}
+" cscope conf {{{
 if has("cscope")
      " use both cscope and ctag for 'ctrl-]', ':ta', 'vim'
      set cscopetag
@@ -1209,4 +1199,7 @@ if has("cscope")
      vnoremap <Leader>pf :<C-u>cscope find f <C-R>*<CR>
      vnoremap <Leader>pi :<C-u>cscope find i ^<C-R>*$<CR>
 endif
+" }}}
+" }}}
 
+" vim:ft=vim:fdm=marker

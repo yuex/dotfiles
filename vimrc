@@ -38,6 +38,7 @@
     "Bundle 'yuex/vim-easymotion'
     Bundle 'matchit.zip'
 
+    Bundle 'bling/vim-bufferline'
     Bundle 'Lokaltog/vim-powerline'
     Bundle 'altercation/vim-colors-solarized'
     Bundle 'mileszs/ack.vim'
@@ -234,30 +235,56 @@
 " tabpage {{{
     " move to previous or next tab, <Esc> for <M-
     " XXX: use dict to implement this kind mapping. map-nvo and map-i
-    " XXX: tips for easy memorizing. <Left> and <Right> are intuitive. for Up and
-    " Down, note that some laptop keyboard designs squeeze <Home> and <End>
-    " to <Up> and <Down>, <Home> for create, <End> for close
-    " XXX: <Esc><C-PageUp/PageDown> and <Esc><Home>/<End> doesn't work :(
-    nnoremap <unique> <silent> <Esc><Left>  :tabprevious<CR>
-    nnoremap <unique> <silent> <Esc><Right> :tabnext<CR>
-    nnoremap <unique> <silent> <Esc><Down>    :tabnew<CR>
-    nnoremap <unique> <silent> <Esc><Up>  :tabclose<CR>
-    inoremap <unique> <Esc><Left>  <C-o>:tabprevious<CR>
-    inoremap <unique> <Esc><Right> <C-o>:tabnext<CR>
-    inoremap <unique> <Esc><Up>    <C-o>:tabnew<CR>
-    inoremap <unique> <Esc><Down>  <C-o>:tabclose<CR>
+    " XXX: tips for easy memorizing. <Left> and <Right> are intuitive. for Up
+    " and Down, note that some laptop keyboard designs squeeze <Home> and
+    " <End> " to <Up> and <Down>, <Home> for create, <End> for close
+    nnoremap <unique> <silent> <C-g><C-t>   :tabs<CR>
+    nnoremap <unique> <silent> <C-g><C-h> :tabprevious<CR>
+    nnoremap <unique> <silent> <C-g><C-l> :tabnext<CR>
+    nnoremap <unique> <silent> <C-g><C-j> :tabnew<CR>
+    nnoremap <unique> <silent> <C-g><C-k> :tabclose<CR>
+    nnoremap <unique> <silent> <Left>  :tabprevious<CR>
+    nnoremap <unique> <silent> <Right> :tabnext<CR>
+    nnoremap <unique> <silent> <Down>  :tabnew<CR>
+    nnoremap <unique> <silent> <Up>    :tabclose<CR>
+
+    inoremap <unique> <silent> <Left>  <Esc>:tabprevious<CR>
+    inoremap <unique> <silent> <Right> <Esc>:tabnext<CR>
+    inoremap <unique> <silent> <Up>    <Esc>:tabnew<CR>
+    inoremap <unique> <silent> <Down>  <Esc>:tabclose<CR>
     " move tab left or right
     nnoremap <unique> <Esc><PageUp>   :tabmove -1<CR>
     nnoremap <unique> <Esc><PageDown> :tabmove +1<CR>
-    inoremap <unique> <Esc><PageUp>   <C-o>:tabmove -1<CR>
-    inoremap <unique> <Esc><PageDown> <C-o>:tabmove +1<CR>
+    "inoremap <unique> <Esc><PageUp>   <Esc>:tabmove -1<CR>
+    "inoremap <unique> <Esc><PageDown> <Esc>:tabmove +1<CR>
     " move to tab #1-#9, #0 is last"
-    nnoremap <unique> <M-0> :tablast<CR>
-    inoremap <unique> <M-0> <C-o>:tablast<CR>
+    nnoremap <unique> <C-g>0 :tablast<CR>
+    inoremap <unique> <C-g>0 <C-o>:tablast<CR>
     let c = '1'
     while c <= '9'
-        exec "nnoremap <unique> <M-".c."> :tabnext ".c."<CR>"
-        exec "inoremap <unique> <M-".c."> <C-o>:tabnext ".c."<CR>"
+        exec "nnoremap <unique> <C-g>".c." :tabnext ".c."<CR>"
+        exec "inoremap <unique> <C-g>".c." <Esc>:tabnext ".c."<CR>"
+        let c = nr2char(1+char2nr(c))
+    endw
+" }}}
+" buffer {{{
+    nnoremap <unique> <silent> <C-g><C-u>   :buffers<CR>
+    nnoremap <unique> <silent> <C-g><C-p>   :bprevious<CR>
+    nnoremap <unique> <silent> <C-g><C-n>   :bnext<CR>
+    "nnoremap <unique> <silent> <PageUp>     :bprevious<CR>
+    "nnoremap <unique> <silent> <PageDown>   :bnext<CR>
+
+    inoremap <unique> <silent> <C-g><C-p>   <Esc>:bprevious<CR>
+    inoremap <unique> <silent> <C-g><C-n>   <Esc>:bnext<CR>
+    "inoremap <unique> <silent> <PageUp>     <Esc>:bprevious<CR>
+    "inoremap <unique> <silent> <PageDown>   <Esc>:bnext<CR>
+
+    nnoremap <unique> <M-0> :blast<CR>
+    inoremap <unique> <M-0> <C-o>:blast<CR>
+    let c = '1'
+    while c <= '9'
+        exec "nnoremap <unique> <M-".c."> :buffer ".c."<CR>"
+        exec "inoremap <unique> <M-".c."> <Esc>:buffer ".c."<CR>"
         let c = nr2char(1+char2nr(c))
     endw
 " }}}

@@ -69,7 +69,7 @@ bindkey -N yuexmap emacs
 
 bindkey -M yuexmap ''    backward-kill-line
 bindkey -M yuexmap 'u'   kill-line
-bindkey -M yuexmap ''  kill-whole-line
+#bindkey -M yuexmap ''  kill-whole-line
 bindkey -M yuexmap ''    backward-kill-word
 bindkey -M yuexmap 'w'   kill-word
 bindkey -M yuexmap 'p'   up-line-or-search
@@ -89,6 +89,8 @@ bindkey -M yuexmap ''    history-incremental-search-backward
 bindkey -M yuexmap ''    clear-screen
 bindkey -M yuexmap 'm'   run-help
 bindkey -M yuexmap ''    get-line #be consistent with ^Q (push-line)
+bindkey -M yuexmap ''  up-case-word
+bindkey -M yuexmap ''  down-case-word
 
 bindkey -M yuexmap -s 's' 'qls'
 bindkey -M yuexmap -s ''  'tmux attach -t $USER || tmux new-session -s $USER'
@@ -97,6 +99,9 @@ bindkey -A yuexmap main
 
 # disable auto correction of zsh
 unsetopt correct_all
+
+# enable {a-z}, {0-9} in zsh
+setopt braceccl
 
 # set the right $TERM, if in pts, use 256-color, else use 8-color by default
 if [ `tty|cut -d'/' -f3` = 'pts' ];then

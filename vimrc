@@ -51,6 +51,7 @@
     Bundle 'scrooloose/nerdcommenter'
     Bundle 'majutsushi/tagbar'
     Bundle 'Yggdroot/indentLine'
+    Bundle 'sukima/xmledit'
     "Bundle 'willthefrog/indentLine'
     " use astyle for C#/C++/C/Java, jsbeautify for Javascript
     " autopep8 for python, tidy for HTML/XHTML/XML
@@ -69,7 +70,7 @@
     "Bundle 'ervandew/supertab'
     "Bundle 'Rip-Rip/clang_complete'
     "let g:SuperTabDefaultCompletionType='context'
-    Bundle 'HTML-AutoCloseTag'
+    "Bundle 'HTML-AutoCloseTag'
 "}}}
 " notetaking {{{
     "Bundle 'vimwiki/vimwiki'

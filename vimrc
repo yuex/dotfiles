@@ -336,7 +336,7 @@
     autocmd FileType python set tabstop=4 shiftwidth=4 softtabstop=4
     autocmd FileType c,cpp set tabstop=2 shiftwidth=2 softtabstop=2
     autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType html,css,htmldjango
+    autocmd FileType xml,html,css,htmldjango
                 \ set tabstop=2 shiftwidth=2 softtabstop=2
     autocmd FileType make set noexpandtab
 " }}}

@@ -102,8 +102,8 @@
     set iskeyword-=_
 " }}}
 " word {{{
-    set spell spelllang=en
-    set dictionary=/usr/local/plan9/lib/words
+    "set spell spelllang=en
+    "set dictionary=/usr/local/plan9/lib/words
     "set complete-=k complete+=k
 " }}}
 " encoding {{{
@@ -333,12 +333,13 @@
     autocmd FileType c set makeprg=gcc\ -Wall\ -o%<.o\ %;./%<.o
 " }}}
 " autocmd indent {{{
-    autocmd FileType python set tabstop=4 shiftwidth=4 softtabstop=4
-    autocmd FileType c,cpp set tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType yaml set tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
+    autocmd FileType java setlocal tabstop=4 shiftwidth=4 softtabstop=4
+    autocmd FileType c,cpp setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
     autocmd FileType xml,html,css,htmldjango
-                \ set tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType make set noexpandtab
+                \ setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType make setlocal noexpandtab
 " }}}
 " }}}
 " hacks {{{

@@ -74,6 +74,7 @@
 "}}}
 " notetaking {{{
     "Bundle 'vimwiki/vimwiki'
+    Bundle 'kakkyz81/evervim' 
     Bundle 'yuex/vimwiki'
     Bundle 'aaronbieber/quicktask'
     Bundle 'VOoM'
@@ -91,7 +92,7 @@
     "Bundle 'mattn/calendar-vim'
 " }}}
 
-    let bundle_name = map(copy(g:bundles), 'v:val.name')
+    let g:bundle_name = map(copy(g:bundles), 'v:val.name')
     "let g:bundle_name = bundle_name
 " }}}
 " general options {{{
@@ -782,12 +783,12 @@
 " }}}
 " plugins {{{
 " project.tar.gz {{{
-if match(bundle_name, 'project.tar.gz') >= 0
+if match(g:bundle_name, 'project.tar.gz') >= 0
     nnoremap <unique> <M-g> <Plug>ToggleProject
 endif
 " }}}
 " easymotion and insert mode motion {{{
-if match(bundle_name, 'vim-easymotion') >= 0
+if match(g:bundle_name, 'vim-easymotion') >= 0
     " to have more choice for insert mode eaasymotion
     " for exmaple, <M-o>ge, <M-o>gE
     let g:EasyMotion_leader_key = '<M-v>'
@@ -831,7 +832,7 @@ if match(bundle_name, 'vim-easymotion') >= 0
 endif
 " }}}
 " vim-textobj-user {{{
-if match(bundle_name, 'vim-textobj-user') >= 0
+if match(g:bundle_name, 'vim-textobj-user') >= 0
     call textobj#user#plugin('php', {
         \   'code': {
         \       'pattern': ['<?php\>','?>'],
@@ -852,7 +853,7 @@ if match(bundle_name, 'vim-textobj-user') >= 0
 endif
 " }}}
 " indentLine {{{
-if match(bundle_name, 'indentLine') >= 0
+if match(g:bundle_name, 'indentLine') >= 0
     nnoremap <unique> <Leader>il :IndentLinesToggle<CR>
     "let g:indentLine_enabled = 1
     let g:indentLine_showFirstIndentLevel = 1
@@ -865,7 +866,7 @@ if match(bundle_name, 'indentLine') >= 0
 endif
 " }}}
 " quicktask {{{
-if match(bundle_name, 'quicktask') >= 0
+if match(g:bundle_name, 'quicktask') >= 0
     let g:quicktask_snip_path= '~/snips'
     let g:quicktask_snip_default_filetype = 'markdown'
     nnoremap <unique> <Leader>ti Go# vim:ft=quicktask<Esc><C-o>
@@ -881,7 +882,7 @@ endif
     "nnoremap <unique> <Leader>hh :Hammer<CR>
 " }}}
 " vimwiki {{{
-if match(bundle_name, 'vimwiki') >= 0
+if match(g:bundle_name, 'vimwiki') >= 0
     " use :hammer to have a quick preview of markdown
     " use pandoc to convert markdown to html in batch es
     " use grip to have a instant view of github flavoured markdown
@@ -927,7 +928,7 @@ if match(bundle_name, 'vimwiki') >= 0
 endif
 " }}}
 " VOoM {{{
-if match(bundle_name, 'VOoM') >= 0
+if match(g:bundle_name, 'VOoM') >= 0
     autocmd FileType voomtree nnoremap <buffer> j j:<C-u>call Voom_TreeSelect(1)<CR>
     autocmd FileType voomtree nnoremap <buffer> k k:<C-u>call Voom_TreeSelect(1)<CR>
     autocmd FileType voomtree nnoremap <buffer> h :<C-u>call Voom_TreeLeft()<CR>
@@ -992,7 +993,7 @@ if match(bundle_name, 'VOoM') >= 0
 endif
 " }}}
 " YouCompleteMe {{{
-if match(bundle_name, 'YouCompleteMe') >= 0
+if match(g:bundle_name, 'YouCompleteMe') >= 0
     let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
     let g:ycm_filetype_blacklist = {}
     " XXX: After YouCompleteMe prompt, it disables <C-u>, following line hacks
@@ -1003,7 +1004,7 @@ if match(bundle_name, 'YouCompleteMe') >= 0
 endif
 " }}}
 " ctrlp {{{
-if match(bundle_name, 'ctrlp') >= 0
+if match(g:bundle_name, 'ctrlp') >= 0
     let g:ctrlp_map = '<Leader><Leader>'
     "nnoremap <Leader>p :CtrlP<CR>
     nnoremap <unique> <Leader>pp :CtrlP<CR>
@@ -1026,7 +1027,7 @@ if match(bundle_name, 'ctrlp') >= 0
 endif
 " }}}
 " vim-fugitive {{{
-if match(bundle_name, 'vim-fugitive') >= 0
+if match(g:bundle_name, 'vim-fugitive') >= 0
     nnoremap <unique> <Leader>gs :Gstatus<CR>
     nnoremap <unique> <Leader>gc :Gcommit<CR>
     nnoremap <unique> <Leader>ga :Gcommit -a<CR>
@@ -1035,7 +1036,7 @@ if match(bundle_name, 'vim-fugitive') >= 0
 endif
 " }}}
 " delimitMate {{{
-if match(bundle_name, 'delimitMate') >= 0
+if match(g:bundle_name, 'delimitMate') >= 0
     "set matchpairs+=<:>
     let delimitMate_expand_space = 1
     let delimitMate_expand_cr = 1
@@ -1050,19 +1051,19 @@ if match(bundle_name, 'delimitMate') >= 0
 endif
 " }}}
 " matchit.zip {{{
-if match(bundle_name, 'matchit.zip') >= 0
+if match(g:bundle_name, 'matchit.zip') >= 0
     "let b:match_words = '<:>,\<if\>:\<else\>:\<endif\>'
 endif
 " }}}
 " vim-powerline {{{
-if match(bundle_name, 'vim-powerline') >= 0
+if match(g:bundle_name, 'vim-powerline') >= 0
     set laststatus=2
     let g:Powerline_symbols = 'fancy'
     let g:Powerline_stl_path_style = 'short'
 endif
 " }}}
 " tagbar {{{
-if match(bundle_name, 'tagbar') >= 0
+if match(g:bundle_name, 'tagbar') >= 0
     let g:tagbar_sort = 0
     "autocmd Filetype tagbar,c,cpp,python,ruby,vim nnoremap <buffer> <Tab> :TagbarToggle<CR>
     " following 3 lines make tagbar autofocus only when using :TagbarToggle, 
@@ -1108,7 +1109,7 @@ if match(bundle_name, 'tagbar') >= 0
 endif
 " }}}
 " nerdcommenter {{{
-if match(bundle_name, 'nerdcommenter') >= 0
+if match(g:bundle_name, 'nerdcommenter') >= 0
     "nerdcommenter defined key map, replicated here to avoid overwrite
     "nnoremap <unique> <Leader>cc <Plug><NERDCommenterNested
     "nnoremap <unique> <Leader>ca <Plug><NERDCommenterAltDelims
@@ -1126,7 +1127,7 @@ if match(bundle_name, 'nerdcommenter') >= 0
 endif
 " }}}
 " nerdtree {{{
-if match(bundle_name, 'nerdtree') >= 0
+if match(g:bundle_name, 'nerdtree') >= 0
     "nnoremap <leader>e :NERDTreeTabsOpen<CR>:NERDTreeSteppedClose<CR>:NERDTreeFind<CR>
 
     nnoremap <unique> <M-e> :NERDTree %:p:h<CR>
@@ -1143,13 +1144,13 @@ if match(bundle_name, 'nerdtree') >= 0
 endif
 " }}}
 " undotree {{{
-if match(bundle_name, 'undotree') >= 0
+if match(g:bundle_name, 'undotree') >= 0
     nnoremap <unique> <M-u> :UndotreeToggle<CR>
     let g:undotree_SetFocusWhenToggle=1
 endif
 " }}}
 " YankRing.vim {{{
-if match(bundle_name, 'YankRing.vim') >= 0
+if match(g:bundle_name, 'YankRing.vim') >= 0
     nnoremap <unique> <M-y> :YRShow<CR>
     "let g:yankring_replace_n_pkey = '<M-p>'
     "let g:yankring_replace_n_nkey = '<M-n>'
@@ -1163,7 +1164,7 @@ endif
 " }}}
 " tabular {{{
 " align table
-if match(bundle_name, 'tabular') >= 0
+if match(g:bundle_name, 'tabular') >= 0
     " :Tabularize /:/l1r0
     " algin by :, insert 1 space to left, and 0 to right.default to l1r1
     "nnoremap <unique> <Leader>a& :Tabularize /&<CR>
@@ -1181,7 +1182,7 @@ if match(bundle_name, 'tabular') >= 0
 endif
 " }}}
 " sessionman.vim {{{
-if match(bundle_name, 'sessionman.vim') >= 0
+if match(g:bundle_name, 'sessionman.vim') >= 0
     set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
     nnoremap <leader>sl :SessionList<CR>
     nnoremap <leader>ss :SessionSave<CR>
@@ -1230,5 +1231,10 @@ if has("cscope")
 endif
 " }}}
 " }}}
+
+let s:vimrc_private = "$HOME/.vimrc-private"
+if filereadable(glob( s:vimrc_private ))
+    exec 'source '.s:vimrc_private
+endif
 
 " vim:ft=vim:fdm=marker

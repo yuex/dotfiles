@@ -117,6 +117,7 @@
     set showcmd
     set showmode
     set cursorline  " hightlight current line
+    set laststatus=2
 " }}}
 " search {{{
     set hlsearch    " disable with :nohl
@@ -1057,7 +1058,6 @@ endif
 " }}}
 " vim-powerline {{{
 if match(g:bundle_name, 'vim-powerline') >= 0
-    set laststatus=2
     let g:Powerline_symbols = 'fancy'
     let g:Powerline_stl_path_style = 'short'
 endif

@@ -41,6 +41,7 @@
     Bundle 'bling/vim-bufferline'
     Bundle 'Lokaltog/vim-powerline'
     Bundle 'altercation/vim-colors-solarized'
+    Bundle 'tomasr/molokai'
     Bundle 'mileszs/ack.vim'
 " }}}
 " programming {{{
@@ -154,6 +155,7 @@
     " solarized needs termianl palette configured properly
     " checkout
     colorscheme solarized
+    "colorscheme molokai
     "let g:solarized_termcolors=256
     "let g:solarized_termtrans=1
     let g:solarized_contrast="high"

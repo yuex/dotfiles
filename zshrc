@@ -163,7 +163,7 @@ $(git_prompt_info)%(!.#.») '
 
 setprompt
 
-ZSH_PRIVATE=$HOME/.zshrc-export
+ZSH_PRIVATE=$HOME/.zshrc-private
 if [ -f $ZSH_PRIVATE ]; then
     source $ZSH_PRIVATE
 fi

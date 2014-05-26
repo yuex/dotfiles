@@ -49,6 +49,7 @@ alias grep='grep -i --color=auto'
 alias egrep='egrep -i --color=auto'
 alias fgrep='fgrep -i --color=auto'
 alias tmux='TERM=screen-256color tmux'
+alias curl='curl -L'
 
 PATH=$PATH:$HOME/bin:/sbin:$HOME/.gem/ruby/1.9.1/bin
 

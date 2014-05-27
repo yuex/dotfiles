@@ -411,9 +411,9 @@
     inoremap <unique> <Esc><C-j> <C-o>}
     inoremap <unique> <Esc><C-k> <C-o>{
 
-    inoremap <unique> <C-u> <C-o>d^
+    inoremap <unique> <C-u> <C-o>d0
     inoremap <unique> <M-u> <C-o>d$
-    inoremap <unique> <Esc><C-u> <C-o>d0
+    inoremap <unique> <Esc><C-u> <C-o>d^
     "inoremap <unique> <Esc><C-k> <C-o>d$
     inoremap <unique> <C-w> <C-o>db
     inoremap <unique> <M-d> <C-o>de
@@ -454,9 +454,9 @@
     cnoremap <unique> <Esc><C-h> <C-o><C-Left><C-c>
     cnoremap <unique> <Esc><C-l> <C-o><C-Right><C-c>
 
-    cnoremap <unique> <C-u> <C-o>d^<C-c>
+    cnoremap <unique> <C-u> <C-o>d0<C-c>
     cnoremap <unique> <M-u> <C-o>d$<C-c>
-    cnoremap <unique> <Esc><C-u> <C-o>d0<C-c>
+    cnoremap <unique> <Esc><C-u> <C-o>d^<C-c>
     cnoremap <unique> <Esc><C-k> <C-o>d$<C-c>
     cnoremap <unique> <C-w> <C-o>db<C-c>
     cnoremap <unique> <M-d> <C-o>de<C-c>

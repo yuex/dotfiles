@@ -1043,8 +1043,8 @@ if match(g:bundle_name, 'delimitMate') >= 0
     "set matchpairs+=<:>
     let delimitMate_expand_space = 1
     let delimitMate_expand_cr = 1
-    imap <unique> <C-g><C-l> <Plug>delimitMateS-Tab
-    imap <unique> <C-g><C-g> <Plug>delimitMateJumpMany
+    imap <unique> <C-g><C-g> <Plug>delimitMateS-Tab
+    imap <unique> <C-g><C-e> <Plug>delimitMateJumpMany
     autocmd FileType tex let b:delimitMate_quotes = "\" ' ` $"
     "imap <Space> <Plug>delimitMateSpace
     "autocmd FileType vimwiki let b:delimitMate_matchpairs=&matchpairs

@@ -415,7 +415,7 @@
     inoremap <unique> <M-u> <C-o>d$
     inoremap <unique> <Esc><C-u> <C-o>d^
     "inoremap <unique> <Esc><C-k> <C-o>d$
-    inoremap <unique> <C-w> <C-o>db
+    "inoremap <unique> <C-w> <C-o>db
     inoremap <unique> <M-d> <C-o>de
     inoremap <unique> <M-w> <C-o>de
     inoremap <unique> <C-y> <C-r>-

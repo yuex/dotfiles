@@ -253,10 +253,10 @@
     nnoremap <unique> <silent> <Down>  :tabnew<CR>
     nnoremap <unique> <silent> <Up>    :tabclose<CR>
 
-    inoremap <unique> <silent> <Left>  <Esc>:tabprevious<CR>
-    inoremap <unique> <silent> <Right> <Esc>:tabnext<CR>
-    inoremap <unique> <silent> <Up>    <Esc>:tabnew<CR>
-    inoremap <unique> <silent> <Down>  <Esc>:tabclose<CR>
+    inoremap <unique> <silent> <Left>  <nop>
+    inoremap <unique> <silent> <Right> <nop>
+    inoremap <unique> <silent> <Up>    <nop>
+    inoremap <unique> <silent> <Down>  <nop>
     " move tab left or right
     nnoremap <unique> <Esc><PageUp>   :tabmove -1<CR>
     nnoremap <unique> <Esc><PageDown> :tabmove +1<CR>

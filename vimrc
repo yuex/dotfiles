@@ -336,6 +336,7 @@
     autocmd FileType tex set makeprg=pdflatex\ %
     autocmd FileType c set makeprg=gcc\ -Wall\ -o%<.o\ %;./%<.o
     autocmd FileType haskell set makeprg=runhaskell\ %
+    autocmd Filetype go set makeprg=go\ run\ %
 " }}}
 " autocmd indent {{{
     autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4

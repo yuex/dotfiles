@@ -334,7 +334,7 @@
     autocmd FileType sh set makeprg=bash\ %
     autocmd FileType lisp set makeprg=clisp\ %
     autocmd FileType tex set makeprg=pdflatex\ %
-    autocmd FileType c set makeprg=gcc\ -Wall\ -o%<.o\ %;./%<.o
+    autocmd FileType c set makeprg=gcc\ -Wall\ -o%<\ %;./%<
     autocmd FileType haskell set makeprg=runhaskell\ %
     autocmd Filetype go set makeprg=go\ run\ %
 " }}}

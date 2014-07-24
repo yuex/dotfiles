@@ -109,7 +109,7 @@ if [ `tty|cut -d'/' -f3` = 'pts' ];then
 fi
 
 # poor man's tmux plugin
-if ${USER} != "root" && [ -z $TMUX ] && which tmux &>/dev/null; then
+if [ ${USER} != "root" ] && [ -z $TMUX ] && which tmux &>/dev/null; then
     if tmux has-session -t "$USER" &>/dev/null; then
         tmux new-window -t "$USER" && tmux attach -t "$USER"
     else

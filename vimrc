@@ -346,7 +346,7 @@
 " }}}
 " }}}
 " hacks {{{
-" quickmotion {{{
+" insert, normal, command mode keymapping {{{
     " function SmartMove() {{{
     function SmartMove(moveToNext, moveToEnd, ...)
         " if line number changed, use moveToEnd, otherwise use moveToNext
@@ -392,6 +392,7 @@
     " }}}
     " quickinsert inoremap {{{
     " it seems <C-Left> and <C-Right> in insert mode
+    let g:omni_sql_no_default_maps=1
     inoremap <unique> <C-a> <C-o>^
     inoremap <unique> <C-e> <End>
     inoremap <unique> <C-h> <Left>

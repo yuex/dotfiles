@@ -163,6 +163,8 @@ $(git_prompt_info)%(!.#.») '
 
 setprompt
 
+alias .=source
+
 ZSH_PRIVATE=$HOME/.zshrc-private
 if [ -f $ZSH_PRIVATE ]; then
     source $ZSH_PRIVATE

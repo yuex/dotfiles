@@ -76,8 +76,8 @@ bindkey -M yuexmap 'p'   up-line-or-search
 bindkey -M yuexmap 'n'   down-line-or-search
 bindkey -M yuexmap 'k'   history-beginning-search-backward
 bindkey -M yuexmap 'j'   history-beginning-search-forward
-bindkey -M yuexmap ''  backward-word
-bindkey -M yuexmap ''  forward-word
+bindkey -M yuexmap ''  vi-backward-word
+bindkey -M yuexmap ''  vi-forward-word
 bindkey -M yuexmap 'b'   vi-backward-word
 bindkey -M yuexmap 'f'   vi-forward-word
 bindkey -M yuexmap ''    backward-char

@@ -131,6 +131,7 @@
 " indent {{{
     "set nowrap
     set autoindent
+    set shiftround
     "set smartindent
     set shiftwidth=4
     set tabstop=4

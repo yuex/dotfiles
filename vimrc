@@ -116,6 +116,7 @@
     set showmode
     set cursorline  " hightlight current line
     set laststatus=2
+    set wildmenu
 " }}}
 " search {{{
     set hlsearch    " disable with :nohl

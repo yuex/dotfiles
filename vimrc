@@ -347,8 +347,8 @@
     autocmd FileType make setlocal noexpandtab
 " }}}
 " }}}
-" hacks {{{
-" insert, normal, command mode keymapping {{{
+" hacks, proud {{{
+" smart mode, keymappings {{{
     " function SmartMove() {{{
     function SmartMove(moveToNext, moveToEnd, ...)
         " if line number changed, use moveToEnd, otherwise use moveToNext
@@ -382,15 +382,44 @@
         endif
     endfunc
     " }}}
-    " common motion {{{
-    "noremap! <unique> <C-a> <Home>
-    "noremap! <unique> <C-e> <End>
-    "noremap! <unique> <C-h> <Left>
-    "noremap! <unique> <C-l> <Right>
-    "noremap! <unique> <M-b> <S-Left>
-    "noremap! <unique> <M-f> <S-Right>
-    "noremap! <unique> <M-h> <BS>
-    "noremap! <unique> <M-l> <Del>
+    " Smart Execution {{{
+    " CompleteCustomed(), SmartWriteWithName() {{{
+    func CompleteCustomed(A, L, P)
+        " :h command-completion-customlist
+        let leading_words = split(a:A)
+        let prefix = join(leading_words[0:-2])
+        let the_word = leading_words[-1]
+        let syscmd = 'ls '.the_word.'*'
+        return map(split(system(syscmd)), 'prefix." ".v:val')
+    endfunc
+
+    func SmartWriteWithName()
+        " :h input()
+        " :h command-completion
+        let cmd = 'w'.input(':w', ' ', 'customlist,CompleteCustomed')
+        exec cmd
+    endfunc
+    " }}}
+    " SmartWrite() {{{
+    func SmartWrite()
+        let cmd = 'w '
+        let prompt = ':'
+        try
+            exec cmd
+        catch /^Vim(write):E32:/
+            "catch Vim(write):E32:No file name
+            "echo v:exception
+            call SmartWriteWithName()
+        endtry
+        "normal \<Esc>;\<Esc>x
+    endfunc
+    " }}}
+    "nnoremap <unique> <Esc>;<M-w> :w !sudo tee % >/dev/null
+    nnoremap <unique> <Esc>;<Esc>; :
+    nnoremap <unique> <Esc>;<M-w>  :call SmartWrite()<CR>
+    nnoremap <unique> <Esc>;<M-e>  :w<Space>
+    nnoremap <unique> <Esc>;<M-q>  :x<CR>
+    "nnoremap <unique> <Esc>;<C-c>  :call SmartQuit()<CR>
     " }}}
     " quickinsert inoremap {{{
     " it seems <C-Left> and <C-Right> in insert mode

@@ -446,7 +446,7 @@
     inoremap <unique> <M-u> <C-o>d$
     inoremap <unique> <Esc><C-u> <C-o>d^
     "inoremap <unique> <Esc><C-k> <C-o>d$
-    "inoremap <unique> <C-w> <C-o>db
+    inoremap <unique> <C-w> <C-o>db
     inoremap <unique> <M-d> <C-o>de
     inoremap <unique> <M-w> <C-o>de
     inoremap <unique> <C-y> <C-r>-
@@ -708,7 +708,8 @@
             return
         endif
         if flag == 0
-            let grep_cmd = 'vimgrep /\vTODO|FIXME|XXX/ %'
+            " todo:
+            let grep_cmd = 'vimgrep /\v\C(TODO|FIXME|XXX):/ %'
             if a:type ==# 'l'
                 let grep_cmd = a:type . grep_cmd
             endif

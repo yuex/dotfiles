@@ -247,6 +247,13 @@
     nnoremap <unique> <silent> <C-g><C-l> :tabnext<CR>
     nnoremap <unique> <silent> <C-g><C-j> :tabnew<CR>
     nnoremap <unique> <silent> <C-g><C-k> :tabclose<CR>
+
+    "nnoremap <unique> <silent> <Esc><C-t>   :tabs<CR>
+    nnoremap <unique> <silent> <Esc><C-t> :tabnew<CR>
+    nnoremap <unique> <silent> <Esc><C-c> :tabclose<CR>
+    nnoremap <unique> <silent> <Esc><C-p> :tabprevious<CR>
+    nnoremap <unique> <silent> <Esc><C-n> :tabnext<CR>
+
     nnoremap <unique> <silent> <Left>  :tabprevious<CR>
     nnoremap <unique> <silent> <Right> :tabnext<CR>
     nnoremap <unique> <silent> <Down>  :tabnew<CR>
@@ -625,14 +632,12 @@
     " }}}
 " }}}"
 " quickpaste, quickcopy {{{
-    "set pastetoggle=<Esc><C-p>
     set pastetoggle=<M-p>
     vnoremap <unique> <Esc><C-y> "+y
     nnoremap <unique> <Esc><C-y> "+yy
     " paste before the curor
     nnoremap <unique> <Esc><C-v> "+P
     " paste after the curor, rare case
-    "nnoremap <unique> <Esc><C-p> "+p
     inoremap <unique> <Esc><C-v> <C-o>"+P
 " }}}
 " quickwindow {{{

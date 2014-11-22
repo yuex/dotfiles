@@ -1,5 +1,6 @@
 CONFIG=vimrc bashrc zshrc tmux.conf nethackrc
-SRC_DIR=~yuexin
+SRC_DIR=~
+#SHELL=/bin/bash
 
 all: clean $(CONFIG)
 	@echo "ln $(CONFIG)..."

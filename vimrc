@@ -657,16 +657,16 @@
     noremap <unique> <M-w> <C-w>w
     noremap <unique> <M-r> <C-w>W
     noremap <unique> <M-o> <C-w><C-p>
-    noremap <unique> <C-w><C-o> <C-w><C-p>
-    noremap <unique> <C-w><M-o> <C-w><C-o>
+    "noremap <unique> <C-w><C-p> <C-w><C-p>
+    "noremap <unique> <C-w><M-o> <C-w><C-o>
 
     noremap <unique> <C-w>+ 5<C-w>+
     noremap <unique> <C-w>- 5<C-w>-
     noremap <unique> <C-w>< 5<C-w>>
     noremap <unique> <C-w>> 5<C-w><
 
-    noremap <unique> <C-w>o <C-w>w
-    noremap <unique> <C-w>O <C-w>W
+    "noremap <unique> <C-w>o <C-w>w
+    "noremap <unique> <C-w>O <C-w>W
     noremap <unique> <C-w><C-t> <C-w>T
 " }}}
 " mottos" {{{
@@ -1056,7 +1056,7 @@ endif
 " YouCompleteMe {{{
 if PluginInstalled('YouCompleteMe')
     let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-    let g:ycm_filetype_blacklist = {}
+    "let g:ycm_filetype_blacklist = {}
     " XXX: After YouCompleteMe prompt, it disables <C-u>, following line hacks
     " to work around this problem. But later I found it breaks insertion in block
     " visual mode. Now the only way I can think of is to map another key

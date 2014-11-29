@@ -84,8 +84,8 @@ function prompt_dollar {
         echo '\$'
     fi
 }
-PS1="\n[ \u@\e[37;37;1m\h\e[0m | \e[37;37;1m\W\e[0m ] \t\n`mottos`\! `prompt_dollar` "
-#PS1="\n[ \u@\h | \W ] \t\n`mottos`\! `prompt_dollar` "
+#PS1="\n[ \u@\e[37;37;1m\h\e[0m | \e[37;37;1m\W\e[0m ] \t\n`mottos`\! `prompt_dollar` "
+PS1="\n[ \u@\[\033[1;37m\]\h\033[0m\] | \[\033[1;37m\]\W\[\033[0m\] ] \t\n`mottos`\! `prompt_dollar` "
 
 # virtualenvwrapper settings
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2

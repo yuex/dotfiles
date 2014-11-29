@@ -1269,6 +1269,7 @@ if has("cscope")
          cscope add $CSCOPE_DB
      endif
      set csverb
+
      " s - symbol
      " g - definition
      " d - functions called by this function"
@@ -1277,6 +1278,18 @@ if has("cscope")
      " e - egrep pattern"
      " f - file
      " i - files #including this file"
+     let g:cscope_help_msg = "help for cscope:"
+                 \. "\n s - symbol"
+                 \. "\n g - definition"
+                 \. "\n d - functions called by this function"
+                 \. "\n c - functions calling this function"
+                 \. "\n t - text string"
+                 \. "\n e - egrep pattern"
+                 \. "\n f - file"
+                 \. "\n i - files #including this file"
+     nnoremap <Leader>ph :echo g:cscope_help_msg<CR>
+     nnoremap <Leader>pp :echo g:cscope_help_msg<CR>
+
      " normal mode map for cscope
      nnoremap <Leader>ps :cscope find s <C-R>=expand("<cword>")<CR>
      nnoremap <Leader>pg :cscope find g <C-R>=expand("<cword>")<CR>
@@ -1286,6 +1299,7 @@ if has("cscope")
      nnoremap <Leader>pe :cscope find e <C-R>=expand("<cword>")<CR>
      nnoremap <Leader>pf :cscope find f <C-R>=expand("<cfile>")<CR>
      nnoremap <Leader>pi :cscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+
      " visual mode map for cscope
      vnoremap <Leader>ps :<C-u>cscope find s <C-R>*<CR>
      vnoremap <Leader>pg :<C-u>cscope find g <C-R>*<CR>

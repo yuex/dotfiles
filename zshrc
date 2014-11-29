@@ -68,7 +68,7 @@ stty -ixoff
 bindkey -N yuexmap emacs
 
 bindkey -M yuexmap ''    backward-kill-line
-bindkey -M yuexmap 'u'   kill-line
+#bindkey -M yuexmap 'u'   kill-line
 #bindkey -M yuexmap ''  kill-whole-line
 bindkey -M yuexmap ''    backward-kill-word
 bindkey -M yuexmap 'w'   kill-word
@@ -82,8 +82,8 @@ bindkey -M yuexmap 'b'   vi-backward-word
 bindkey -M yuexmap 'f'   vi-forward-word
 bindkey -M yuexmap ''    backward-char
 bindkey -M yuexmap ''    forward-char
-bindkey -M yuexmap 'h'   backward-delete-char
-bindkey -M yuexmap 'l'   delete-char
+bindkey -M yuexmap 'u'   up-case-word
+bindkey -M yuexmap 'l'   down-case-word
 bindkey -M yuexmap ''    history-incremental-search-forward
 bindkey -M yuexmap ''    history-incremental-search-backward
 bindkey -M yuexmap ''    clear-screen

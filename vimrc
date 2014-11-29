@@ -741,6 +741,8 @@
     nnoremap <unique> <Leader>tp :cprev<CR>
     nnoremap <unique> <Leader>ln :lnext<CR>
     nnoremap <unique> <Leader>lp :lprev<CR>
+    nnoremap <unique> <Leader>lo :lopen<CR>
+    nnoremap <unique> <Leader>lc :lclose<CR>
 " }}}
 " quick deletion using <C-s> {{{
     "inoremap <unique> <C-s><C-a> <C-o>d<Home>
@@ -1056,6 +1058,11 @@ endif
 " YouCompleteMe {{{
 if PluginInstalled('YouCompleteMe')
     let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+    let g:ycm_always_populate_location_list = 1
+    "let g:ycm_error_symbol = 'E'
+    "let g:ycm_warning_symbol = 'W'
+    "let g:ycm_enable_diagnostic_signs = 1
+    let g:ycm_enable_diagnostic_highlighting = 0
     "let g:ycm_filetype_blacklist = {}
     " XXX: After YouCompleteMe prompt, it disables <C-u>, following line hacks
     " to work around this problem. But later I found it breaks insertion in block

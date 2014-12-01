@@ -2,12 +2,27 @@
 # ~/.bashrc
 #
 
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+# history alias
+alias h='history 10'
+alias hh='history'
 
-# for C-xC-e edit-and-execute-command
-declare -x EDITOR=vim
+alias ls='ls --color=auto'
+alias ll='ls -l --color=auto'
+alias la='ls -la --color=auto'
+alias grep='grep -i --color=auto'
+alias egrep='egrep -i --color=auto'
+alias fgrep='fgrep -i --color=auto'
+alias tmux='TERM=screen-256color tmux'
+alias curl='curl -L'
+alias vim='vim -p'
+
+export EDITOR=vim
 HISTSIZE=404
+
+PATH=$PATH:$HOME/bin:/sbin:$HOME/.gem/ruby/1.9.1/bin
+
+# If not running interactively, stop and return
+[[ $- != *i* ]] && return
 
 # for directory stack, extend cd -. related: dirs, pushd, popd
 # stack view
@@ -37,22 +52,6 @@ sp(){
         pushd .
     fi
 }
-
-# history alias
-alias h='history 10'
-alias hh='history'
-
-alias ls='ls --color=auto'
-alias ll='ls -l --color=auto'
-alias la='ls -la --color=auto'
-alias grep='grep -i --color=auto'
-alias egrep='egrep -i --color=auto'
-alias fgrep='fgrep -i --color=auto'
-alias tmux='TERM=screen-256color tmux'
-alias curl='curl -L'
-alias vim='vim -p'
-
-PATH=$PATH:$HOME/bin:/sbin:$HOME/.gem/ruby/1.9.1/bin
 
 # completion configs for bash, replaced by bash-completion
 #complete -c man whatis which whereis

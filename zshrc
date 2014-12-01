@@ -124,7 +124,7 @@ if [ $terminfo[colors] -eq 256 ];then
     eval my_cyan='$FG[037]'
     eval my_green='$FG[064]'
     eval my_orange='$FG[166]'
-    DIRCOLORS_SOLARIZED='./.dircolors-solarized/dircolors.ansi-dark'
+    DIRCOLORS_SOLARIZED=~/.dircolors-solarized/dircolors.ansi-dark
     [ -f ${DIRCOLORS_SOLARIZED} ] && eval `dircolors ${DIRCOLORS_SOLARIZED}`
 else
     eval my_blue='$fg[blue]'

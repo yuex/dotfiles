@@ -58,33 +58,18 @@ sp(){
 #complete -cf sudo exec
 complete -f python python2
 
-if [ `which fortune 2>/dev/null` ]; then
-    MOTTOS_FILE=$HOME/.mottos/mottos
-    if [ -r ${MOTTOS_FILE} ]; then
-        strfile ${MOTTOS_FILE}{,.dat} &> /dev/null
-    else
-        echo "no fortune file ${MOTTOS_FILE}" >/dev/stderr
-    fi
-    function mottos {
-        if [ -r ${MOTTOS_FILE}.dat ]
-        then
-            echo '[ \e[30;47m\e[0m\e[32;32;1m`fortune 100% $MOTTOS_FILE 2>/dev/null`\e[0m ]\n'
-        fi
-    }
-else
-    echo "command fortune not found" >/dev/stderr
-    function mottos { echo 'nop\n'; }
-fi
 function prompt_dollar {
     if [[ $HOME == '/root' ]]
     then
         echo '#'
     else
-        echo '\$'
+        echo '$'
     fi
 }
-#PS1="\n[ \u@\e[37;37;1m\h\e[0m | \e[37;37;1m\W\e[0m ] \t\n`mottos`\! `prompt_dollar` "
-PS1="\n[ \u@\[\033[1;37m\]\h\033[0m\] | \[\033[1;37m\]\W\[\033[0m\] ] \t\n`mottos`\! `prompt_dollar` "
+PS1='
+[ \u@\[\033[1;37m\]\h\033[0m\] | \[\033[1;37m\]\W\[\033[0m\] ] \t
+[ \[\033[1;32m\]`mottos`\[\033[0m\] ]
+\! `prompt_dollar` '
 
 # virtualenvwrapper settings
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2

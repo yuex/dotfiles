@@ -93,7 +93,7 @@ bindkey -M yuexmap ''  up-case-word
 bindkey -M yuexmap ''  down-case-word
 
 bindkey -M yuexmap -s 's' 'qls'
-bindkey -M yuexmap -s ''  'tmux attach -t $USER || tmux new-session -s $USER'
+bindkey -M yuexmap -s 't'  'tmux attach -t $USER || tmux new-session -s $USER'
 
 bindkey -A yuexmap main
 

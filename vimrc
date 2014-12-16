@@ -53,6 +53,7 @@
     Bundle 'majutsushi/tagbar'
     Bundle 'Yggdroot/indentLine'
     Bundle 'sukima/xmledit'
+    Bundle 'a.vim'
     "Bundle 'willthefrog/indentLine'
     " use astyle for C#/C++/C/Java, jsbeautify for Javascript
     " autopep8 for python, tidy for HTML/XHTML/XML
@@ -531,8 +532,8 @@
 
     nnoremap <unique> Y y$
 
-    nnoremap <unique> <M-a> <C-a>
-    nnoremap <unique> <M-x> <C-x>
+    nnoremap <unique> <Esc><C-a> <C-a>
+    nnoremap <unique> <Esc><C-x> <C-x>
 
     noremap <unique> <M-h> X
     noremap <unique> <M-l> x
@@ -928,6 +929,11 @@ if PluginInstalled('indentLine')
     let g:indentLine_fileType = ['c','cpp','python']
 endif
 " }}}
+" a.vim {{{
+if PluginInstalled('a.vim')
+    nnoremap <unique> <M-a> :A<CR>
+endif
+" }}}
 " quicktask {{{
 if PluginInstalled('quicktask')
     let g:quicktask_snip_path= '~/snips'
@@ -1135,9 +1141,9 @@ if PluginInstalled('tagbar')
     "autocmd Filetype tagbar,c,cpp,python,ruby,vim nnoremap <buffer> <Tab> :TagbarToggle<CR>
     " following 3 lines make tagbar autofocus only when using :TagbarToggle, 
     " but not when using :TagOpen
-    let g:tagbar_autofocus = 0
+    let g:tagbar_autofocus = 1
     nnoremap <unique> <silent> <M-p> :TagbarToggle<CR>
-    autocmd Filetype c,cpp,python :TagbarOpen
+    "autocmd Filetype c,cpp,python :TagbarOpen
     autocmd Filetype tagbar nmap <buffer> <C-j> jp
     autocmd Filetype tagbar nmap <buffer> <C-k> kp
     let g:tagbar_type_vimwiki = {

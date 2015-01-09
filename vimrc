@@ -14,85 +14,88 @@
     " NOTE: comments after Bundle command are not allowed..t
     set nocompatible
     filetype off
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
-    filetype plugin indent on
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
 
-    Bundle 'gmarik/vundle'
+    Plugin 'gmarik/Vundle.vim'
 " general {{{
-    Bundle 'kien/ctrlp.vim'
-    Bundle 'scrooloose/nerdtree'
-    Bundle 'jistr/vim-nerdtree-tabs'
-    Bundle 'project.tar.gz'
-    Bundle 'sessionman.vim'
+    Plugin 'kien/ctrlp.vim'
+    Plugin 'scrooloose/nerdtree'
+    Plugin 'jistr/vim-nerdtree-tabs'
+    Plugin 'project.tar.gz'
+    Plugin 'sessionman.vim'
 
-    "Bundle 'Townk/vim-autoclose'
-    Bundle 'Raimondi/delimitMate'
-    Bundle 'tpope/vim-surround'
-    Bundle 'kana/vim-textobj-user'
-    Bundle 'mbbill/undotree'
-    "Bundle 'YankRing.vim'
-    Bundle 'godlygeek/tabular'
+    "Plugin 'Townk/vim-autoclose'
+    Plugin 'Raimondi/delimitMate'
+    Plugin 'tpope/vim-surround'
+    Plugin 'kana/vim-textobj-user'
+    Plugin 'mbbill/undotree'
+    "Plugin 'YankRing.vim'
+    Plugin 'godlygeek/tabular'
 
-    Bundle 'Lokaltog/vim-easymotion'
-    "Bundle 'yuex/vim-easymotion'
-    Bundle 'matchit.zip'
+    Plugin 'Lokaltog/vim-easymotion'
+    "Plugin 'yuex/vim-easymotion'
+    Plugin 'matchit.zip'
 
-    Bundle 'bling/vim-bufferline'
-    Bundle 'Lokaltog/vim-powerline'
-    Bundle 'altercation/vim-colors-solarized'
-    Bundle 'tomasr/molokai'
-    Bundle 'mileszs/ack.vim'
+    Plugin 'bling/vim-bufferline'
+    Plugin 'Lokaltog/vim-powerline'
+    Plugin 'altercation/vim-colors-solarized'
+    Plugin 'tomasr/molokai'
+    Plugin 'mileszs/ack.vim'
 " }}}
 " programming {{{
     " git integration
-    Bundle 'tpope/vim-fugitive'
+    Plugin 'tpope/vim-fugitive'
     " automatic syntax checker
-    Bundle 'scrooloose/syntastic'
-    Bundle 'scrooloose/nerdcommenter'
-    Bundle 'majutsushi/tagbar'
-    Bundle 'Yggdroot/indentLine'
-    Bundle 'sukima/xmledit'
-    Bundle 'a.vim'
-    "Bundle 'willthefrog/indentLine'
+    Plugin 'scrooloose/syntastic'
+    Plugin 'scrooloose/nerdcommenter'
+    Plugin 'majutsushi/tagbar'
+    Plugin 'Yggdroot/indentLine'
+    Plugin 'sukima/xmledit'
+    Plugin 'a.vim'
+    "Plugin 'willthefrog/indentLine'
     " use astyle for C#/C++/C/Java, jsbeautify for Javascript
     " autopep8 for python, tidy for HTML/XHTML/XML
-    "Bundle 'Chiel92/vim-autoformat'
-    "Bundle 'einars/js-beautify'
+    "Plugin 'Chiel92/vim-autoformat'
+    "Plugin 'einars/js-beautify'
 " }}}
 " snippet and autocomplete {{{
-    "Bundle 'Shougo/neocomplcache'
-    "Bundle 'Shougo/neosnippet'
+    "Plugin 'Shougo/neocomplcache'
+    "Plugin 'Shougo/neosnippet'
     " snipMate cant be configured to disable completion after space(\s), first of line(^), also in confilict with supertab
-    "Bundle 'snipMate'
-    "Bundle 'honza/snipmate-snippets'
+    "Plugin 'snipMate'
+    "Plugin 'honza/snipmate-snippets'
     " code semantic and fuzzy completion
-    Bundle 'Valloric/YouCompleteMe'
+    Plugin 'Valloric/YouCompleteMe'
     " tab complete all, (C-xC-o, C-xC-k, etc), including English word
-    "Bundle 'ervandew/supertab'
-    "Bundle 'Rip-Rip/clang_complete'
+    "Plugin 'ervandew/supertab'
+    "Plugin 'Rip-Rip/clang_complete'
     "let g:SuperTabDefaultCompletionType='context'
-    "Bundle 'HTML-AutoCloseTag'
+    "Plugin 'HTML-AutoCloseTag'
 "}}}
 " notetaking {{{
-    "Bundle 'vimwiki/vimwiki'
-    Bundle 'kakkyz81/evervim' 
-    Bundle 'yuex/vimwiki'
-    Bundle 'aaronbieber/quicktask'
-    Bundle 'VOoM'
-    Bundle 'plasticboy/vim-markdown'
-    Bundle 'VimOrganizer'
-    Bundle 'utl.vim'
+    "Plugin 'vimwiki/vimwiki'
+    Plugin 'kakkyz81/evervim' 
+    Plugin 'yuex/vimwiki'
+    Plugin 'aaronbieber/quicktask'
+    Plugin 'VOoM'
+    Plugin 'plasticboy/vim-markdown'
+    Plugin 'VimOrganizer'
+    Plugin 'utl.vim'
     " depends on gem github-markup tilt redcarpet but it doesn't work :(.
     " Maybe after I learned myself a byte of ruby to fix it
-    "Bundle 'matthias-guenther/hammer.vim'
+    "Plugin 'matthias-guenther/hammer.vim'
     " real-time preview
-    "Bundle 'suan/vim-instant-markdown'
-    "Bundle 'jtratner/vim-flavored-markdown'
-    "Bundle 'samsonw/vim-task'
+    "Plugin 'suan/vim-instant-markdown'
+    "Plugin 'jtratner/vim-flavored-markdown'
+    "Plugin 'samsonw/vim-task'
     " provide calendar support in vimwiki
-    "Bundle 'mattn/calendar-vim'
+    "Plugin 'mattn/calendar-vim'
 " }}}
+
+    call vundle#end()
+    filetype plugin indent on
+
 " }}}
 " general options {{{
 " editing {{{

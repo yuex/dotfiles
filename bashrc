@@ -19,7 +19,7 @@ alias vim='vim -p'
 export EDITOR=vim
 HISTSIZE=404
 
-PATH=$PATH:$HOME/bin:/sbin:$HOME/.gem/ruby/1.9.1/bin
+PATH=$HOME/bin:$PATH:$HOME/.gem/ruby/2.1.0/bin
 
 # If not running interactively, stop and return
 [[ $- != *i* ]] && return

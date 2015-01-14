@@ -82,6 +82,8 @@ bindkey -M yuexmap 'b'   vi-backward-word
 bindkey -M yuexmap 'f'   vi-forward-word
 bindkey -M yuexmap ''    backward-char
 bindkey -M yuexmap ''    forward-char
+bindkey -M yuexmap 'h'   backward-delete-char
+#bindkey -M yuexmap 'l'   delete-char
 bindkey -M yuexmap 'u'   up-case-word
 bindkey -M yuexmap 'l'   down-case-word
 bindkey -M yuexmap ''    history-incremental-search-forward

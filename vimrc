@@ -425,12 +425,13 @@
         "normal \<Esc>;\<Esc>x
     endfunc
     " }}}
-    "nnoremap <unique> <Esc>;<M-w> :w !sudo tee % >/dev/null
-    nnoremap <unique> <Esc>;<Esc>; :
-    nnoremap <unique> <Esc>;<M-w>  :call SmartWrite()<CR>
-    nnoremap <unique> <Esc>;<M-e>  :w<Space>
-    nnoremap <unique> <Esc>;<M-q>  :x<CR>
-    "nnoremap <unique> <Esc>;<C-c>  :call SmartQuit()<CR>
+    "nnoremap <unique> <Esc><Leader><M-w> :w !sudo tee % >/dev/null
+    "nnoremap <unique> <Esc><Leader><Esc><Leader> :
+    nnoremap <unique> <Esc><Leader><Esc><Leader> :
+    nnoremap <unique> <Esc><Leader><M-w>  :call SmartWrite()<CR>
+    nnoremap <unique> <Esc><Leader><M-e>  :w<Space>
+    nnoremap <unique> <Esc><Leader><M-q>  :x<CR>
+    "nnoremap <unique> <Esc><Leader><C-c>  :call SmartQuit()<CR>
     " }}}
     " quickinsert inoremap {{{
     " it seems <C-Left> and <C-Right> in insert mode

@@ -659,9 +659,9 @@
     "noremap! <M-w> <C-c><C-w>w
     "noremap! <M-r> <C-c><C-w>W
     "noremap! <M-o> <C-c><C-w><C-p>
-    noremap <unique> <M-w> <C-w>w
+    noremap <unique> <M-o> <C-w>w
     noremap <unique> <M-r> <C-w>W
-    noremap <unique> <M-o> <C-w><C-p>
+    noremap <unique> <M-w> <C-w><C-p>
     "noremap <unique> <C-w><C-p> <C-w><C-p>
     "noremap <unique> <C-w><M-o> <C-w><C-o>
 
@@ -1141,7 +1141,7 @@ endif
 " }}}
 " tagbar {{{
 if PluginInstalled('tagbar')
-    let g:tagbar_sort = 0
+    let g:tagbar_sort = 1
     "autocmd Filetype tagbar,c,cpp,python,ruby,vim nnoremap <buffer> <Tab> :TagbarToggle<CR>
     " following 3 lines make tagbar autofocus only when using :TagbarToggle, 
     " but not when using :TagOpen

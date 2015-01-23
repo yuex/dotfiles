@@ -263,25 +263,24 @@
     ""nnoremap <unique> <silent> <Esc><C-c> :tabclose<CR>
     "nnoremap <unique> <silent> <Esc><C-c> :call SmartQuit()<CR>
 
-    nnoremap <unique> <silent> <Left>  :tabprevious<CR>
-    nnoremap <unique> <silent> <Right> :tabnext<CR>
-    nnoremap <unique> <silent> <Up>  :tabnew<CR>
-    nnoremap <unique> <silent> <Down>  :tabclose<CR>
+    "nnoremap <unique> <silent> <Left>  :tabprevious<CR>
+    "nnoremap <unique> <silent> <Right> :tabnext<CR>
+    "nnoremap <unique> <silent> <Up>  :tabnew<CR>
 
     " move tab left or right
-    nnoremap <unique> <Esc><PageUp>   :tabprevious<CR>
-    nnoremap <unique> <Esc><PageDown> :tabnext<CR>
+    nnoremap <unique> <Esc><PageUp>   :tabmove -1<CR>
+    nnoremap <unique> <Esc><PageDown> :tabmove +1<CR>
 
-    nnoremap <unique> <silent> <Esc><Left>  :tabmove -1<CR>
-    nnoremap <unique> <silent> <Esc><Right> :tabmove +1<CR>
+    nnoremap <unique> <silent> <Esc><Left>  :tabprevious<CR>
+    nnoremap <unique> <silent> <Esc><Right> :tabnext<CR>
     nnoremap <unique> <silent> <Esc><Up>    :tabnew %<CR>
-    nnoremap <unique> <Esc><Down>  :tabnew<Space>
+    nnoremap <unique> <silent> <Esc><Down>  :tabclose<CR>
     "nnoremap <unique> <silent> <Down>  :tabclose<CR>
 
-    inoremap <unique> <silent> <Left>  <nop>
-    inoremap <unique> <silent> <Right> <nop>
-    inoremap <unique> <silent> <Up>    <nop>
-    inoremap <unique> <silent> <Down>  <nop>
+    "inoremap <unique> <silent> <Left>  <nop>
+    "inoremap <unique> <silent> <Right> <nop>
+    "inoremap <unique> <silent> <Up>    <nop>
+    "inoremap <unique> <silent> <Down>  <nop>
     " move to tab #1-#9, #0 is last"
     nnoremap <unique> <C-g>0 :tablast<CR>
     inoremap <unique> <C-g>0 <C-o>:tablast<CR>

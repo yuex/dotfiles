@@ -246,32 +246,42 @@
     " XXX: tips for easy memorizing. <Left> and <Right> are intuitive. for Up
     " and Down, note that some laptop keyboard designs squeeze <Home> and
     " <End> " to <Up> and <Down>, <Home> for create, <End> for close
-    nnoremap <unique> <silent> <C-g><C-t>   :tabs<CR>
-    nnoremap <unique> <silent> <C-g><C-h> :tabprevious<CR>
-    nnoremap <unique> <silent> <C-g><C-l> :tabnext<CR>
-    nnoremap <unique> <silent> <C-g><C-j> :tabnew<CR>
-    nnoremap <unique> <silent> <C-g><C-k> :tabclose<CR>
 
-    "nnoremap <unique> <silent> <Esc><C-t>   :tabs<CR>
-    nnoremap <unique> <silent> <Esc><C-t> :tabnew<CR>
-    nnoremap <unique> <silent> <Esc><C-c> :tabclose<CR>
-    nnoremap <unique> <silent> <Esc><C-p> :tabprevious<CR>
-    nnoremap <unique> <silent> <Esc><C-n> :tabnext<CR>
+    " XXX: doesn't used too much, comment out
+    "nnoremap <unique> <silent> <C-g><C-t>   :tabs<CR>
+    "nnoremap <unique> <silent> <C-g><C-h> :tabprevious<CR>
+    "nnoremap <unique> <silent> <C-g><C-l> :tabnext<CR>
+    "nnoremap <unique> <silent> <C-g><C-j> :tabnew<CR>
+    ""nnoremap <unique> <silent> <C-g><C-k> :tabclose<CR>
+    "nnoremap <unique> <silent> <C-g><C-k> :call SmartQuit()<CR>
+
+    " XXX: doesn't used too much, comment out
+    ""nnoremap <unique> <silent> <Esc><C-t>   :tabs<CR>
+    "nnoremap <unique> <silent> <Esc><C-p> :tabprevious<CR>
+    "nnoremap <unique> <silent> <Esc><C-n> :tabnext<CR>
+    "nnoremap <unique> <silent> <Esc><C-t> :tabnew<CR>
+    ""nnoremap <unique> <silent> <Esc><C-c> :tabclose<CR>
+    "nnoremap <unique> <silent> <Esc><C-c> :call SmartQuit()<CR>
 
     nnoremap <unique> <silent> <Left>  :tabprevious<CR>
     nnoremap <unique> <silent> <Right> :tabnext<CR>
-    nnoremap <unique> <silent> <Down>  :tabnew<CR>
-    nnoremap <unique> <silent> <Up>    :tabclose<CR>
+    nnoremap <unique> <silent> <Up>  :tabnew<CR>
+    nnoremap <unique> <silent> <Down>  :tabclose<CR>
+
+    " move tab left or right
+    nnoremap <unique> <Esc><PageUp>   :tabprevious<CR>
+    nnoremap <unique> <Esc><PageDown> :tabnext<CR>
+
+    nnoremap <unique> <silent> <Esc><Left>  :tabmove -1<CR>
+    nnoremap <unique> <silent> <Esc><Right> :tabmove +1<CR>
+    nnoremap <unique> <silent> <Esc><Up>    :tabnew %<CR>
+    nnoremap <unique> <Esc><Down>  :tabnew<Space>
+    "nnoremap <unique> <silent> <Down>  :tabclose<CR>
 
     inoremap <unique> <silent> <Left>  <nop>
     inoremap <unique> <silent> <Right> <nop>
     inoremap <unique> <silent> <Up>    <nop>
     inoremap <unique> <silent> <Down>  <nop>
-    " move tab left or right
-    nnoremap <unique> <Esc><PageUp>   :tabmove -1<CR>
-    nnoremap <unique> <Esc><PageDown> :tabmove +1<CR>
-    "inoremap <unique> <Esc><PageUp>   <Esc>:tabmove -1<CR>
-    "inoremap <unique> <Esc><PageDown> <Esc>:tabmove +1<CR>
     " move to tab #1-#9, #0 is last"
     nnoremap <unique> <C-g>0 :tablast<CR>
     inoremap <unique> <C-g>0 <C-o>:tablast<CR>

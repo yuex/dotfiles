@@ -217,12 +217,12 @@
             let cmd = "redraw!"
             let ret = nr2char(getchar())
 
-            if match('', ret) >= 0
+            if ret == "\<C-b>" || ret == "\<C-n>"
                 " BOOM! NUKE!
                 let cmd = "q!"
-            elseif ret == ''
+            elseif ret == "\<C-w>"
                 let cmd = "w"
-            elseif ret == ''
+            elseif ret == "\<C-s>"
                 let cmd = "x"
             endif
 
@@ -236,7 +236,7 @@
                 return
             endtry
         endif
-    endfunc
+    endfunction
     " }}}
     nnoremap <unique> <C-c> :call SmartQuit()<CR>
     " make C-c to trigger InsertLeave to make ^V insert at head working
@@ -444,7 +444,6 @@
     nnoremap <unique> <Esc><Leader><M-w>  :call SmartWrite()<CR>
     nnoremap <unique> <Esc><Leader><M-e>  :w<Space>
     nnoremap <unique> <Esc><Leader><M-q>  :x<CR>
-    "nnoremap <unique> <Esc><Leader><C-c>  :call SmartQuit()<CR>
     " }}}
     " quickinsert inoremap {{{
     " it seems <C-Left> and <C-Right> in insert mode

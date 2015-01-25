@@ -210,7 +210,6 @@
         if !&modified
             exec "quit"
         else
-            redraw
             echohl WarningMsg
             echo "Buffer changed! [^W]w [^S]x [^B^N]q!: "
             echohl None
@@ -232,6 +231,7 @@
             catch
                 " one line echo
                 "echoerr matchstr(v:exception, '\(Vim(.*):\)\@<=.*')
+                redraw
                 echoerr v:exception
                 return
             endtry
@@ -239,6 +239,10 @@
     endfunc
     " }}}
     nnoremap <unique> <C-c> :call SmartQuit()<CR>
+    " make C-c to trigger InsertLeave to make ^V insert at head working
+    inoremap <unique> <C-c> <Esc>
+    "vnoremap <unique> <C-c> <Esc>
+    "cnoremap <unique> <C-c> <Esc>
 " }}}
 " tabpage {{{
     " move to previous or next tab, <Esc> for <M-

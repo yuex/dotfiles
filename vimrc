@@ -210,31 +210,29 @@
         if !&modified
             exec "quit"
         else
+            redraw
             echohl WarningMsg
             echo "Buffer changed! [^W]w [^S]x [^B^N]q!: "
             echohl None
 
-            let cmd = "redraw!"
+            let cmd = ""
             let ret = nr2char(getchar())
 
             if ret == "\<C-b>" || ret == "\<C-n>"
                 " BOOM! NUKE!
                 let cmd = "q!"
             elseif ret == "\<C-w>"
-                let cmd = "w"
+                "let cmd = "w"
+                let cmd = "call SmartWrite('w')"
             elseif ret == "\<C-s>"
-                let cmd = "x"
+                "let cmd = "x"
+                let cmd = "call SmartWrite('x')"
             endif
 
-            try
+            redraw
+            if !empty(cmd)
                 exec cmd
-            catch
-                " one line echo
-                "echoerr matchstr(v:exception, '\(Vim(.*):\)\@<=.*')
-                redraw
-                echoerr v:exception
-                return
-            endtry
+            endif
         endif
     endfunction
     " }}}
@@ -407,27 +405,56 @@
     endfunc
     " }}}
     " Smart Execution {{{
-    " CompleteCustomed(), SmartWriteWithName() {{{
-    func CompleteCustomed(A, L, P)
-        " :h command-completion-customlist
-        let leading_words = split(a:A)
-        let prefix = join(leading_words[0:-2])
-        let the_word = leading_words[-1]
-        let syscmd = 'ls '.the_word.'*'
-        return map(split(system(syscmd)), 'prefix." ".v:val')
-    endfunc
-
-    func SmartWriteWithName()
-        " :h input()
-        " :h command-completion
-        let cmd = 'w'.input(':w', ' ', 'customlist,CompleteCustomed')
-        exec cmd
-    endfunc
-    " }}}
     " SmartWrite() {{{
-    func SmartWrite()
+    func SmartWrite(...)
+        let cmd = 'w'
+        if a:0 > 0
+            let cmd = a:1
+        endif
+        if empty(bufname('%'))
+            call WriteWithName(cmd)
+        else
+            exec cmd
+        endif
+    endfunction
+
+    func WriteWithName(cmd)
+        " :h input() and :h command-completion
+        call inputsave()
+
+        let filename = input(':'.a:cmd.' ', '', 'file')
+        let cmds = [a:cmd, filename]
+        if !empty(glob(filename))
+            redraw
+            echohl WarningMsg
+            echo '"'.filename.'" existed. Force '.a:cmd.' [!] ? [Y/n] '
+            echohl None
+
+            let choice = nr2char(getchar())
+            if choice == "\<CR>" || choice ==? 'y'
+                call CmdExecute(cmds, 1)
+            endif
+        else
+            call CmdExecute(cmds, 0)
+        endif
+
+        call inputrestore()
+    endfunction
+
+    func CmdExecute(cmds, force)
+        if a:force
+            let cmd = a:cmds[0].'! '.join(a:cmds[1:])
+        else
+            let cmd = join(a:cmds)
+        endif
+
+        if exists('cmd')
+            exec cmd
+        endif
+    endfunction
+
+    func SmartWrite2()
         let cmd = 'w '
-        let prompt = ':'
         try
             exec cmd
         catch /^Vim(write):E32:/
@@ -435,8 +462,7 @@
             "echo v:exception
             call SmartWriteWithName()
         endtry
-        "normal \<Esc>;\<Esc>x
-    endfunc
+    endfunction
     " }}}
     "nnoremap <unique> <Esc><Leader><M-w> :w !sudo tee % >/dev/null
     "nnoremap <unique> <Esc><Leader><Esc><Leader> :
@@ -962,7 +988,7 @@ endif
     "autocmd FileType vimwiki,markdown nnoremap <Leader>hh
     autocmd FileType vimwiki,markdown nnoremap <buffer> <Leader>hh
                 \ :silent !hammer "%" > "/tmp/%:t.html"<CR>
-                \ :silent !xdg-open "/tmp/%:t.html"<CR>
+                \ :silent !google-chrome-stable "/tmp/%:t.html"<CR>
                 \ :redraw!<CR>
     "nnoremap <unique> <Leader>hh :Hammer<CR>
 " }}}

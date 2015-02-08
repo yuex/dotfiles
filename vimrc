@@ -176,18 +176,16 @@
 " }}}
 " meta key {{{
 " vim hacks fix meta-keys which generate <Esc>a .. <Esc>z
-    let c = 'a'
-    while c <= 'z'
-        exec "set <M-".c.">=\e".c
-        exec "inoremap \e".c." <M-".c.">"
-        let c = nr2char(1+char2nr(c))
-    endw
-    let c = '0'
-    while c <= '9'
-        exec "set <M-".c.">=\e".c
-        exec "inoremap \e".c." <M-".c.">"
-        let c = nr2char(1+char2nr(c))
-    endw
+    for i in range(char2nr('a'), char2nr('z'))
+        let i = nr2char(i)
+        exec "set <M-".i.">=\<Esc>".i
+        exec "inoremap \<Esc>".i." <M-".i.">"
+    endfor
+    for i in range(char2nr('0'), char2nr('9'))
+        let i = nr2char(i)
+        exec "set <M-".i.">=\<Esc>".i
+        exec "inoremap \<Esc>".i." <M-".i.">"
+    endfor
 " }}}
 " folding level {{{
     for lvl in range(0,9)

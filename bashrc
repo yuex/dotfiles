@@ -68,7 +68,7 @@ function prompt_dollar {
 }
 PS1='
 [ \u@\[\033[1;37m\]\h\033[0m\] | \[\033[1;37m\]\W\[\033[0m\] ] \t
-[ \[\033[1;32m\]`mottos`\[\033[0m\] ]
+[ \[\033[1;32m\]`mottos 2>/dev/null`\[\033[0m\] ]
 \! `prompt_dollar` '
 
 # virtualenvwrapper settings

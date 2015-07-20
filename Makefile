@@ -32,16 +32,16 @@ bashrc nethackrc tmux.conf: backup
 #vimrc: ${VIM_VUNDLE}
 vimrc: backup vim
 	ln -frs $@ ${DST_DIR}/.$@
-	#vim -c 'PluginInstall | q!'
+	#vim -c 'PluginInstall' -c 'qa'
 
 #${VIM_VUNDLE}:
 vim: backup
-	if [ ! -e $@ ]; then \
-		mkdir $@; \
+	if [ ! -e ${DST_DIR}/.$@ ]; then \
+		mkdir -p ${DST_DIR}/.$@/bundle; \
+		git clone https://github.com/gmarik/Vundle.vim.git ${DST_DIR}/.$@/bundle/Vundle.vim; \
+		mv -b ${DST_DIR}/.$@ $@; \
+		ln -frs $@ ${DST_DIR}/.$@; \
 	fi
-	#[ ! -e $@ ] && mkdir $@
-	ln -frs $@ ${DST_DIR}/.$@
-	git clone https://github.com/gmarik/Vundle.vim.git ${VIM_VUNDLE}
 
 #zshrc: ${OH_MY_ZSH}
 zshrc: backup oh-my-zsh
@@ -49,12 +49,12 @@ zshrc: backup oh-my-zsh
 
 #${OH_MY_ZSH}:
 oh-my-zsh: backup
-	if [ ! -e $@ ]; then \
-		mkdir $@; \
+	if [ ! -e ${DST_DIR}/.$@ ]; then \
+		sh -c "$$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"; \
+		mv -b ${DST_DIR}/.$@ $@; \
+		ln -frs $@ ${DST_DIR}/.$@; \
 	fi
 	#[ ! -e $@ ] && mkdir $@
-	ln -frs $@ ${DST_DIR}/.$@
-	sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 install: backup ${MODULE_INSTALL}
 
@@ -86,7 +86,9 @@ restore: delete
 delete:
 	for f in ${MODULE_INSTALL}; do \
 		file=${DST_DIR}/.$$f; \
-		[ -e $$file ] && rm $$file; \
-	done || :
+		if [ -L $$file -o -e $$file ]; then \
+			rm -rf $$file; \
+		fi; \
+	done
 
 .PHONY: compile remove ${MODULE_SRC} install backup clean restore delete

@@ -1,5 +1,5 @@
 DST_DIR=~
-MODULE_INSTALL=bashrc nethackrc tmux.conf oh-my-zsh zshrc vim vimrc
+MODULE_INSTALL=bashrc nethackrc tmux.conf dircolors-solarized oh-my-zsh zshrc vim vimrc
 #DST_DIR=test
 #MODULE_INSTALL=zshrc oh-my-zsh
 
@@ -45,7 +45,7 @@ vim: backup
 	fi
 
 #zshrc: ${OH_MY_ZSH}
-zshrc: backup oh-my-zsh
+zshrc: backup oh-my-zsh dircolors
 	ln -frs $@ ${DST_DIR}/.$@
 
 #${OH_MY_ZSH}:
@@ -57,6 +57,13 @@ oh-my-zsh: backup
 		ln -frs $@ ${DST_DIR}/.$@; \
 	fi
 	#[ ! -e $@ ] && mkdir $@
+
+dircolors-solarized: backup
+	if [ ! -e ${DST_DIR}/.$@ ]; then \
+		git clone https://github.com/seebi/dircolors-solarized.git ${DST_DIR}/.$@
+		mv -b ${DST_DIR}/.$@ $@; \
+		ln -frs $@ ${DST_DIR}/.$@; \
+	fi
 
 install: backup ${MODULE_INSTALL}
 

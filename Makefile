@@ -46,25 +46,30 @@ ${OH_MY_ZSH}:
 install: backup ${MODULE_INSTALL}
 
 backup:
-	[ ! -e ${BAK_DIR} ] && mkdir ${BAK_DIR} && [ -e ${DST_DIR} ] && \
-	for f in ${MODULE_INSTALL}; do \
-		file=${DST_DIR}/.$$f; \
-		[ -e $$file ] && cp $$file ${BAK_DIR}; \
-	done && touch ${BAK_LOCK}
+	if [ ! -e ${BAK_LOCK} ]; then \
+		[ ! -e ${BAK_DIR} ] && mkdir ${BAK_DIR}; \
+		if [ -e ${DST_DIR} ]; then \
+			for f in ${MODULE_INSTALL}; do \
+				file=${DST_DIR}/.$$f; \
+				[ -e $$file ] && cp $$file ${BAK_DIR}; \
+			done && touch ${BAK_LOCK}; \
+		fi; \
+	fi
 
-restore:
-	[ -e ${BAK_DIR} ] && [ -e ${BAK_LOCK} ] && [ -e ${DST_DIR} ] && \
-	for f in ${MODULE_INSTALL}; do \
-		file=${BAK_DIR}/.$$f; \
-		[ -e $$file ] && cp -f $$file ${DST_DIR}; \
-	done
+restore: delete
+	if [ -e ${BAK_LOCK} ]; then \
+		if [ -e ${BAK_DIR} -a -e ${DST_DIR} ]; then \
+			for f in ${MODULE_INSTALL}; do \
+				file=${BAK_DIR}/.$$f; \
+				[ -e $$file ] && cp -f $$file ${DST_DIR}; \
+			done; \
+		fi; \
+	fi
 
 delete:
 	for f in ${MODULE_INSTALL}; do \
 		file=${DST_DIR}/.$$f; \
 		[ -e $$file ] && rm $$file; \
-	done; \
-	:
-
+	done || :
 
 .PHONY: compile remove ${MODULE_SRC} install backup clean restore delete

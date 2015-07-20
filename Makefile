@@ -53,10 +53,10 @@ backup:
 	done && touch ${BAK_LOCK}
 
 restore:
-	[ -e ${BAK_DIR} ] && [ -e ${BAK_LOCK} && [ -e ${DST_DIR} ] && \
+	[ -e ${BAK_DIR} ] && [ -e ${BAK_LOCK} ] && [ -e ${DST_DIR} ] && \
 	for f in ${MODULE_INSTALL}; do \
 		file=${BAK_DIR}/.$$f; \
-		[ -e $$file ] && cp $$file ${DST_DIR}; \
+		[ -e $$file ] && cp -f $$file ${DST_DIR}; \
 	done
 
 delete:

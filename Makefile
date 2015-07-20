@@ -1,6 +1,6 @@
-DST_DIR=test
-MODULE_INSTALL=zshrc oh-my-zsh
-#MODULE_INSTALL=bashrc nethackrc tmux.conf oh-my-zsh zshrc vim vimrc
+DST_DIR=~
+#MODULE_INSTALL=zshrc oh-my-zsh
+MODULE_INSTALL=bashrc nethackrc tmux.conf oh-my-zsh zshrc vim vimrc
 
 #------------------------------------------------------------
 SRC_DIR=~

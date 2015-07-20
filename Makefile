@@ -1,5 +1,7 @@
 DST_DIR=test
 MODULE_INSTALL=bashrc
+#MODULE_INSTALL=bashrc nethackrc tmux.conf zshrc vimrc
+
 
 #------------------------------------------------------------
 SRC_DIR=~
@@ -45,18 +47,18 @@ install: backup ${MODULE_INSTALL}
 
 backup:
 	[ -e ${BAK_DIR} ] || mkdir ${BAK_DIR}
-	[ ! -e ${BAK_LOCK} ] && for f in ${MODULE_INSTALL}; do \
+	[ ! -e ${BAK_LOCK} ] && [ -e ${DST_DIR} ] && \
+	for f in ${MODULE_INSTALL}; do \
 		file=${DST_DIR}/.$$f; \
 		[ -e $$file ] && mv $$file ${BAK_DIR}; \
-	done; \
-	touch ${BAK_LOCK}
+	done && touch ${BAK_LOCK}
 
 restore:
-	[ -e ${BAK_LOCK} ] && for f in ${MODULE_INSTALL}; do \
+	[ -e ${BAK_LOCK} ] && [ -e ${DST_DIR} ] && \
+	for f in ${MODULE_INSTALL}; do \
 		file=${BAK_DIR}/.$$f; \
 		[ -e $$file ] && mv $$file ${DST_DIR}; \
-	done; \
-	rm ${BAK_LOCK}
+	done && rm ${BAK_LOCK}
 
 delete:
 	for f in ${MODULE_INSTALL}; do \

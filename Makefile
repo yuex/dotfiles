@@ -28,17 +28,17 @@ remove:
 	:
 
 bashrc nethackrc tmux.conf:
-	ln -rs $@ ${DST_DIR}/.$@
+	ln -frs $@ ${DST_DIR}/.$@
 
 vimrc: ${VIM_VUNDLE}
-	ln -rs $@ ${DST_DIR}/.$@
+	ln -frs $@ ${DST_DIR}/.$@
 	vim -c 'PluginInstall | q!'
 
 ${VIM_VUNDLE}:
 	git clone https://github.com/gmarik/Vundle.vim.git $@
 
 zshrc: ${OH_MY_ZSH}
-	ln -rs $@ ${DST_DIR}/.$@
+	ln -frs $@ ${DST_DIR}/.$@
 
 ${OH_MY_ZSH}:
 	sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"

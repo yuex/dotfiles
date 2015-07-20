@@ -75,13 +75,13 @@
 "}}}
 " notetaking {{{
     "Plugin 'vimwiki/vimwiki'
-    Plugin 'kakkyz81/evervim' 
-    Plugin 'yuex/vimwiki'
-    Plugin 'Rykka/riv.vim'
-    Plugin 'aaronbieber/quicktask'
-    Plugin 'VOoM'
+    "Plugin 'kakkyz81/evervim' 
+    "Plugin 'yuex/vimwiki'
+    "Plugin 'Rykka/riv.vim'
+    "Plugin 'aaronbieber/quicktask'
+    "Plugin 'VOoM'
     Plugin 'plasticboy/vim-markdown'
-    Plugin 'VimOrganizer'
+    "Plugin 'VimOrganizer'
     Plugin 'utl.vim'
     " depends on gem github-markup tilt redcarpet but it doesn't work :(.
     " Maybe after I learned myself a byte of ruby to fix it
@@ -590,10 +590,10 @@
     " use <c-d> and <c-t> in i-mode to keep cursor's position
     "inoremap <unique> <Esc>, <C-d>
     "inoremap <unique> <Esc>. <C-t>
-    imap <unique> <Esc>, <C-o><
-    imap <unique> <Esc>. <C-o>>
-    nmap <unique> <Esc>, <
-    nmap <unique> <Esc>. >
+    imap <unique> <Esc>, <C-o><<
+    imap <unique> <Esc>. <C-o>>>
+    nmap <unique> <Esc>, <<
+    nmap <unique> <Esc>. >>
     cnoremap <unique> <Esc>, <C-o>i<C-d><C-c>
     cnoremap <unique> <Esc>. <C-o>i<C-t><C-c>
 " }}}

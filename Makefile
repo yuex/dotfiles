@@ -1,21 +1,68 @@
-CONFIG=vimrc bashrc zshrc tmux.conf nethackrc
+DST_DIR=test
+MODULE_INSTALL=bashrc
+
+#------------------------------------------------------------
 SRC_DIR=~
-#SHELL=/bin/bash
 
-all: clean $(CONFIG)
-	@echo "ln $(CONFIG)..."
+BAK_DIR=backup
+BAK_LOCK=${BAK_DIR}/lock
 
-$(CONFIG):
-	@ln ${SRC_DIR}/.$@ $@
+VIM_VUNDLE=${DST_DIR}/.vim/bundle/Vundle.vim
+OH_MY_ZSH=${DST_DIR}/.oh-my-zsh
+
+MODULE_SRC=bashrc nethackrc tmux.conf zshrc vimrc
+
+compile: remove
+	for f in ${MODULE_SRC}; do\
+		cp ${SRC_DIR}/.$$f $$f; \
+	done
 
 # use $$ prefix to pass parameter to bash to interpret
 # bash script must be written within one line, forget this never
-clean:
-	@for i in $(CONFIG); do \
-		if [ -e $$i ]; then \
-			unlink $$i; \
-		fi; \
-	done
-	@echo "unlink $(CONFIG)..."
+remove:
+	for f in ${MODULE_SRC}; do \
+		[ -e $$f ] && rm $$f; \
+	done; \
+	:
 
-.PHONY: all clean
+bashrc nethackrc tmux.conf:
+	ln -fs $@ ${DST_DIR}/.$@
+
+vimrc: ${VIM_VUNDLE}
+	ln -fs $@ ${DST_DIR}/.$@
+	vim -c 'PluginInstall | q!'
+
+${VIM_VUNDLE}:
+	git clone https://github.com/gmarik/Vundle.vim.git $@
+
+zshrc: ${OH_MY_ZSH}
+	ln -fs $@ ${DST_DIR}/.$@
+
+${OH_MY_ZSH}:
+	sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+
+install: backup ${MODULE_INSTALL}
+
+backup:
+	[ -e ${BAK_DIR} ] || mkdir ${BAK_DIR}
+	[ ! -e ${BAK_LOCK} ] && for f in ${MODULE_INSTALL}; do \
+		file=${DST_DIR}/.$$f; \
+		[ -e $$file ] && mv $$file ${BAK_DIR}; \
+	done; \
+	touch ${BAK_LOCK}
+
+restore:
+	[ -e ${BAK_LOCK} ] && for f in ${MODULE_INSTALL}; do \
+		file=${BAK_DIR}/.$$f; \
+		[ -e $$file ] && mv $$file ${DST_DIR}; \
+	done; \
+	rm ${BAK_LOCK}
+
+delete:
+	for f in ${MODULE_INSTALL}; do \
+		file=${DST_DIR}/.$$f; \
+		[ -e $$file ] && rm $$file; \
+	done; \
+	:
+
+.PHONY: compile remove ${MODULE_SRC} install backup clean restore delete

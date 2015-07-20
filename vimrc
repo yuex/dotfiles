@@ -77,6 +77,7 @@
     "Plugin 'vimwiki/vimwiki'
     Plugin 'kakkyz81/evervim' 
     Plugin 'yuex/vimwiki'
+    Plugin 'Rykka/riv.vim'
     Plugin 'aaronbieber/quicktask'
     Plugin 'VOoM'
     Plugin 'plasticboy/vim-markdown'
@@ -336,8 +337,10 @@
     autocmd BufNewFile *.tcl call append(0,"#!/usr/bin/env tclsh")
     autocmd BufNewFile *.sh call append(0,"#!/usr/bin/env sh")
     autocmd BufNewFile *.lisp call append(0,"#!/usr/bin/env clisp")
+    autocmd BufNewFile *.rkt call append(0,"#!/usr/bin/env racket")
+    autocmd BufNewFile *.rkt call append(1,"#lang racket")
 
-    autocmd BufWritePost *.sh,*.py,*.rb,*.tcl,*.lisp
+    autocmd BufWritePost *.sh,*.py,*.rb,*.tcl,*.lisp,*.rkt
                 \  exec "!chmod a+x %"
                 \| exec "redraw"
 " }}}
@@ -580,15 +583,17 @@
     " }}}
 " }}}"
 " quick shift {{{
-    vnoremap <unique> <Esc>, <gv
-    vnoremap <unique> <Esc>. >gv
-    vnoremap <unique> < <gv
-    vnoremap <unique> > >gv
+    vmap <unique> <Esc>, <gv
+    vmap <unique> <Esc>. >gv
+    vmap <unique> < <gv
+    vmap <unique> > >gv
     " use <c-d> and <c-t> in i-mode to keep cursor's position
-    inoremap <unique> <Esc>, <C-d>
-    inoremap <unique> <Esc>. <C-t>
-    nnoremap <unique> <Esc>, a<C-d><Esc>
-    nnoremap <unique> <Esc>. a<C-t><Esc>
+    "inoremap <unique> <Esc>, <C-d>
+    "inoremap <unique> <Esc>. <C-t>
+    imap <unique> <Esc>, <C-o><
+    imap <unique> <Esc>. <C-o>>
+    nmap <unique> <Esc>, <
+    nmap <unique> <Esc>. >
     cnoremap <unique> <Esc>, <C-o>i<C-d><C-c>
     cnoremap <unique> <Esc>. <C-o>i<C-t><C-c>
 " }}}
@@ -985,7 +990,11 @@ endif
 " poor man's hammer
     "autocmd FileType vimwiki,markdown nnoremap <Leader>hh
     autocmd FileType vimwiki,markdown nnoremap <buffer> <Leader>hh
-                \ :silent !hammer "%" > "/tmp/%:t.html"<CR>
+                \ :silent !pandoc -r markdown -w html "%" > "/tmp/%:t.html"<CR>
+                \ :silent !google-chrome-stable "/tmp/%:t.html"<CR>
+                \ :redraw!<CR>
+    autocmd FileType rst nnoremap <buffer> <Leader>hh
+                \ :silent !pandoc -r rst -w html "%" > "/tmp/%:t.html"<CR>
                 \ :silent !google-chrome-stable "/tmp/%:t.html"<CR>
                 \ :redraw!<CR>
     "nnoremap <unique> <Leader>hh :Hammer<CR>

@@ -1,7 +1,6 @@
 DST_DIR=test
 MODULE_INSTALL=bashrc
-#MODULE_INSTALL=bashrc nethackrc tmux.conf zshrc vimrc
-
+#MODULE_INSTALL=bashrc nethackrc tmux.conf oh-my-zsh zshrc vim vimrc
 
 #------------------------------------------------------------
 SRC_DIR=~
@@ -30,18 +29,22 @@ remove:
 bashrc nethackrc tmux.conf:
 	ln -frs $@ ${DST_DIR}/.$@
 
-vimrc: ${VIM_VUNDLE}
+#vimrc: ${VIM_VUNDLE}
+vimrc: vim
 	ln -frs $@ ${DST_DIR}/.$@
 	vim -c 'PluginInstall | q!'
 
-${VIM_VUNDLE}:
+#${VIM_VUNDLE}:
+vim:
 	git clone https://github.com/gmarik/Vundle.vim.git $@
 
-zshrc: ${OH_MY_ZSH}
+#zshrc: ${OH_MY_ZSH}
+zshrc: oh-my-zsh
 	ln -frs $@ ${DST_DIR}/.$@
 
-${OH_MY_ZSH}:
-	sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+#${OH_MY_ZSH}:
+oh-my-zsh:
+	sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 install: backup ${MODULE_INSTALL}
 

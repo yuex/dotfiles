@@ -46,19 +46,19 @@ ${OH_MY_ZSH}:
 install: backup ${MODULE_INSTALL}
 
 backup:
-	[ -e ${BAK_DIR} ] || mkdir ${BAK_DIR}
-	[ ! -e ${BAK_LOCK} ] && [ -e ${DST_DIR} ] && \
+	[ ! -e ${BAK_DIR} ] && mkdir ${BAK_DIR} \
+	[ -e ${DST_DIR} ] && \
 	for f in ${MODULE_INSTALL}; do \
 		file=${DST_DIR}/.$$f; \
-		[ -e $$file ] && mv $$file ${BAK_DIR}; \
-	done && touch ${BAK_LOCK}
+		[ -e $$file ] && cp $$file ${BAK_DIR}; \
+	done
 
 restore:
-	[ -e ${BAK_LOCK} ] && [ -e ${DST_DIR} ] && \
+	[ -e ${BAK_DIR} && [ -e ${DST_DIR} ] && \
 	for f in ${MODULE_INSTALL}; do \
 		file=${BAK_DIR}/.$$f; \
-		[ -e $$file ] && mv $$file ${DST_DIR}; \
-	done && rm ${BAK_LOCK}
+		[ -e $$file ] && cp $$file ${DST_DIR}; \
+	done
 
 delete:
 	for f in ${MODULE_INSTALL}; do \
@@ -66,5 +66,6 @@ delete:
 		[ -e $$file ] && rm $$file; \
 	done; \
 	:
+
 
 .PHONY: compile remove ${MODULE_SRC} install backup clean restore delete

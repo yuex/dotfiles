@@ -1,6 +1,7 @@
 DST_DIR=~
-#MODULE_INSTALL=zshrc oh-my-zsh
 MODULE_INSTALL=bashrc nethackrc tmux.conf oh-my-zsh zshrc vim vimrc
+#DST_DIR=test
+#MODULE_INSTALL=zshrc oh-my-zsh
 
 #------------------------------------------------------------
 SRC_DIR=~
@@ -50,6 +51,7 @@ zshrc: backup oh-my-zsh
 #${OH_MY_ZSH}:
 oh-my-zsh: backup
 	if [ ! -e ${DST_DIR}/.$@ ]; then \
+		echo $$SHELL > old_shell; \
 		sh -c "$$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"; \
 		mv -b ${DST_DIR}/.$@ $@; \
 		ln -frs $@ ${DST_DIR}/.$@; \
@@ -90,5 +92,8 @@ delete:
 			rm -rf $$file; \
 		fi; \
 	done
+	if [ -e old_shell ]; then \
+		chsh -s "$$(<old_shell)"; \
+	fi
 
 .PHONY: compile remove ${MODULE_SRC} install backup clean restore delete

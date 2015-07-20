@@ -64,7 +64,9 @@ backup:
 		if [ -e ${DST_DIR} ]; then \
 			for f in ${MODULE_INSTALL}; do \
 				file=${DST_DIR}/.$$f; \
-				[ -e $$file ] && mv -b $$file ${BAK_DIR}; \
+				if [ -e $$file ]; then \
+					mv -b $$file ${BAK_DIR}; \
+				fi; \
 			done && touch ${BAK_LOCK} || rm -rf ${BAK_DIR}; \
 		fi; \
 	fi
@@ -74,7 +76,9 @@ restore: delete
 		if [ -e ${BAK_DIR} -a -e ${DST_DIR} ]; then \
 			for f in ${MODULE_INSTALL}; do \
 				file=${BAK_DIR}/.$$f; \
-				[ -e $$file ] && cp -rf $$file ${DST_DIR}; \
+				if [ -e $$file ]; then \
+					cp -rf $$file ${DST_DIR}; \
+				fi; \
 			done; \
 		fi; \
 	fi

@@ -877,7 +877,7 @@
 function PluginInstalled(plugin,...)
     " if g:bundle_name doesn't exist, create it
     if !exists("g:bundle_name")
-        let g:bundle_name = map(copy(g:bundles), 'v:val.name')
+        let g:bundle_name = map(copy(g:vundle#bundles), 'v:val.name')
     endif
     if a:0 == 0
         let installed = g:bundle_name

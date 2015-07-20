@@ -9,9 +9,6 @@ SRC_DIR=~
 BAK_DIR=backup
 BAK_LOCK=${BAK_DIR}/lock
 
-VIM_VUNDLE=${DST_DIR}/.vim/bundle/Vundle.vim
-OH_MY_ZSH=${DST_DIR}/.oh-my-zsh
-
 MODULE_SRC=bashrc nethackrc tmux.conf zshrc vimrc
 
 compile: remove
@@ -30,63 +27,70 @@ remove:
 bashrc nethackrc tmux.conf: backup
 	ln -frs $@ ${DST_DIR}/.$@
 
-#vimrc: ${VIM_VUNDLE}
 vimrc: backup vim
 	ln -frs $@ ${DST_DIR}/.$@
 	#vim -c 'PluginInstall' -c 'qa'
 
-#${VIM_VUNDLE}:
 vim: backup
-	if [ ! -e ${DST_DIR}/.$@ ]; then \
-		mkdir -p ${DST_DIR}/.$@/bundle; \
-		git clone https://github.com/gmarik/Vundle.vim.git ${DST_DIR}/.$@/bundle/Vundle.vim; \
-		mv -b ${DST_DIR}/.$@ $@; \
-		ln -frs $@ ${DST_DIR}/.$@; \
+	if [ -e $@ ]; then \
+		rm -rf $@; \
 	fi
+	mkdir -p $@/bundle
+	git clone https://github.com/gmarik/Vundle.vim.git $@/bundle/Vundle.vim
+	ln -frs $@ ${DST_DIR}/.$@
 
-#zshrc: ${OH_MY_ZSH}
 zshrc: backup dircolors-solarized oh-my-zsh 
 	ln -frs $@ ${DST_DIR}/.$@
 
-#${OH_MY_ZSH}:
 oh-my-zsh: backup
-	if [ ! -e ${DST_DIR}/.$@ ]; then \
-		echo $$SHELL > old_shell; \
-		sh -c "$$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"; \
-		mv -b ${DST_DIR}/.$@ $@; \
-		ln -frs $@ ${DST_DIR}/.$@; \
+	if [ -e $@ ]; then \
+		rm -rf $@; \
 	fi
-	#[ ! -e $@ ] && mkdir $@
+	mkdir $@
+	git clone https://github.com/robbyrussell/oh-my-zsh.git $@
+	ln -frs $@ ${DST_DIR}/.$@
 
 dircolors-solarized: backup
-	if [ ! -e ${DST_DIR}/.$@ ]; then \
-		git clone https://github.com/seebi/dircolors-solarized.git ${DST_DIR}/.$@; \
-		mv -b ${DST_DIR}/.$@ $@; \
-		ln -frs $@ ${DST_DIR}/.$@; \
+	if [ -e $@ ]; then \
+		rm -rf $@; \
 	fi
+	mkdir $@
+	git clone https://github.com/seebi/dircolors-solarized.git $@
+	ln -frs $@ ${DST_DIR}/.$@
 
 install: backup ${MODULE_INSTALL}
 
 backup:
 	if [ ! -e ${BAK_LOCK} ]; then \
-		[ ! -e ${BAK_DIR} ] && mkdir ${BAK_DIR}; \
+		if [ ! -e ${BAK_DIR} ]; then \
+			mkdir ${BAK_DIR}; \
+		fi; \
 		if [ -e ${DST_DIR} ]; then \
 			for f in ${MODULE_INSTALL}; do \
-				file=${DST_DIR}/.$$f; \
-				if [ -e $$file ]; then \
-					mv -b $$file ${BAK_DIR}; \
+				src_file=${DST_DIR}/.$$f; \
+				dst_file=${BAK_DIR}/.$$f; \
+				if [ -e $$src_file ]; then \
+					cp -a $$src_file $$dst_file; \
+				else \
+					> $$dst_file; \
 				fi; \
-			done && touch ${BAK_LOCK} || rm -rf ${BAK_DIR}; \
+			done && touch ${BAK_LOCK}; \
 		fi; \
 	fi
 
-restore: delete
+restore:
 	if [ -e ${BAK_LOCK} ]; then \
 		if [ -e ${BAK_DIR} -a -e ${DST_DIR} ]; then \
 			for f in ${MODULE_INSTALL}; do \
-				file=${BAK_DIR}/.$$f; \
-				if [ -e $$file ]; then \
-					cp -rf $$file ${DST_DIR}; \
+				src_file=${BAK_DIR}/.$$f; \
+				dst_file=${DST_DIR}/.$$f; \
+				if [ -e $$src_file ]; then \
+					if [ -e $$dst_file ]; then \
+						rm -rf $$dst_file; \
+					fi; \
+					if [ -s $$src_file ]; then \
+						cp -a $$src_file $$dst_file; \
+					fi; \
 				fi; \
 			done; \
 		fi; \

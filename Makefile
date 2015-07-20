@@ -46,15 +46,14 @@ ${OH_MY_ZSH}:
 install: backup ${MODULE_INSTALL}
 
 backup:
-	[ ! -e ${BAK_DIR} ] && mkdir ${BAK_DIR} \
-	[ -e ${DST_DIR} ] && \
+	[ ! -e ${BAK_DIR} ] && mkdir ${BAK_DIR} && [ -e ${DST_DIR} ] && \
 	for f in ${MODULE_INSTALL}; do \
 		file=${DST_DIR}/.$$f; \
 		[ -e $$file ] && cp $$file ${BAK_DIR}; \
-	done
+	done && touch ${BAK_LOCK}
 
 restore:
-	[ -e ${BAK_DIR} && [ -e ${DST_DIR} ] && \
+	[ -e ${BAK_DIR} ] && [ -e ${BAK_LOCK} && [ -e ${DST_DIR} ] && \
 	for f in ${MODULE_INSTALL}; do \
 		file=${BAK_DIR}/.$$f; \
 		[ -e $$file ] && cp $$file ${DST_DIR}; \

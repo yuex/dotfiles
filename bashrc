@@ -66,6 +66,10 @@ function prompt_dollar {
         echo '$'
     fi
 }
+
+DIRCOLORS_SOLARIZED=~/.dircolors-solarized/dircolors.ansi-dark
+[ -f ${DIRCOLORS_SOLARIZED} ] && eval `dircolors ${DIRCOLORS_SOLARIZED}`
+
 PS1='
 [ \u@\[\033[1;37m\]\h\033[0m\] | \[\033[1;37m\]\W\[\033[0m\] ] \t
 [ \[\033[1;32m\]`mottos 2>/dev/null`\[\033[0m\] ]

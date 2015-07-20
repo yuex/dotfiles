@@ -1,5 +1,5 @@
 DST_DIR=test
-MODULE_INSTALL=bashrc
+MODULE_INSTALL=zshrc oh-my-zsh
 #MODULE_INSTALL=bashrc nethackrc tmux.conf oh-my-zsh zshrc vim vimrc
 
 #------------------------------------------------------------
@@ -26,24 +26,34 @@ remove:
 	done; \
 	:
 
-bashrc nethackrc tmux.conf:
+bashrc nethackrc tmux.conf: backup
 	ln -frs $@ ${DST_DIR}/.$@
 
 #vimrc: ${VIM_VUNDLE}
-vimrc: vim
+vimrc: backup vim
 	ln -frs $@ ${DST_DIR}/.$@
-	vim -c 'PluginInstall | q!'
+	#vim -c 'PluginInstall | q!'
 
 #${VIM_VUNDLE}:
-vim:
-	git clone https://github.com/gmarik/Vundle.vim.git $@
+vim: backup
+	if [ ! -e $@ ]; then \
+		mkdir $@; \
+	fi
+	#[ ! -e $@ ] && mkdir $@
+	ln -frs $@ ${DST_DIR}/.$@
+	git clone https://github.com/gmarik/Vundle.vim.git ${VIM_VUNDLE}
 
 #zshrc: ${OH_MY_ZSH}
-zshrc: oh-my-zsh
+zshrc: backup oh-my-zsh
 	ln -frs $@ ${DST_DIR}/.$@
 
 #${OH_MY_ZSH}:
-oh-my-zsh:
+oh-my-zsh: backup
+	if [ ! -e $@ ]; then \
+		mkdir $@; \
+	fi
+	#[ ! -e $@ ] && mkdir $@
+	ln -frs $@ ${DST_DIR}/.$@
 	sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 install: backup ${MODULE_INSTALL}
@@ -54,8 +64,8 @@ backup:
 		if [ -e ${DST_DIR} ]; then \
 			for f in ${MODULE_INSTALL}; do \
 				file=${DST_DIR}/.$$f; \
-				[ -e $$file ] && cp $$file ${BAK_DIR}; \
-			done && touch ${BAK_LOCK}; \
+				[ -e $$file ] && mv -b $$file ${BAK_DIR}; \
+			done && touch ${BAK_LOCK} || rm -rf ${BAK_DIR}; \
 		fi; \
 	fi
 
@@ -64,7 +74,7 @@ restore: delete
 		if [ -e ${BAK_DIR} -a -e ${DST_DIR} ]; then \
 			for f in ${MODULE_INSTALL}; do \
 				file=${BAK_DIR}/.$$f; \
-				[ -e $$file ] && cp -f $$file ${DST_DIR}; \
+				[ -e $$file ] && cp -rf $$file ${DST_DIR}; \
 			done; \
 		fi; \
 	fi

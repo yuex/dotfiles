@@ -77,7 +77,7 @@
     "Plugin 'vimwiki/vimwiki'
     "Plugin 'kakkyz81/evervim' 
     "Plugin 'yuex/vimwiki'
-    "Plugin 'Rykka/riv.vim'
+    Plugin 'Rykka/riv.vim'
     "Plugin 'aaronbieber/quicktask'
     "Plugin 'VOoM'
     Plugin 'plasticboy/vim-markdown'

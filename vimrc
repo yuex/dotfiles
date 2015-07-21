@@ -993,11 +993,11 @@ endif
     "autocmd FileType vimwiki,markdown nnoremap <Leader>hh
     autocmd FileType vimwiki,markdown nnoremap <buffer> <Leader>hh
                 \ :silent !pandoc -r markdown -w html "%" > "/tmp/%:t.html"<CR>
-                \ :silent !google-chrome-stable "/tmp/%:t.html"<CR>
+                \ :silent !xdg-open "/tmp/%:t.html"<CR>
                 \ :redraw!<CR>
     autocmd FileType rst nnoremap <buffer> <Leader>hh
                 \ :silent !pandoc -r rst -w html "%" > "/tmp/%:t.html"<CR>
-                \ :silent !google-chrome-stable "/tmp/%:t.html"<CR>
+                \ :silent !xdg-open "/tmp/%:t.html"<CR>
                 \ :redraw!<CR>
     "nnoremap <unique> <Leader>hh :Hammer<CR>
 " }}}

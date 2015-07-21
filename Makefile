@@ -38,7 +38,7 @@ vim: backup
 	git clone https://github.com/gmarik/Vundle.vim.git $@/bundle/Vundle.vim
 	ln -frs $@ ${DST_DIR}/.$@
 	vim -c 'PluginInstall' -c 'qa'
-	$@/bundle/YouCompleteMe/install.sh
+	#$@/bundle/YouCompleteMe/install.sh
 
 zshrc: backup dircolors-solarized oh-my-zsh 
 	ln -frs $@ ${DST_DIR}/.$@

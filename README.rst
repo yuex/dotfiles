@@ -2,6 +2,16 @@
 Yuex's Dotfiles
 ###############
 
+* Contents:
+
+  + 1 Introduction_
+  + 2 Installation_
+
+    + 2.1 zshrc_
+    + 2.2 vimrc_
+
+  + 3 `Backup and Restore`_
+
 
 Introduction
 ============
@@ -18,7 +28,7 @@ A collection of my dotfiles, including:
 Installation
 ============
 
-Trying these dotfiles out by creating a brand new user is recommended::
+Trying out by creating a brand new user is recommended::
 
     useradd -m dotfiles
     passwd dotfiles
@@ -29,7 +39,7 @@ In case bad things should happen or you don't like these dotfiles, you can just 
     
     userdel -r dotfiles
 
-To download these dotfiles::
+To download::
 
     git clone https://github.com/yuex/dotfiles.git
     cd dotfiles
@@ -38,7 +48,7 @@ If you are feeling luck and wanna install and try out everything::
 
     make install
 
-Or, take a specific dotfile one time::
+Or, install and try a specific dotfile::
     
     make bashrc
     make zshrc

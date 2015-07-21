@@ -590,10 +590,12 @@
     " use <c-d> and <c-t> in i-mode to keep cursor's position
     "inoremap <unique> <Esc>, <C-d>
     "inoremap <unique> <Esc>. <C-t>
-    imap <unique> <Esc>, <C-o><<
-    imap <unique> <Esc>. <C-o>>>
-    nmap <unique> <Esc>, <<
-    nmap <unique> <Esc>. >>
+    nnoremap <unique> < <<
+    nnoremap <unique> > >>
+    imap <unique> <Esc>, <C-o><
+    imap <unique> <Esc>. <C-o>>
+    nmap <unique> <Esc>, <
+    nmap <unique> <Esc>. >
     cnoremap <unique> <Esc>, <C-o>i<C-d><C-c>
     cnoremap <unique> <Esc>. <C-o>i<C-t><C-c>
 " }}}

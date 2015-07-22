@@ -165,6 +165,7 @@ $(git_prompt_info)%(!.#.») '
 
 setprompt
 
+export EDITOR=vim
 alias .=source
 
 _VIRTUALENVWRAPPER=virtualenvwrapper.sh

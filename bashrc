@@ -67,31 +67,20 @@ function prompt_dollar {
     fi
 }
 
-DIRCOLORS_SOLARIZED=~/.dircolors-solarized/dircolors.ansi-dark
-[ -f ${DIRCOLORS_SOLARIZED} ] && eval `dircolors ${DIRCOLORS_SOLARIZED}`
+_DIRCOLORS_SOLARIZED=~/.dircolors-solarized/dircolors.ansi-dark
+[ -f "${_DIRCOLORS_SOLARIZED}" ] && eval `dircolors "${_DIRCOLORS_SOLARIZED}"`
 
 PS1='
 [ \u@\[\033[1;37m\]\h\033[0m\] | \[\033[1;37m\]\W\[\033[0m\] ] \t
 [ \[\033[1;32m\]`mottos 2>/dev/null`\[\033[0m\] ]
 \! `prompt_dollar` '
 
-# virtualenvwrapper settings
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2
-VIRTUALENV_HOME=$HOME/.virtualenv
-export WORKON_HOME=$VIRTUALENV_HOME/workon
-export PROJECT_HOME=$VIRTUALENV_HOME/project
-source /usr/bin/virtualenvwrapper.sh
+# source virtualenvwrapper.sh
+_VIRTUALENVWRAPPER=virtualenvwrapper.sh
+which ${_VIRTUALENVWRAPPER} &>/dev/null && source "`which ${_VIRTUALENVWRAPPER}`"
 
-# self-defined location ab.
-export PLAYGROUND=$HOME/coding/playground
+_BASH_COMPLETION=/usr/share/bash-completion/bash_completion
+[ -r "${_BASH_COMPLETION}" ] && . "${_BASH_COMPLETION}"
 
-[ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion 
-# .inputrc
-#set -o vi
-#bind -m vi-command ".":insert-last-argument
-#bind -m vi-insert "\C-l.":clear-screen
-#bind -m vi-insert "\C-a.":beginning-of-line
-#bind -m vi-insert "\C-e.":end-of-line
-#bind -m vi-insert "\C-w.":backward-kill-word
-#bind -m vi-insert "\C-p.":previous-history
-#bind -m vi-insert "\C-n.":next-history
+_BASHRC_PRIVATE=$HOME/.bashrc-private
+[ -r "${_BASHRC_PRIVATE}" ] && . "${_BASHRC_PRIVATE}"

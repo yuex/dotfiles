@@ -167,7 +167,8 @@ setprompt
 
 alias .=source
 
-ZSH_PRIVATE=$HOME/.zshrc-private
-if [ -f $ZSH_PRIVATE ]; then
-    source $ZSH_PRIVATE
-fi
+_VIRTUALENVWRAPPER=virtualenvwrapper.sh
+which ${_VIRTUALENVWRAPPER} &>/dev/null && source "`which ${_VIRTUALENVWRAPPER}`"
+
+_ZSHRC_PRIVATE=$HOME/.zshrc-private
+[ -r "${_ZSHRC_PRIVATE}" ] && source "${_ZSHRC_PRIVATE}"

@@ -895,7 +895,7 @@ endfun
 " project.tar.gz {{{
 "if match(g:bundle_name, 'project.tar.gz') >= 0
 if PluginInstalled('project.tar.gz')
-    nnoremap <unique> <M-g> <Plug>ToggleProject
+    nmap <unique> <M-g> <Plug>ToggleProject
 endif
 " }}}
 " easymotion and insert mode motion {{{

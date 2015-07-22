@@ -24,7 +24,10 @@ remove:
 	done; \
 	:
 
-bashrc nethackrc tmux.conf: backup
+nethackrc tmux.conf: backup
+	ln -frs $@ ${DST_DIR}/.$@
+
+bashrc: backup dircolors-solarized
 	ln -frs $@ ${DST_DIR}/.$@
 
 vimrc: backup vim

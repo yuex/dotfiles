@@ -25,13 +25,13 @@ remove:
 	:
 
 nethackrc tmux.conf: backup
-	ln -frs $@ ${DST_DIR}/.$@
+	ln -fs $$(readlink -f $@) ${DST_DIR}/.$@
 
 bashrc: backup dircolors-solarized
-	ln -frs $@ ${DST_DIR}/.$@
+	ln -fs $$(readlink -f $@) ${DST_DIR}/.$@
 
 vimrc: backup vim
-	ln -frs $@ ${DST_DIR}/.$@
+	ln -fs $$(readlink -f $@) ${DST_DIR}/.$@
 
 vim: backup
 	if [ -e $@ ]; then \
@@ -39,12 +39,12 @@ vim: backup
 	fi
 	mkdir -p $@/bundle
 	git clone https://github.com/gmarik/Vundle.vim.git $@/bundle/Vundle.vim
-	ln -frs $@ ${DST_DIR}/.$@
+	ln -fs $$(readlink -f $@) ${DST_DIR}/.$@
 	vim -c 'PluginInstall' -c 'qa'
 	#$@/bundle/YouCompleteMe/install.sh
 
 zshrc: backup dircolors-solarized oh-my-zsh 
-	ln -frs $@ ${DST_DIR}/.$@
+	ln -fs $$(readlink -f $@) ${DST_DIR}/.$@
 
 oh-my-zsh: backup
 	if [ -e $@ ]; then \
@@ -52,7 +52,7 @@ oh-my-zsh: backup
 	fi
 	mkdir $@
 	git clone https://github.com/robbyrussell/oh-my-zsh.git $@
-	ln -frs $@ ${DST_DIR}/.$@
+	ln -fs $$(readlink -f $@) ${DST_DIR}/.$@
 
 dircolors-solarized: backup
 	if [ -e $@ ]; then \
@@ -60,7 +60,7 @@ dircolors-solarized: backup
 	fi
 	mkdir $@
 	git clone https://github.com/seebi/dircolors-solarized.git $@
-	ln -frs $@ ${DST_DIR}/.$@
+	ln -fs $$(readlink -f $@) ${DST_DIR}/.$@
 
 install: backup ${MODULE_INSTALL}
 

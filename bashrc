@@ -76,8 +76,12 @@ PS1='
 \! `prompt_dollar` '
 
 # source virtualenvwrapper.sh
-_VIRTUALENVWRAPPER=virtualenvwrapper.sh
-which ${_VIRTUALENVWRAPPER} &>/dev/null && source "`which ${_VIRTUALENVWRAPPER}`"
+if command -v virtualenvwrapper.sh &>/dev/null; then
+    if command -v python2 &>/dev/null; then
+        export VIRTUALENVWRAPPER_PYTHON=$(command -v python2)
+    fi
+    source $(command -v virtualenvwrapper.sh)
+fi
 
 _BASH_COMPLETION=/usr/share/bash-completion/bash_completion
 [ -r "${_BASH_COMPLETION}" ] && . "${_BASH_COMPLETION}"

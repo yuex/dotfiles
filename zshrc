@@ -168,8 +168,12 @@ setprompt
 export EDITOR=vim
 alias .=source
 
-_VIRTUALENVWRAPPER=virtualenvwrapper.sh
-which ${_VIRTUALENVWRAPPER} &>/dev/null && source "`which ${_VIRTUALENVWRAPPER}`"
+if command -v virtualenvwrapper.sh &>/dev/null; then
+    if command -v python2 &>/dev/null; then
+        export VIRTUALENVWRAPPER_PYTHON=$(command -v python2)
+    fi
+    source $(command -v virtualenvwrapper.sh)
+fi
 
 _ZSHRC_PRIVATE=$HOME/.zshrc-private
 [ -r "${_ZSHRC_PRIVATE}" ] && source "${_ZSHRC_PRIVATE}"

@@ -42,6 +42,7 @@
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'tomasr/molokai'
     Plugin 'mileszs/ack.vim'
+    Plugin 'kshenoy/vim-signature'
 " }}}
 " programming {{{
     " git integration
@@ -60,13 +61,13 @@
     "Plugin 'einars/js-beautify'
 " }}}
 " snippet and autocomplete {{{
+    Plugin 'Valloric/YouCompleteMe'
     "Plugin 'Shougo/neocomplcache'
     "Plugin 'Shougo/neosnippet'
     " snipMate cant be configured to disable completion after space(\s), first of line(^), also in confilict with supertab
     "Plugin 'snipMate'
     "Plugin 'honza/snipmate-snippets'
     " code semantic and fuzzy completion
-    Plugin 'Valloric/YouCompleteMe'
     " tab complete all, (C-xC-o, C-xC-k, etc), including English word
     "Plugin 'ervandew/supertab'
     "Plugin 'Rip-Rip/clang_complete'

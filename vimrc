@@ -371,6 +371,11 @@
 " }}}
 " }}}
 " hacks, proud {{{
+" fold {{{
+    nnoremap <unique> zo @=foldclosed(".")>0?"zv":"zc"<CR>
+    nnoremap <unique> z] ]z
+    nnoremap <unique> z[ [z
+"}}}
 " smart mode, keymappings {{{
     " function SmartMove() {{{
     function SmartMove(moveToNext, moveToEnd, ...)
@@ -1374,5 +1379,7 @@ let s:vimrc_private = "$HOME/.vimrc-private"
 if filereadable(glob( s:vimrc_private ))
     exec 'source '.s:vimrc_private
 endif
+
+
 
 " vim:ft=vim:fdm=marker

@@ -86,8 +86,8 @@ bindkey -M yuexmap 'h'   backward-delete-char
 #bindkey -M yuexmap 'l'   delete-char
 bindkey -M yuexmap 'u'   up-case-word
 bindkey -M yuexmap 'l'   down-case-word
-bindkey -M yuexmap ''    history-incremental-search-forward
-bindkey -M yuexmap ''    history-incremental-search-backward
+bindkey -M yuexmap ''    history-incremental-pattern-search-forward
+bindkey -M yuexmap ''    history-incremental-pattern-search-backward
 bindkey -M yuexmap ''    clear-screen
 bindkey -M yuexmap 'm'   run-help
 bindkey -M yuexmap ''    get-line #be consistent with ^Q (push-line)
@@ -174,6 +174,16 @@ if command -v virtualenvwrapper.sh &>/dev/null; then
     fi
     source $(command -v virtualenvwrapper.sh)
 fi
+
+DIRSTACKSIZE=9
+DIRSTACKFILE=~/.zdirs
+if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
+  dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+  [[ -d $dirstack[1] ]] && cd $dirstack[1] && cd $OLDPWD
+fi
+chpwd() {
+  print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
+}
 
 _ZSHRC_PRIVATE=$HOME/.zshrc-private
 [ -r "${_ZSHRC_PRIVATE}" ] && source "${_ZSHRC_PRIVATE}"

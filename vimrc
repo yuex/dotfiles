@@ -483,12 +483,14 @@
     let g:omni_sql_no_default_maps=1
     inoremap <unique> <C-a> <C-o>^
     inoremap <unique> <C-e> <End>
-    inoremap <unique> <C-h> <Left>
-    inoremap <unique> <C-l> <Right>
+    inoremap <unique> <M-h> <Left>
+    inoremap <unique> <M-l> <Right>
+    inoremap <unique> <C-h> <C-o>:call SmartMove('b','gel')<CR>
+    inoremap <unique> <C-l> <C-o>:call SmartMove('w','el')<CR>
     inoremap <unique> <M-b> <C-o>:call SmartMove('b','gel')<CR>
     inoremap <unique> <M-f> <C-o>:call SmartMove('w','el')<CR>
-    inoremap <unique> <M-h> <BS>
-    inoremap <unique> <M-l> <Del>
+    "inoremap <unique> <M-h> <BS>
+    "inoremap <unique> <M-l> <Del>
 
     inoremap <unique> <Esc><C-h> <C-o>:call SmartMove('B','gEl')<CR>
     inoremap <unique> <Esc><C-l> <C-o>:call SmartMove('W','$l')<CR>
@@ -523,12 +525,14 @@
 
     cnoremap <unique> <C-a> <C-o>^<C-c>
     cnoremap <unique> <C-e> <End>
-    cnoremap <unique> <C-h> <Left>
-    cnoremap <unique> <C-l> <Right>
+    cnoremap <unique> <M-h> <Left>
+    cnoremap <unique> <M-l> <Right>
+    cnoremap <unique> <C-h> <C-o>b<C-c>
+    cnoremap <unique> <C-l> <C-o>w<C-c>
     cnoremap <unique> <M-b> <C-o>b<C-c>
     cnoremap <unique> <M-f> <C-o>w<C-c>
-    cnoremap <unique> <M-h> <BS>
-    cnoremap <unique> <M-l> <Del>
+    "cnoremap <unique> <M-h> <BS>
+    "cnoremap <unique> <M-l> <Del>
 
     cnoremap <unique> <M-n> <Down>
     cnoremap <unique> <M-p> <Up>
@@ -559,8 +563,8 @@
     " quicknormal {{{
     noremap <unique> <C-a> ^
     noremap <unique> <C-e> <End>
-    noremap <unique> <C-h> <Left>
-    noremap <unique> <C-l> <Right>
+    noremap <unique> <M-h> <Left>
+    noremap <unique> <M-l> <Right>
     noremap <unique> <C-j> g<Down>
     noremap <unique> <C-k> g<Up>
     noremap <unique> <Esc><C-b> <S-Left>
@@ -570,10 +574,15 @@
     noremap <unique> <Esc><C-j> }
     noremap <unique> <Esc><C-k> {
 
+    nnoremap <unique> <C-h> :call SmartMove('b','gel')<CR>
+    nnoremap <unique> <C-l> :call SmartMove('w','el')<CR>
     nnoremap <unique> <M-b> :<C-u>call SmartMove('b','gel')<CR>
     nnoremap <unique> <M-f> :<C-u>call SmartMove('w','el')<CR>
     nnoremap <unique> <Esc><C-h> :<C-u>call SmartMove('B','gEl')<CR>
     nnoremap <unique> <Esc><C-l> :<C-u>call SmartMove('W','El')<CR>
+
+    vnoremap <unique> <C-h> <Esc>:<C-u>call SmartMove('b','gel',visualmode())<CR>
+    vnoremap <unique> <C-l> <Esc>:<C-u>call SmartMove('w','el',visualmode())<CR>
     vnoremap <unique> <M-b> <Esc>:<C-u>call SmartMove('b','gel',visualmode())<CR>
     vnoremap <unique> <M-f> <Esc>:<C-u>call SmartMove('w','el',visualmode())<CR>
     vnoremap <unique> <Esc><C-h> <Esc>:<C-u>call SmartMove('B','gEl',visualmode())<CR>
@@ -584,8 +593,8 @@
     nnoremap <unique> <Esc><C-a> <C-a>
     nnoremap <unique> <Esc><C-x> <C-x>
 
-    noremap <unique> <M-h> X
-    noremap <unique> <M-l> x
+    "noremap <unique> <M-h> X
+    "noremap <unique> <M-l> x
     " }}}
 " }}}"
 " quick shift {{{

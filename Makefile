@@ -55,12 +55,12 @@ install: backup $(RC_MODULE)
 
 .ONESHELL:
 backup: |$(BAK_DIR) $(DST_DIR)
-	[ -r $(BAK_LOCK) ] && exit
+	[ -f $(BAK_LOCK) ] && exit
 	for f in $(RC_INCLUDE) $(RC_DEPENDS); do
 		src_file=${DST_DIR}/.$$f
 		dst_file=${BAK_DIR}/.$$f
-		[ -r $$dst_file ] && rm -rf $$dst_file
-		[ -r $$src_file ] && cp -fa $$src_file $$dst_file || > $$dst_file
+		[ -f $$dst_file ] && rm -rf $$dst_file
+		[ -f $$src_file ] && cp -fa $$src_file $$dst_file || > $$dst_file
 	done && touch ${BAK_LOCK}
 
 .ONESHELL:
@@ -68,7 +68,9 @@ restore: $(BAK_LOCK) |$(BAK_DIR) $(DST_DIR)
 	for f in $(RC_INCLUDE) $(RC_DEPENDS); do
 		src_file=${BAK_DIR}/.$$f
 		dst_file=${DST_DIR}/.$$f
-		[ -s $$src_file ] && cp -a $$src_file $$dst_file || unlink $$dst_file
+		[ -h $$dst_file ] && unlink $$dst_file
+		[ -s $$src_file -a ! -e $$dst_file ] && cp -a $$src_file $$dst_file
+		:
 	done && rm ${BAK_LOCK}
 
 $(RC_MODULE): %:backup install-%

@@ -3,15 +3,15 @@ DST_DIR = ~
 # VPATH = src:../headers to search src and ../headers
 # or vpath %.h ../headers:/usr/include for searching files of specific pattern
 # but not suitable to this case
-SRC_DIR = ~
 DRC_DIR = source
 LIB_DIR = lib
 BAK_DIR=.backup
 BAK_LOCK=${BAK_DIR}/lock
 
 
-.PHONY: all code readme compile remove \
+.PHONY: all compile remove \
 	install backup restore \
+	rc_module vim_plugin readme \
 	$(RC_MODULE) \
 	$(addprefix install-,$(RC_MODULE)) \
 	$(addprefix plugin-,$(RC_MODULE)) \
@@ -22,49 +22,63 @@ BAK_LOCK=${BAK_DIR}/lock
 RC_MODULE=bash nethack tmux vim zsh
 RC_INCLUDE=bashrc nethackrc tmux.conf zshrc vimrc
 RC_DEPENDS=dircolors-solarized oh-my-zsh vundle vim
-RC_PATH:=$(addprefix $(DRC_DIR)/,$(RC_INCLUDE))
 
 all: 
 	@echo 'RTFD :)'
 
-$(DRC_DIR)/vim_plugin: $(DRC_DIR)/vimrc
-	> $@ && grep '^\s\+Plugin' $< > $@
-
-.ONESHELL:
-$(DRC_DIR)/rc_module: $(RC_PATH)
-	rc_module_file=$(DRC_DIR)/rc_module
-	> $$rc_module_file
-	echo $(RC_MODULE) |sed 's/ /\n/g' >> $$rc_module_file
-
-$(RC_PATH): $(DRC_DIR)/%:$(SRC_DIR)/.% |$(DRC_DIR)
-	cp -f $< $@
-
-.ONESHELL:
-code: $(RC_PATH)
-
 readme: README.rst
+	
+compile: $(RC_INCLUDE) README.rst
 
 .ONESHELL:
-README.rst: README.template.rst $(DRC_DIR)/rc_module $(DRC_DIR)/vim_plugin
+README.rst: README.template.rst rc_module vim_plugin
 	eval "cat <<EOF
 	$$(cat $<|sed 's/`/\\`/g')
 	EOF" > README.rst
 
-compile: code README.rst
+$(RC_INCLUDE) vim_plugin: |$(DRC_DIR)
+	$(MAKE) -C $(DRC_DIR) $@
 
-remove:
-	rm -rf $(DRC_DIR)
+rc_module: $(DRC_DIR)/rc_module
 
-$(LIB_DIR) $(BAK_DIR) $(DST_DIR) $(DRC_DIR):
-	mkdir $@
+.ONESHELL:
+$(DRC_DIR)/rc_module: $(RC_INCLUDE) |$(DRC_DIR)
+	rc_module_file=$(DRC_DIR)/rc_module
+	> $$rc_module_file
+	echo $(RC_MODULE) |sed 's/ /\n/g' >> $$rc_module_file
 
-$(LIB_DIR)/%: |$(LIB_DIR)
-	mkdir -p $@
+remove: |$(DRC_DIR)
+	$(MAKE) -C $(DRC_DIR) clean
+
+
+install: backup $(RC_MODULE)
+
+.ONESHELL:
+backup: |$(BAK_DIR) $(DST_DIR)
+	[ -r $(BAK_LOCK) ] && exit
+	for f in $(RC_INCLUDE) $(RC_DEPENDS); do
+		src_file=${DST_DIR}/.$$f
+		dst_file=${BAK_DIR}/.$$f
+		[ -r $$dst_file ] && rm -rf $$dst_file
+		[ -r $$src_file ] && cp -fa $$src_file $$dst_file || > $$dst_file
+	done && touch ${BAK_LOCK}
+
+.ONESHELL:
+restore: $(BAK_LOCK) |$(BAK_DIR) $(DST_DIR)
+	for f in $(RC_INCLUDE) $(RC_DEPENDS); do
+		src_file=${BAK_DIR}/.$$f
+		dst_file=${DST_DIR}/.$$f
+		[ -s $$src_file ] && cp -a $$src_file $$dst_file || unlink $$dst_file
+	done && rm ${BAK_LOCK}
 
 $(RC_MODULE): %:backup install-%
 
-define link-prereq=
-	ln -fs $(abspath $<) $(DST_DIR)/.$(<F)
+
+
+define rm-and-link=
+	dst=$(DST_DIR)/.$(<F)
+	[ -e $$dst ] && rm -rf $$dst
+	ln -fs $(abspath $<) $$dst
 endef
 
 define git-update=
@@ -75,60 +89,47 @@ define git-update=
 	fi
 endef
 
-install-nethack: install-%:$(DRC_DIR)/%rc
-	$(link-prereq)
-
+.ONESHELL:
 install-tmux: install-%:$(DRC_DIR)/%.conf
-	$(link-prereq)
+	$(rm-and-link)
 
-install-zsh install-bash: install-%:$(DRC_DIR)/%rc plugin-%
-	$(link-prereq)
+.ONESHELL:
+install-nethack install-zsh install-bash: install-%:$(DRC_DIR)/%rc plugin-% 
+	$(rm-and-link)
 
 .ONESHELL:
 install-vim: install-%:$(DRC_DIR)/%rc plugin-%
-	$(link-prereq)
-	vim -c 'PluginInstall!' -c 'qa'
+	$(rm-and-link)
+	vim -c 'PluginInstall' -c 'qa'
 
-plugin-vim: $(LIB_DIR)/vim vundle
-	$(link-prereq)
+plugin-tmux plugin-nethack: ;
 
 plugin-zsh: dircolors-solarized oh-my-zsh
 
 plugin-bash: dircolors-solarized
 
+plugin-vim: $(LIB_DIR)/vim vundle
+	$(rm-and-link)
+
 .ONESHELL:
 dircolors-solarized: %:$(LIB_DIR)/%
 	url=https://github.com/seebi/dircolors-solarized.git
 	$(git-update)
-	$(link-prereq)
+	$(rm-and-link)
 
 .ONESHELL:
 oh-my-zsh: %:$(LIB_DIR)/%
 	url=https://github.com/robbyrussell/oh-my-zsh.git
 	$(git-update)
-	$(link-prereq)
+	$(rm-and-link)
 
 .ONESHELL:
 vundle: $(LIB_DIR)/vim/bundle/Vundle.vim
 	url=https://github.com/gmarik/Vundle.vim.git
 	$(git-update)
 
-install: backup $(RC_MODULE)
+$(LIB_DIR)/%: |$(LIB_DIR)
+	mkdir -p $@
 
-.ONESHELL:
-backup: |$(BAK_DIR) $(DST_DIR)
-	[ -r $(BAK_LOCK) ] && exit
-	for f in $(RC_INCLUDE) $(RC_DEPENDS); do
-		src_file=${DST_DIR}/.$$f
-		dst_file=${BAK_DIR}/.$$f
-		[ -r $$src_file ] && cp -fa $$src_file $$dst_file || > $$dst_file
-	done && touch ${BAK_LOCK}
-
-.ONESHELL:
-restore: $(BAK_LOCK) |$(BAK_DIR) $(DST_DIR)
-	for f in $(RC_INCLUDE) $(RC_DEPENDS); do
-		src_file=${BAK_DIR}/.$$f
-		dst_file=${DST_DIR}/.$$f
-		[ -r $$src_file ] && [ -h $$dst_file ] && unlink $$dst_file
-		[ -r $$src_file ] && cp -a $$src_file $$dst_file
-	done && rm ${BAK_LOCK}
+$(LIB_DIR) $(BAK_DIR) $(DST_DIR) $(DRC_DIR):
+	mkdir $@

@@ -104,7 +104,7 @@ In case you like it, to update this dotfiles to the lastest, just::
 
 and then ``make`` what module you want to update.
 
-    
+
 .. _`oh-my-zsh`: https://github.com/robbyrussell/oh-my-zsh
 .. _`dircolors-solarized`: https://github.com/seebi/dircolors-solarized
 .. _`Vundle.vim`: https://github.com/VundleVim/Vundle.vim

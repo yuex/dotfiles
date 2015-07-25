@@ -27,7 +27,7 @@ Installation
 Basics
 ------
 
-Trying out by creating a brand new accound is recommended::
+Trying out by creating a new account is recommended::
 
     useradd -m dotfiles
     passwd dotfiles
@@ -47,7 +47,7 @@ If you are feeling lucky, you can just install and try out everything::
 
     make install
 
-Or, install and try a specific dotfile, one at a time::
+Or, install a specific dotfile, one at a time::
 
 $(cat source/rc_module|sed 's/^/\tmake /g')
 

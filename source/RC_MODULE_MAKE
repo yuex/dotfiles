@@ -1,0 +1,5 @@
+make bash
+make nethack
+make tmux
+make vim
+make zsh

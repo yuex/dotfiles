@@ -344,6 +344,8 @@
     autocmd BufWritePost *.sh,*.py,*.rb,*.tcl,*.lisp,*.rkt
                 \  exec "!chmod a+x %"
                 \| exec "redraw"
+    " I wanna my iskeyword back
+    autocmd FileType * set iskeyword&|set iskeyword-=_
 " }}}
 " autocmd make {{{
     " quick :make

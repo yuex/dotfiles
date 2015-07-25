@@ -23,7 +23,17 @@ RC_INCLUDE=bashrc nethackrc tmux.conf zshrc vimrc
 RC_DEPENDS=dircolors-solarized oh-my-zsh vim
 MODULE_INSTALL=bashrc nethackrc tmux.conf zshrc vim vimrc dircolors-solarized oh-my-zsh
 
-compile:
+.ONESHELL:
+$(DRC_DIR)/RC_MODULE_LIST:
+	> $@
+	echo $(RC_MODULE) |sed 's/ /\n/g' |sed 's/^/* /g' >> $@
+
+.ONESHELL:
+$(DRC_DIR)/RC_MODULE_MAKE:
+	> $@
+	echo $(RC_MODULE) |sed 's/ /\n/g' |sed 's/^/make /g' >> $@
+
+compile: $(DRC_DIR)/RC_MODULE_LIST $(DRC_DIR)/RC_MODULE_MAKE
 	$(MAKE) -C $(DRC_DIR) $(RC_INCLUDE)
 
 remove:

@@ -86,6 +86,39 @@ But if you want semantic support for C-family languages, take time to::
 
 If the YCM thing doesn't work, remember to check the newest docs at `YouCompleteMe`_.
 
+``vimrc`` contains some self-customed key mappings and homemade scripts in ``.vimrc`` and a collection of selected plugins managed by `Vundle.vim`_. Here's a short list::
+
+    Plugin 'Lokaltog/vim-easymotion'
+    Plugin 'Lokaltog/vim-powerline'
+    Plugin 'Raimondi/delimitMate'
+    Plugin 'Rykka/riv.vim'
+    Plugin 'Valloric/YouCompleteMe'
+    Plugin 'Yggdroot/indentLine'
+    Plugin 'a.vim'
+    Plugin 'altercation/vim-colors-solarized'
+    Plugin 'bling/vim-bufferline'
+    Plugin 'gmarik/Vundle.vim'
+    Plugin 'godlygeek/tabular'
+    Plugin 'jistr/vim-nerdtree-tabs'
+    Plugin 'kana/vim-textobj-user'
+    Plugin 'kien/ctrlp.vim'
+    Plugin 'kshenoy/vim-signature'
+    Plugin 'majutsushi/tagbar'
+    Plugin 'matchit.zip'
+    Plugin 'mbbill/undotree'
+    Plugin 'mileszs/ack.vim'
+    Plugin 'plasticboy/vim-markdown'
+    Plugin 'project.tar.gz'
+    Plugin 'scrooloose/nerdcommenter'
+    Plugin 'scrooloose/nerdtree'
+    Plugin 'scrooloose/syntastic'
+    Plugin 'sessionman.vim'
+    Plugin 'sukima/xmledit'
+    Plugin 'tomasr/molokai'
+    Plugin 'tpope/vim-fugitive'
+    Plugin 'tpope/vim-surround'
+    Plugin 'utl.vim'
+
 
 Backup and Restore
 ==================

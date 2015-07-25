@@ -68,8 +68,8 @@ stty -ixoff
 bindkey -N yuexmap emacs
 
 bindkey -M yuexmap ''    backward-kill-line
-#bindkey -M yuexmap 'u'   kill-line
-#bindkey -M yuexmap ''  kill-whole-line
+bindkey -M yuexmap 'u'   kill-line
+bindkey -M yuexmap ''  kill-whole-line
 bindkey -M yuexmap ''    backward-kill-word
 bindkey -M yuexmap 'w'   kill-word
 bindkey -M yuexmap 'p'   up-line-or-search
@@ -80,19 +80,17 @@ bindkey -M yuexmap ''  vi-backward-blank-word
 bindkey -M yuexmap ''  vi-forward-blank-word
 bindkey -M yuexmap 'b'   vi-backward-word
 bindkey -M yuexmap 'f'   vi-forward-word
-bindkey -M yuexmap ''    backward-char
-bindkey -M yuexmap ''    forward-char
-bindkey -M yuexmap 'h'   backward-delete-char
-#bindkey -M yuexmap 'l'   delete-char
-bindkey -M yuexmap 'u'   up-case-word
-bindkey -M yuexmap 'l'   down-case-word
+bindkey -M yuexmap ''    vi-backward-word
+bindkey -M yuexmap ''    vi-forward-word
+bindkey -M yuexmap 'h'   backward-char
+bindkey -M yuexmap 'l'   forward-char
+bindkey -M yuexmap ''  down-case-word
+bindkey -M yuexmap ''    up-case-word
 bindkey -M yuexmap ''    history-incremental-pattern-search-forward
 bindkey -M yuexmap ''    history-incremental-pattern-search-backward
 bindkey -M yuexmap ''    clear-screen
 bindkey -M yuexmap 'm'   run-help
 bindkey -M yuexmap ''    get-line #be consistent with ^Q (push-line)
-bindkey -M yuexmap ''  up-case-word
-bindkey -M yuexmap ''  down-case-word
 
 bindkey -M yuexmap -s 's' 'qls'
 bindkey -M yuexmap -s 't'  'tmux attach -t $USER || tmux new-session -s $USER'

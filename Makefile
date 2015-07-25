@@ -1,114 +1,108 @@
-DST_DIR=~
-MODULE_INSTALL=bashrc nethackrc tmux.conf zshrc vim vimrc dircolors-solarized oh-my-zsh 
+DST_DIR = ~
 #DST_DIR=test
-#MODULE_INSTALL=zshrc oh-my-zsh
-
-#------------------------------------------------------------
-SRC_DIR=~
-
-BAK_DIR=backup
+# VPATH = src:../headers to search src and ../headers
+# or vpath %.h ../headers:/usr/include for searching files of specific pattern
+# but not suitable to this case
+SRC_DIR = ~
+DRC_DIR = source
+LIB_DIR = lib
+BAK_DIR=.backup
 BAK_LOCK=${BAK_DIR}/lock
 
-MODULE_SRC=bashrc nethackrc tmux.conf zshrc vimrc
 
-compile: remove
-	for f in ${MODULE_SRC}; do\
-		cp ${SRC_DIR}/.$$f $$f; \
-	done
+.PHONY: compile remove install backup restore \
+	$(RC_MODULE) \
+	$(addprefix install-,$(RC_MODULE)) \
+	$(addprefix plugin-,$(RC_MODULE)) \
+	dircolors-solarized \
+	oh-my-zsh \
+	vundle \
 
-# use $$ prefix to pass parameter to bash to interpret
-# bash script must be written within one line, forget this never
+RC_MODULE=bash nethack tmux vim zsh
+RC_INCLUDE=bashrc nethackrc tmux.conf zshrc vimrc
+RC_DEPENDS=dircolors-solarized oh-my-zsh vim
+MODULE_INSTALL=bashrc nethackrc tmux.conf zshrc vim vimrc dircolors-solarized oh-my-zsh
+
+compile:
+	$(MAKE) -C $(DRC_DIR) $(RC_INCLUDE)
+
 remove:
-	for f in ${MODULE_SRC}; do \
-		[ -e $$f ] && rm $$f; \
-	done; \
-	:
+	$(MAKE) -C $(DRC_DIR) clean
 
-nethackrc tmux.conf: backup
-	ln -fs $$(readlink -e $@) ${DST_DIR}/.$@
-
-bashrc: backup dircolors-solarized
-	ln -fs $$(readlink -e $@) ${DST_DIR}/.$@
-
-vimrc: backup vim
-	ln -fs $$(readlink -e $@) ${DST_DIR}/.$@
-
-vim: backup
-	if [ -e $@ ]; then \
-		rm -rf $@; \
-	fi
-	mkdir -p $@/bundle
-	git clone https://github.com/gmarik/Vundle.vim.git $@/bundle/Vundle.vim
-	ln -fs $$(readlink -e $@) ${DST_DIR}/.$@
-	vim -c 'PluginInstall' -c 'qa'
-	#$@/bundle/YouCompleteMe/install.sh
-
-zshrc: backup dircolors-solarized oh-my-zsh 
-	ln -fs $$(readlink -e $@) ${DST_DIR}/.$@
-
-oh-my-zsh: backup
-	if [ -e $@ ]; then \
-		rm -rf $@; \
-	fi
+$(LIB_DIR) $(BAK_DIR) $(DST_DIR):
 	mkdir $@
-	git clone https://github.com/robbyrussell/oh-my-zsh.git $@
-	ln -fs $$(readlink -e $@) ${DST_DIR}/.$@
 
-dircolors-solarized: backup
-	if [ -e $@ ]; then \
-		rm -rf $@; \
+$(LIB_DIR)/%: |$(LIB_DIR)
+	mkdir -p $@
+
+$(RC_MODULE): %:backup install-%
+
+define link-prereq=
+	ln -fs $(abspath $<) $(DST_DIR)/.$(<F)
+endef
+
+define git-update=
+	if [ ! -d $</.git ]; then
+		git clone $$url $<
+	else
+		sh -c 'cd $< && git pull'
 	fi
-	mkdir $@
-	git clone https://github.com/seebi/dircolors-solarized.git $@
-	ln -fs $$(readlink -e $@) ${DST_DIR}/.$@
+endef
 
-install: backup ${MODULE_INSTALL}
+install-nethack: install-%:$(DRC_DIR)/%rc
+	$(link-prereq)
 
-backup:
-	if [ ! -e ${BAK_LOCK} ]; then \
-		if [ ! -e ${BAK_DIR} ]; then \
-			mkdir ${BAK_DIR}; \
-		fi; \
-		if [ -e ${DST_DIR} ]; then \
-			for f in ${MODULE_INSTALL}; do \
-				src_file=${DST_DIR}/.$$f; \
-				dst_file=${BAK_DIR}/.$$f; \
-				if [ -e $$src_file ]; then \
-					cp -a $$src_file $$dst_file; \
-				else \
-					> $$dst_file; \
-				fi; \
-			done && touch ${BAK_LOCK}; \
-		fi; \
-	fi
+install-tmux: install-%:$(DRC_DIR)/%.conf
+	$(link-prereq)
 
-restore:
-	if [ -e ${BAK_LOCK} ]; then \
-		if [ -e ${BAK_DIR} -a -e ${DST_DIR} ]; then \
-			for f in ${MODULE_INSTALL}; do \
-				src_file=${BAK_DIR}/.$$f; \
-				dst_file=${DST_DIR}/.$$f; \
-				if [ -e $$src_file ]; then \
-					if [ -e $$dst_file ]; then \
-						rm -rf $$dst_file; \
-					fi; \
-					if [ -s $$src_file ]; then \
-						cp -a $$src_file $$dst_file; \
-					fi; \
-				fi; \
-			done; \
-		fi; \
-	fi
+install-zsh install-bash: install-%:$(DRC_DIR)/%rc plugin-%
+	$(link-prereq)
 
-delete:
-	for f in ${MODULE_INSTALL}; do \
-		file=${DST_DIR}/.$$f; \
-		if [ -L $$file -o -e $$file ]; then \
-			rm -rf $$file; \
-		fi; \
-	done
-	if [ -e old_shell -a "$$SHELL" != "$$(<old_shell)" ]; then \
-		chsh -s "$$(<old_shell)"; \
-	fi
+.ONESHELL:
+install-vim: install-%:$(DRC_DIR)/%rc plugin-%
+	$(link-prereq)
+	vim -c 'PluginInstall!' -c 'qa'
 
-.PHONY: compile remove ${MODULE_SRC} install backup clean restore delete
+plugin-vim: $(LIB_DIR)/vim vundle
+	$(link-prereq)
+
+plugin-zsh: dircolors-solarized oh-my-zsh
+
+plugin-bash: dircolors-solarized
+
+.ONESHELL:
+dircolors-solarized: %:$(LIB_DIR)/%
+	url=https://github.com/seebi/dircolors-solarized.git
+	$(git-update)
+	$(link-prereq)
+
+.ONESHELL:
+oh-my-zsh: %:$(LIB_DIR)/%
+	url=https://github.com/robbyrussell/oh-my-zsh.git
+	$(git-update)
+	$(link-prereq)
+
+.ONESHELL:
+vundle: $(LIB_DIR)/vim/bundle/Vundle.vim
+	url=https://github.com/gmarik/Vundle.vim.git
+	$(git-update)
+
+install: backup $(RC_MODULE)
+
+.ONESHELL:
+backup: |$(BAK_DIR) $(DST_DIR)
+	[ -r $(BAK_LOCK) ] && exit
+	for f in $(RC_INCLUDE) $(RC_DEPENDS); do
+		src_file=${DST_DIR}/.$$f
+		dst_file=${BAK_DIR}/.$$f
+		[ -r $$src_file ] && cp -fa $$src_file $$dst_file || > $$dst_file
+	done && touch ${BAK_LOCK}
+
+.ONESHELL:
+restore: $(BAK_LOCK) |$(BAK_DIR) $(DST_DIR)
+	for f in $(RC_INCLUDE) $(RC_DEPENDS); do
+		src_file=${BAK_DIR}/.$$f
+		dst_file=${DST_DIR}/.$$f
+		[ -r $$src_file ] && [ -h $$dst_file ] && unlink $$dst_file
+		[ -r $$src_file ] && cp -a $$src_file $$dst_file
+	done && rm ${BAK_LOCK}

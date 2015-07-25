@@ -19,11 +19,7 @@ Introduction
 
 A collection of my dotfiles, including:
 
-* bash
-* nethack
-* tmux
-* vim
-* zsh
+$(cat source/rc_module|sed 's/^/* /g')
 
 Installation
 ============
@@ -53,11 +49,7 @@ If you are feeling lucky, you can just install and try out everything::
 
 Or, install and try a specific dotfile, one at a time::
 
-	make bash
-	make nethack
-	make tmux
-	make vim
-	make zsh
+$(cat source/rc_module|sed 's/^/\tmake /g')
 
 
 Zsh
@@ -87,36 +79,7 @@ If the YCM thing doesn't work, remember to check the newest docs at `YouComplete
 
 ``vimrc`` contains some self-customed key mappings and homemade scripts in ``.vimrc`` and a collection of selected plugins managed by `Vundle.vim`_. Here's a short list::
 
-    Plugin 'gmarik/Vundle.vim'
-    Plugin 'kien/ctrlp.vim'
-    Plugin 'scrooloose/nerdtree'
-    Plugin 'jistr/vim-nerdtree-tabs'
-    Plugin 'project.tar.gz'
-    Plugin 'sessionman.vim'
-    Plugin 'Raimondi/delimitMate'
-    Plugin 'tpope/vim-surround'
-    Plugin 'kana/vim-textobj-user'
-    Plugin 'mbbill/undotree'
-    Plugin 'godlygeek/tabular'
-    Plugin 'Lokaltog/vim-easymotion'
-    Plugin 'matchit.zip'
-    Plugin 'bling/vim-bufferline'
-    Plugin 'Lokaltog/vim-powerline'
-    Plugin 'altercation/vim-colors-solarized'
-    Plugin 'tomasr/molokai'
-    Plugin 'mileszs/ack.vim'
-    Plugin 'kshenoy/vim-signature'
-    Plugin 'tpope/vim-fugitive'
-    Plugin 'scrooloose/syntastic'
-    Plugin 'scrooloose/nerdcommenter'
-    Plugin 'majutsushi/tagbar'
-    Plugin 'Yggdroot/indentLine'
-    Plugin 'sukima/xmledit'
-    Plugin 'a.vim'
-    Plugin 'Valloric/YouCompleteMe'
-    Plugin 'Rykka/riv.vim'
-    Plugin 'plasticboy/vim-markdown'
-    Plugin 'utl.vim'
+$(cat source/vim_plugin)
 
 Backup and Restore
 ==================

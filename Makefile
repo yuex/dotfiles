@@ -10,36 +10,52 @@ BAK_DIR=.backup
 BAK_LOCK=${BAK_DIR}/lock
 
 
-.PHONY: compile remove install backup restore \
+.PHONY: all code readme compile remove \
+	install backup restore \
 	$(RC_MODULE) \
 	$(addprefix install-,$(RC_MODULE)) \
 	$(addprefix plugin-,$(RC_MODULE)) \
-	dircolors-solarized \
-	oh-my-zsh \
-	vundle \
+	$(RC_DEPENDS) \
+	$(DRC_DIR)/.rc_module \
+
 
 RC_MODULE=bash nethack tmux vim zsh
 RC_INCLUDE=bashrc nethackrc tmux.conf zshrc vimrc
-RC_DEPENDS=dircolors-solarized oh-my-zsh vim
-MODULE_INSTALL=bashrc nethackrc tmux.conf zshrc vim vimrc dircolors-solarized oh-my-zsh
+RC_DEPENDS=dircolors-solarized oh-my-zsh vundle vim
+RC_PATH:=$(addprefix $(DRC_DIR)/,$(RC_INCLUDE))
+
+all: 
+	@echo 'RTFD :)'
+
+$(DRC_DIR)/vim_plugin: $(DRC_DIR)/vimrc
+	> $@ && grep '^\s\+Plugin' $< > $@
 
 .ONESHELL:
-$(DRC_DIR)/RC_MODULE_LIST:
-	> $@
-	echo $(RC_MODULE) |sed 's/ /\n/g' |sed 's/^/* /g' >> $@
+$(DRC_DIR)/rc_module: $(RC_PATH)
+	rc_module_file=$(DRC_DIR)/rc_module
+	> $$rc_module_file
+	echo $(RC_MODULE) |sed 's/ /\n/g' >> $$rc_module_file
+
+$(RC_PATH): $(DRC_DIR)/%:$(SRC_DIR)/.% |$(DRC_DIR)
+	cp -f $< $@
 
 .ONESHELL:
-$(DRC_DIR)/RC_MODULE_MAKE:
-	> $@
-	echo $(RC_MODULE) |sed 's/ /\n/g' |sed 's/^/make /g' >> $@
+code: $(RC_PATH)
 
-compile: $(DRC_DIR)/RC_MODULE_LIST $(DRC_DIR)/RC_MODULE_MAKE
-	$(MAKE) -C $(DRC_DIR) $(RC_INCLUDE)
+readme: README.rst
+
+.ONESHELL:
+README.rst: README.template.rst $(DRC_DIR)/rc_module $(DRC_DIR)/vim_plugin
+	eval "cat <<EOF
+	$$(cat $<|sed 's/`/\\`/g')
+	EOF" > README.rst
+
+compile: code README.rst
 
 remove:
-	$(MAKE) -C $(DRC_DIR) clean
+	rm -rf $(DRC_DIR)
 
-$(LIB_DIR) $(BAK_DIR) $(DST_DIR):
+$(LIB_DIR) $(BAK_DIR) $(DST_DIR) $(DRC_DIR):
 	mkdir $@
 
 $(LIB_DIR)/%: |$(LIB_DIR)

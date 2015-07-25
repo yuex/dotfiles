@@ -497,11 +497,11 @@
     inoremap <unique> <Esc><C-h> <C-o>:call SmartMove('B','gEl')<CR>
     inoremap <unique> <Esc><C-l> <C-o>:call SmartMove('W','$l')<CR>
 
-    inoremap <unique> <C-j> <C-o>g<Down>
-    inoremap <unique> <C-k> <C-o>g<Up>
+    inoremap <unique> <M-j> <C-o>g<Down>
+    inoremap <unique> <M-k> <C-o>g<Up>
     inoremap <unique> <M-e> <C-o>e<Right>
-    inoremap <unique> <Esc><C-j> <C-o>}
-    inoremap <unique> <Esc><C-k> <C-o>{
+    inoremap <unique> <C-j> <C-o>}
+    inoremap <unique> <C-k> <C-o>{
 
     inoremap <unique> <C-u> <C-o>d0
     inoremap <unique> <M-u> <C-o>d$
@@ -567,14 +567,14 @@
     noremap <unique> <C-e> <End>
     noremap <unique> <M-h> <Left>
     noremap <unique> <M-l> <Right>
-    noremap <unique> <C-j> g<Down>
-    noremap <unique> <C-k> g<Up>
+    noremap <unique> <M-j> g<Down>
+    noremap <unique> <M-k> g<Up>
     noremap <unique> <Esc><C-b> <S-Left>
     noremap <unique> <Esc><C-f> <S-Right>
     noremap <unique> <Esc><C-w> w
     noremap <unique> <Esc><C-e> e
-    noremap <unique> <Esc><C-j> }
-    noremap <unique> <Esc><C-k> {
+    noremap <unique> <C-j> }
+    noremap <unique> <C-k> {
 
     nnoremap <unique> <C-h> :call SmartMove('b','gel')<CR>
     nnoremap <unique> <C-l> :call SmartMove('w','el')<CR>
@@ -939,8 +939,8 @@ if PluginInstalled('vim-easymotion')
         exec "imap <unique> <Esc><C-".key."> <C-o><Plug>(easymotion-iskeyword-".key.")"
     endfor
     for key in ['j','k']
-        exec "map  <unique> <M-".key."> <Plug>(easymotion-".key.")"
-        exec "imap <unique> <M-".key."> <C-o><Plug>(easymotion-".key.")"
+        exec "map  <unique> <Esc><C-".key."> <Plug>(easymotion-".key.")"
+        exec "imap <unique> <Esc><C-".key."> <C-o><Plug>(easymotion-".key.")"
     endfor
     "for key in ['t','T','f','F','w','b','e','W','B','E',"ge","gE"]
         "let act = key

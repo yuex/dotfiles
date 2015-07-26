@@ -63,7 +63,7 @@ Or, install a specific dotfile, one at a time::
 Zsh
 ---
 
-``zsh`` depends on `oh-my-zsh`_ and `dircolors-solarized`_. ``make zsh`` will do most work. But you need to manually change the default login shell::
+My ``zshrc`` depends on `oh-my-zsh`_ and `dircolors-solarized`_. ``make zsh`` will do most work. But you need to manually change the default login shell::
 
     chsh -s /usr/bin/zsh
 
@@ -85,7 +85,7 @@ But if you want semantic support for C-family languages, take time to::
 
 If the YCM thing doesn't work, remember to check the newest docs at `YouCompleteMe`_.
 
-``vimrc`` contains some self-customed key mappings and home-made scripts in ``.vimrc`` and a collection of selected plugins managed by `Vundle.vim`_. Here's a short list::
+My ``vimrc`` contains some self-customed key mappings and home-made scripts in ``.vimrc`` and a collection of selected plugins managed by `Vundle.vim`_. Here's a short list::
 
     Plugin 'gmarik/Vundle.vim'
     Plugin 'kien/ctrlp.vim'
@@ -121,11 +121,11 @@ If the YCM thing doesn't work, remember to check the newest docs at `YouComplete
 Backup and Restore
 ==================
 
-Remember to backup your own dotfiles before trying out others'. By default, ``make install`` or ``make`` will backup related dotfiles in ``./backup`` automatically. But you can do it manually by::
+Remember to backup your own dotfiles before trying out others'. By default, ``make install`` or ``make`` will backup related dotfiles in ``.backup`` automatically. But you can do it manually by::
 
     make backup
 
-To overwrite old backups, you have to remove ``./backup`` fold manually. For safety.
+To overwrite old backups, you have to remove ``.backup`` fold manually. For safety.
 
 Allright, perhaps what looks good to me doesn't looks good to you. But You can revert to your old dotfiles easily::
 

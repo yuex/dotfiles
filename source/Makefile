@@ -6,7 +6,6 @@ $(DRC_DIR)/vim_plugin: $(DRC_DIR)/vimrc
 vim_plugin: vimrc
 	> $@ && grep '^\s\+Plugin' $< > $@
 
-.ONESHELL:
 clean:
 	rm $$(ls|grep -v Makefile)
 

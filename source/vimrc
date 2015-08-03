@@ -76,7 +76,7 @@
 "}}}
 " notetaking {{{
     "Plugin 'vimwiki/vimwiki'
-    "Plugin 'kakkyz81/evervim' 
+    "Plugin 'kakkyz81/evervim'
     "Plugin 'yuex/vimwiki'
     Plugin 'Rykka/riv.vim'
     "Plugin 'aaronbieber/quicktask'
@@ -151,6 +151,7 @@
 " }}}
 " listchars {{{
     "set listchars=tab:,.,trail:.,extends:#,nbsp:.
+    set list
     set listchars=tab:×·,trail:·,extends:#,nbsp:.
 " }}}
 " color scheme {{{
@@ -485,23 +486,23 @@
     let g:omni_sql_no_default_maps=1
     inoremap <unique> <C-a> <C-o>^
     inoremap <unique> <C-e> <End>
-    inoremap <unique> <M-h> <Left>
-    inoremap <unique> <M-l> <Right>
-    inoremap <unique> <C-h> <C-o>:call SmartMove('b','gel')<CR>
-    inoremap <unique> <C-l> <C-o>:call SmartMove('w','el')<CR>
+    inoremap <unique> <C-h> <Left>
+    inoremap <unique> <C-l> <Right>
+    inoremap <unique> <Esc><C-h> <C-o>:call SmartMove('b','gel')<CR>
+    inoremap <unique> <Esc><C-l> <C-o>:call SmartMove('w','el')<CR>
     inoremap <unique> <M-b> <C-o>:call SmartMove('b','gel')<CR>
     inoremap <unique> <M-f> <C-o>:call SmartMove('w','el')<CR>
     "inoremap <unique> <M-h> <BS>
     "inoremap <unique> <M-l> <Del>
 
-    inoremap <unique> <Esc><C-h> <C-o>:call SmartMove('B','gEl')<CR>
-    inoremap <unique> <Esc><C-l> <C-o>:call SmartMove('W','$l')<CR>
+    "inoremap <unique> <M-h> <C-o>:call SmartMove('B','gEl')<CR>
+    "inoremap <unique> <M-l> <C-o>:call SmartMove('W','$l')<CR>
 
-    inoremap <unique> <M-j> <C-o>g<Down>
-    inoremap <unique> <M-k> <C-o>g<Up>
+    inoremap <unique> <C-j> <C-o>g<Down>
+    inoremap <unique> <C-k> <C-o>g<Up>
     inoremap <unique> <M-e> <C-o>e<Right>
-    inoremap <unique> <C-j> <C-o>}
-    inoremap <unique> <C-k> <C-o>{
+    inoremap <unique> <Esc><C-j> <C-o>}
+    inoremap <unique> <Esc><C-k> <C-o>{
 
     inoremap <unique> <C-u> <C-o>d0
     inoremap <unique> <M-u> <C-o>d$
@@ -565,16 +566,18 @@
     " quicknormal {{{
     noremap <unique> <C-a> ^
     noremap <unique> <C-e> <End>
-    noremap <unique> <M-h> <Left>
-    noremap <unique> <M-l> <Right>
-    noremap <unique> <M-j> g<Down>
-    noremap <unique> <M-k> g<Up>
+    "noremap <unique> <M-h> <Left>
+    "noremap <unique> <M-l> <Right>
+    "noremap <unique> <M-j> g<Down>
+    "noremap <unique> <M-k> g<Up>
     noremap <unique> <Esc><C-b> <S-Left>
     noremap <unique> <Esc><C-f> <S-Right>
     noremap <unique> <Esc><C-w> w
     noremap <unique> <Esc><C-e> e
-    noremap <unique> <C-j> }
-    noremap <unique> <C-k> {
+    noremap <unique> <C-j> 4j
+    noremap <unique> <C-k> 4k
+    noremap <unique> <Esc><C-j> }
+    noremap <unique> <Esc><C-k> {
 
     nnoremap <unique> <C-h> :call SmartMove('b','gel')<CR>
     nnoremap <unique> <C-l> :call SmartMove('w','el')<CR>
@@ -858,7 +861,20 @@
         redraw!
     endfunc
     " }}}
-    nnoremap <unique> <Leader>fs :retab<CR>:%s/\s\+$//g<CR>``
+    " function SpaceFormat() {{{
+    function! SpaceFormat()
+        let praise = "Neat Yo!"
+        let trailing_space_replace = '%s/\s\+$//g'
+        exec 'retab'
+        try
+            exec trailing_space_replace
+        catch /^Vim\%((\a\+)\)\=:E486/
+            echo praise
+        endtry
+    endfunc
+    "}}}
+    "nnoremap <unique> <Leader>fs :retab<CR>:%s/\s\+$//g<CR>
+    nnoremap <unique> <Leader>fs :call SpaceFormat()<CR>
     nnoremap <unique> <Leader>fc gg=G
     nnoremap <unique> <Leader>ff :call AutoSpaceCJK('n')<CR>
     vnoremap <unique> <Leader>ff :<C-u>call AutoSpaceCJK(visualmode())<CR>
@@ -938,10 +954,15 @@ if PluginInstalled('vim-easymotion')
         endif
         exec "imap <unique> <Esc><C-".key."> <C-o><Plug>(easymotion-iskeyword-".key.")"
     endfor
+    let g:EasyMotion_startofline = 0
     for key in ['j','k']
-        exec "map  <unique> <Esc><C-".key."> <Plug>(easymotion-".key.")"
-        exec "imap <unique> <Esc><C-".key."> <C-o><Plug>(easymotion-".key.")"
+        exec "map  <unique> <M-".key."> <Plug>(easymotion-".key.")"
+        exec "imap <unique> <M-".key."> <C-o><Plug>(easymotion-".key.")"
     endfor
+    map  <unique> <M-h> <Plug>(easymotion-F)
+    map  <unique> <M-l> <Plug>(easymotion-f)
+    imap <unique> <M-h> <C-o><Plug>(easymotion-F)
+    imap <unique> <M-l> <C-o><Plug>(easymotion-f)
     "for key in ['t','T','f','F','w','b','e','W','B','E',"ge","gE"]
         "let act = key
 
@@ -1207,7 +1228,7 @@ endif
 if PluginInstalled('tagbar')
     let g:tagbar_sort = 1
     "autocmd Filetype tagbar,c,cpp,python,ruby,vim nnoremap <buffer> <Tab> :TagbarToggle<CR>
-    " following 3 lines make tagbar autofocus only when using :TagbarToggle, 
+    " following 3 lines make tagbar autofocus only when using :TagbarToggle,
     " but not when using :TagOpen
     let g:tagbar_autofocus = 1
     nnoremap <unique> <silent> <M-p> :TagbarToggle<CR>

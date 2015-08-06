@@ -113,6 +113,7 @@ My ``vimrc`` contains some self-customed key mappings and home-made scripts in `
     Plugin 'Yggdroot/indentLine'
     Plugin 'sukima/xmledit'
     Plugin 'a.vim'
+    Plugin 'hynek/vim-python-pep8-indent'
     Plugin 'Valloric/YouCompleteMe'
     Plugin 'Rykka/riv.vim'
     Plugin 'plasticboy/vim-markdown'

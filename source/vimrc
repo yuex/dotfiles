@@ -54,6 +54,8 @@
     Plugin 'Yggdroot/indentLine'
     Plugin 'sukima/xmledit'
     Plugin 'a.vim'
+    Plugin 'hynek/vim-python-pep8-indent'
+    "Plugin 'klen/python-mode'
     "Plugin 'willthefrog/indentLine'
     " use astyle for C#/C++/C/Java, jsbeautify for Javascript
     " autopep8 for python, tidy for HTML/XHTML/XML

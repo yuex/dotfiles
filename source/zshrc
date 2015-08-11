@@ -80,10 +80,10 @@ bindkey -M yuexmap ''  vi-backward-blank-word
 bindkey -M yuexmap ''  vi-forward-blank-word
 bindkey -M yuexmap 'b'   vi-backward-word
 bindkey -M yuexmap 'f'   vi-forward-word
-bindkey -M yuexmap ''    vi-backward-word
-bindkey -M yuexmap ''    vi-forward-word
-bindkey -M yuexmap 'h'   backward-char
-bindkey -M yuexmap 'l'   forward-char
+bindkey -M yuexmap 'h'   vi-backward-word
+bindkey -M yuexmap 'l'   vi-forward-word
+bindkey -M yuexmap ''    backward-char
+bindkey -M yuexmap ''    forward-char
 bindkey -M yuexmap ''  down-case-word
 bindkey -M yuexmap ''    up-case-word
 bindkey -M yuexmap ''    history-incremental-pattern-search-forward
@@ -170,6 +170,8 @@ if command -v virtualenvwrapper.sh &>/dev/null; then
     if command -v python2 &>/dev/null; then
         export VIRTUALENVWRAPPER_PYTHON=$(command -v python2)
     fi
+    export WORKON_HOME=${HOME}/.virtualenvs
+    export PROJECT_HOME=${HOME}/Devel
     source $(command -v virtualenvwrapper.sh)
 fi
 

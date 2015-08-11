@@ -18,45 +18,49 @@
     call vundle#begin()
 
     Plugin 'gmarik/Vundle.vim'
-" general {{{
+" interface {{{
+    Plugin 'Shougo/unite.vim'
+    Plugin 'Shougo/unite-help'
+    Plugin 'Shougo/vimproc'
+    Plugin 'Shougo/neomru.vim'
     Plugin 'kien/ctrlp.vim'
     Plugin 'scrooloose/nerdtree'
     Plugin 'jistr/vim-nerdtree-tabs'
     Plugin 'project.tar.gz'
     Plugin 'sessionman.vim'
-
-    "Plugin 'Townk/vim-autoclose'
+    Plugin 'Lokaltog/vim-powerline'
+" }}}
+" general {{{
     Plugin 'Raimondi/delimitMate'
     Plugin 'tpope/vim-surround'
     Plugin 'kana/vim-textobj-user'
     Plugin 'mbbill/undotree'
     "Plugin 'YankRing.vim'
     Plugin 'godlygeek/tabular'
-
     Plugin 'Lokaltog/vim-easymotion'
-    "Plugin 'yuex/vim-easymotion'
+    " Plugin 'junegunn/vim-easy-align'
+    Plugin 'terryma/vim-expand-region'
+    Plugin 'terryma/vim-multiple-cursors'
     Plugin 'matchit.zip'
-
-    Plugin 'bling/vim-bufferline'
-    Plugin 'Lokaltog/vim-powerline'
     Plugin 'altercation/vim-colors-solarized'
-    Plugin 'tomasr/molokai'
+    " Plugin 'tomasr/molokai'
     Plugin 'mileszs/ack.vim'
     Plugin 'kshenoy/vim-signature'
 " }}}
 " programming {{{
     " git integration
     Plugin 'tpope/vim-fugitive'
+    Plugin 'airblade/vim-gitgutter'
     " automatic syntax checker
+    Plugin 'hynek/vim-python-pep8-indent'
+    Plugin 'yuex/vim-autopep8'
     Plugin 'scrooloose/syntastic'
     Plugin 'scrooloose/nerdcommenter'
     Plugin 'majutsushi/tagbar'
     Plugin 'Yggdroot/indentLine'
     Plugin 'sukima/xmledit'
     Plugin 'a.vim'
-    Plugin 'hynek/vim-python-pep8-indent'
-    "Plugin 'klen/python-mode'
-    "Plugin 'willthefrog/indentLine'
+    " Plugin 'severin-lemaignan/vim-minimap'
     " use astyle for C#/C++/C/Java, jsbeautify for Javascript
     " autopep8 for python, tidy for HTML/XHTML/XML
     "Plugin 'Chiel92/vim-autoformat'
@@ -64,7 +68,7 @@
 " }}}
 " snippet and autocomplete {{{
     Plugin 'Valloric/YouCompleteMe'
-    "Plugin 'Shougo/neocomplcache'
+    Plugin 'Shougo/neocomplcache'
     "Plugin 'Shougo/neosnippet'
     " snipMate cant be configured to disable completion after space(\s), first of line(^), also in confilict with supertab
     "Plugin 'snipMate'
@@ -106,7 +110,6 @@
     set autowrite
     set virtualedit=onemore
     set formatoptions+=mM
-    set iskeyword-=_
 " }}}
 " word {{{
     "set spell spelllang=en
@@ -163,6 +166,12 @@
 " fold {{{
     set foldmethod=indent
     set foldopen+=insert
+    for lvl in range(0,9)
+        exec "nnoremap <unique> <Leader>z".lvl." :set foldlevel=".lvl."<CR>"
+    endfor
+    nnoremap <unique> zo @=foldclosed(".")>0?"zv":"zc"<CR>
+    nnoremap <unique> z] ]z
+    nnoremap <unique> z[ [z
 " }}}
 " color scheme {{{
     set bg=dark
@@ -198,11 +207,6 @@
         let i = nr2char(i)
         exec "set <M-".i.">=\<Esc>".i
         exec "inoremap \<Esc>".i." <M-".i.">"
-    endfor
-" }}}
-" folding level {{{
-    for lvl in range(0,9)
-        exec "nnoremap <unique> <Leader>z".lvl." :set foldlevel=".lvl."<CR>"
     endfor
 " }}}
 " change cd {{{
@@ -254,46 +258,23 @@
     "cnoremap <unique> <C-c> <Esc>
 " }}}
 " tabpage {{{
-    " move to previous or next tab, <Esc> for <M-
-    " XXX: use dict to implement this kind mapping. map-nvo and map-i
-    " XXX: tips for easy memorizing. <Left> and <Right> are intuitive. for Up
-    " and Down, note that some laptop keyboard designs squeeze <Home> and
-    " <End> " to <Up> and <Down>, <Home> for create, <End> for close
-
-    " XXX: doesn't used too much, comment out
-    "nnoremap <unique> <silent> <C-g><C-t>   :tabs<CR>
-    "nnoremap <unique> <silent> <C-g><C-h> :tabprevious<CR>
-    "nnoremap <unique> <silent> <C-g><C-l> :tabnext<CR>
-    "nnoremap <unique> <silent> <C-g><C-j> :tabnew<CR>
-    ""nnoremap <unique> <silent> <C-g><C-k> :tabclose<CR>
-    "nnoremap <unique> <silent> <C-g><C-k> :call SmartQuit()<CR>
-
-    " XXX: doesn't used too much, comment out
-    ""nnoremap <unique> <silent> <Esc><C-t>   :tabs<CR>
-    "nnoremap <unique> <silent> <Esc><C-p> :tabprevious<CR>
-    "nnoremap <unique> <silent> <Esc><C-n> :tabnext<CR>
-    "nnoremap <unique> <silent> <Esc><C-t> :tabnew<CR>
-    ""nnoremap <unique> <silent> <Esc><C-c> :tabclose<CR>
-    "nnoremap <unique> <silent> <Esc><C-c> :call SmartQuit()<CR>
-
-    "nnoremap <unique> <silent> <Left>  :tabprevious<CR>
-    "nnoremap <unique> <silent> <Right> :tabnext<CR>
-    "nnoremap <unique> <silent> <Up>  :tabnew<CR>
+    " XXX: use <kHome>/<kEnd> to hack around <M-Home>/<M-End>.  although <M-X>
+    " mapping with these two keys still won't work, <Esc><X> do.
+    nnoremap <unique> <Esc><Home>      :tabnew<CR>
+    nnoremap <unique> <Esc><End>       :tabclose<CR>
+    nnoremap <unique> <Esc><PageUp>    :tabprevious<CR>
+    nnoremap <unique> <Esc><PageDown>  :tabnext<CR>
+    nnoremap <unique> <Esc><kHome>     :tabnew<CR>
+    nnoremap <unique> <Esc><kEnd>      :tabclose<CR>
+    nnoremap <unique> <Esc><kPageUp>   :tabprevious<CR>
+    nnoremap <unique> <Esc><kPageDown> :tabnext<CR>
 
     " move tab left or right
-    nnoremap <unique> <Esc><PageUp>   :tabmove -1<CR>
-    nnoremap <unique> <Esc><PageDown> :tabmove +1<CR>
-
-    nnoremap <unique> <silent> <Esc><Left>  :tabprevious<CR>
-    nnoremap <unique> <silent> <Esc><Right> :tabnext<CR>
+    nnoremap <unique> <silent> <Esc><Left>  :tabmove -1<CR>
+    nnoremap <unique> <silent> <Esc><Right> :tabmove +1<CR>
     nnoremap <unique> <silent> <Esc><Up>    :tabnew %<CR>
     nnoremap <unique> <silent> <Esc><Down>  :tabclose<CR>
-    "nnoremap <unique> <silent> <Down>  :tabclose<CR>
 
-    "inoremap <unique> <silent> <Left>  <nop>
-    "inoremap <unique> <silent> <Right> <nop>
-    "inoremap <unique> <silent> <Up>    <nop>
-    "inoremap <unique> <silent> <Down>  <nop>
     " move to tab #1-#9, #0 is last"
     nnoremap <unique> <C-g>0 :tablast<CR>
     inoremap <unique> <C-g>0 <C-o>:tablast<CR>
@@ -355,8 +336,17 @@
     autocmd BufWritePost *.sh,*.py,*.rb,*.tcl,*.lisp,*.rkt
                 \  exec "!chmod a+x %"
                 \| exec "redraw"
-    " I wanna my iskeyword back
-    autocmd FileType * set iskeyword&|set iskeyword-=_
+
+    " I wanna my iskeyword
+    function! GiveMeKeyword()
+        if exists('b:give_me_keyword') && !b:give_me_keyword
+            return
+        endif
+        set iskeyword&
+        set iskeyword-=_
+    endfunc
+    autocmd Filetype help let b:give_me_keyword=0
+    call GiveMeKeyword()
 " }}}
 " autocmd make {{{
     " quick :make
@@ -384,26 +374,30 @@
     autocmd FileType make setlocal noexpandtab
 " }}}
 " }}}
-" hacks, proud {{{
-" fold {{{
-    nnoremap <unique> zo @=foldclosed(".")>0?"zv":"zc"<CR>
-    nnoremap <unique> z] ]z
-    nnoremap <unique> z[ [z
-"}}}
 " smart mode, keymappings {{{
-    " function SmartMove() {{{
+    " quickevil {{{
+    inoremap <unique> <silent> <Left>  <nop>
+    inoremap <unique> <silent> <Right> <nop>
+    inoremap <unique> <silent> <Up>    <nop>
+    inoremap <unique> <silent> <Down>  <nop>
+    " }}}
+    " SmartMove() {{{
     function SmartMove(moveToNext, moveToEnd, ...)
         " if line number changed, use moveToEnd, otherwise use moveToNext
         " will ensure cursor get changed to avoid deadlock
         " a:type to deal with visualmode
+        " a:withLine to confine the movement within one line
         if a:0 > 0
             let a:type = a:1
+        endif
+        if a:0 > 1
+            let a:withinLine = a:2
         endif
         let prevpos = getpos('.')
         let line = prevpos[1]
         let col  = prevpos[2]
 
-        if exists("a:type")
+        if exists("a:type") && a:type
             let prefix = 'gv'
         else
             let prefix = ''
@@ -417,14 +411,16 @@
         exec "normal! " . prefix . a:moveToNext
         if line !=# line('.')
             call setpos('.', prevpos)
-            exec "normal! " . prefix . a:moveToEnd
-            if prevpos ==# getpos('.')
-                exec "normal! " . prefix. a:moveToNext
+            if exists("a:withinLine") && a:withinLine
+                return
             endif
+            exec "normal! " . prefix . a:moveToEnd
+            " if prevpos ==# getpos('.')
+                " exec "normal! " . prefix. a:moveToNext
+            " endif
         endif
     endfunc
     " }}}
-    " Smart Execution {{{
     " SmartWrite() {{{
     func SmartWrite(...)
         let cmd = 'w'
@@ -460,7 +456,8 @@
 
         call inputrestore()
     endfunction
-
+    "}}}
+    " Smart Execution {{{
     func CmdExecute(cmds, force)
         if a:force
             let cmd = a:cmds[0].'! '.join(a:cmds[1:])
@@ -484,6 +481,7 @@
         endtry
     endfunction
     " }}}
+    " smartwrite mapping {{{
     "nnoremap <unique> <Esc><Leader><M-w> :w !sudo tee % >/dev/null
     "nnoremap <unique> <Esc><Leader><Esc><Leader> :
     nnoremap <unique> <Esc><Leader><Esc><Leader> :
@@ -511,8 +509,8 @@
     inoremap <unique> <C-j> <C-o>g<Down>
     inoremap <unique> <C-k> <C-o>g<Up>
     inoremap <unique> <M-e> <C-o>e<Right>
-    inoremap <unique> <Esc><C-j> <C-o>}
-    inoremap <unique> <Esc><C-k> <C-o>{
+    inoremap <unique> <Esc><C-j> <C-o>4j
+    inoremap <unique> <Esc><C-k> <C-o>4k
 
     inoremap <unique> <C-u> <C-o>d0
     inoremap <unique> <M-u> <C-o>d$
@@ -538,12 +536,16 @@
 
     cnoremap <unique> <C-a> <C-o>^<C-c>
     cnoremap <unique> <C-e> <End>
-    cnoremap <unique> <M-h> <Left>
-    cnoremap <unique> <M-l> <Right>
-    cnoremap <unique> <C-h> <C-o>b<C-c>
-    cnoremap <unique> <C-l> <C-o>w<C-c>
-    cnoremap <unique> <M-b> <C-o>b<C-c>
-    cnoremap <unique> <M-f> <C-o>w<C-c>
+    cnoremap <unique> <C-h> <Left>
+    cnoremap <unique> <C-l> <Right>
+    cnoremap <unique> <Esc><C-h> <C-o>:call SmartMove('B','B',0,1)<CR><C-c>
+    cnoremap <unique> <Esc><C-l> <C-o>:call SmartMove('W','W',0,1)<CR><C-c>
+    cnoremap <unique> <M-h> <C-o>:call SmartMove('b','b',0,1)<CR><C-c>
+    cnoremap <unique> <M-l> <C-o>:call SmartMove('w','w',0,1)<CR><C-c>
+    " cnoremap <unique> <Esc><C-h> <C-o>B<C-c>
+    " cnoremap <unique> <Esc><C-l> <C-o>W<C-c>
+    " cnoremap <unique> <M-h> <C-o>b<C-c>
+    " cnoremap <unique> <M-l> <C-o>w<C-c>
     "cnoremap <unique> <M-h> <BS>
     "cnoremap <unique> <M-l> <Del>
 
@@ -556,8 +558,6 @@
     cnoremap <unique> <C-j> <C-n>
     cnoremap <unique> <C-k> <C-p>
     cnoremap <unique> <M-e> <C-o>el<C-c>
-    cnoremap <unique> <Esc><C-h> <C-o><C-Left><C-c>
-    cnoremap <unique> <Esc><C-l> <C-o><C-Right><C-c>
 
     cnoremap <unique> <C-u> <C-o>d0<C-c>
     cnoremap <unique> <M-u> <C-o>d$<C-c>
@@ -611,7 +611,6 @@
     "noremap <unique> <M-h> X
     "noremap <unique> <M-l> x
     " }}}
-" }}}"
 " quick shift {{{
     vmap <unique> <Esc>, <gv
     vmap <unique> <Esc>. >gv
@@ -935,6 +934,34 @@ function PluginInstalled(plugin,...)
     return 0
 endfun
 " }}}
+" unite {{{
+if PluginInstalled('unite.vim')
+    let g:unite_source_history_yank_enable=1
+    let g:unite_source_history_yank_save_clipboard=1
+    nnoremap <unique> <Leader>uf :Unite file<CR>
+    nnoremap <unique> <Leader>up :Unite file -input=
+    nnoremap <unique> <Leader>ua :Unite file_rec/async<CR>
+    nnoremap <unique> <Leader>ug :Unite file_rec/git<CR>
+    nnoremap <unique> <Leader>um :Unite neomru/file neomru/directory<CR>
+
+    nnoremap <unique> <Leader>uh :Unite history/yank<CR>
+    nnoremap <unique> <Leader>uy :Unite history/yank<CR>
+
+    nnoremap <unique> <Leader>ub :Unite buffer<CR>
+    nnoremap <unique> <Leader>ut :Unite tab<CR>
+    nnoremap <unique> <Leader>ur :Unite register<CR>
+    nnoremap <unique> <Leader>uw :Unite window<CR>
+    nnoremap <unique> <Leader>us :Unite grep:%
+    nnoremap <unique> <Leader>uj :Unite jump<CR>
+    nnoremap <unique> <Leader>uc :Unite change<CR>
+endif
+" }}}
+" vim-surround {{{
+if PluginInstalled('vim-surround')
+    " function! del
+    " nnoremap ds<Space> F<Space>xf<Space>x
+endif
+" }}}
 " project.tar.gz {{{
 "if match(g:bundle_name, 'project.tar.gz') >= 0
 if PluginInstalled('project.tar.gz')
@@ -969,10 +996,10 @@ if PluginInstalled('vim-easymotion')
         exec "map  <unique> <M-".key."> <Plug>(easymotion-".key.")"
         exec "imap <unique> <M-".key."> <C-o><Plug>(easymotion-".key.")"
     endfor
-    map  <unique> <M-h> <Plug>(easymotion-F)
-    map  <unique> <M-l> <Plug>(easymotion-f)
-    imap <unique> <M-h> <C-o><Plug>(easymotion-F)
-    imap <unique> <M-l> <C-o><Plug>(easymotion-f)
+    map  <unique> <M-h> <Plug>(easymotion-Fl)
+    map  <unique> <M-l> <Plug>(easymotion-fl)
+    imap <unique> <M-h> <C-o><Plug>(easymotion-Fl)
+    imap <unique> <M-l> <C-o><Plug>(easymotion-fl)
     "for key in ['t','T','f','F','w','b','e','W','B','E',"ge","gE"]
         "let act = key
 
@@ -1093,6 +1120,13 @@ if PluginInstalled('vimwiki')
     autocmd FileType vimwiki inoremap <buffer> <C-G><C-J> <C-O>:VimwikiListChangeMarker next i<CR>
     autocmd FileType vimwiki inoremap <buffer> <C-G><C-K> <C-O>:VimwikiListChangeMarker prev i<CR>
     autocmd FileType vimwiki inoremap <buffer> <C-G><C-M> <Esc>:call vimwiki#lst#toggle_list_item()<CR>
+endif
+" }}}
+" riv.vim {{{
+if PluginInstalled('riv.vim')
+    " XXX: to see the list of options, check autoload/riv.vim. search
+    " default.options
+    let g:riv_global_leader = '<Leader>r'
 endif
 " }}}
 " VOoM {{{
@@ -1282,20 +1316,7 @@ endif
 " }}}
 " nerdcommenter {{{
 if PluginInstalled('nerdcommenter')
-    "nerdcommenter defined key map, replicated here to avoid overwrite
-    "nnoremap <unique> <Leader>cc <Plug><NERDCommenterNested
-    "nnoremap <unique> <Leader>ca <Plug><NERDCommenterAltDelims
-    "nnoremap <unique> <Leader>cu <Plug><NERDCommenterUncomment
-    "nnoremap <unique> <Leader>cb <Plug><NERDCommenterAlignBoth
-    "nnoremap <unique> <Leader>cl <Plug><NERDCommenterAlignLeft
-    "nnoremap <unique> <Leader>cA <Plug><NERDCommenterAppend
-    "nnoremap <unique> <Leader>cy <Plug><NERDCommenterYank
-    "nnoremap <unique> <Leader>cs <Plug><NERDCommenterSexy
-    "nnoremap <unique> <Leader>ci <Plug><NERDCommenterInvert
-    "nnoremap <unique> <Leader>c$ <Plug><NERDCommenterToEOL
-    "nnoremap <unique> <Leader>cm <Plug><NERDCommenterMinimal
-    "nnoremap <unique> <Leader>cn <Plug><NERDCommenterNested
-    "nnoremap <unique> <Leader>c<space> <Plug><NERDCommenterToggle
+    let NERDSpaceDelims=1
 endif
 " }}}
 " nerdtree {{{
@@ -1360,6 +1381,12 @@ if PluginInstalled('sessionman.vim')
     nnoremap <leader>ss :SessionSave<CR>
 endif
 " }}}
+" syntastic {{{
+if PluginInstalled('syntastic')
+    nnoremap <unique> <Leader>kk :SyntasticCheck<CR>
+    nnoremap <unique> <Leader>ke :Errors<CR>
+endif
+" }}}
 " cscope conf {{{
 if has("cscope")
      " use both cscope and ctag for 'ctrl-]', ':ta', 'vim'
@@ -1422,7 +1449,5 @@ let s:vimrc_private = "$HOME/.vimrc-private"
 if filereadable(glob( s:vimrc_private ))
     exec 'source '.s:vimrc_private
 endif
-
-
 
 " vim:ft=vim:fdm=marker

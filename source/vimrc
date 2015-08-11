@@ -1316,7 +1316,11 @@ endif
 " }}}
 " nerdcommenter {{{
 if PluginInstalled('nerdcommenter')
-    let NERDSpaceDelims=1
+    let g:NERDSpaceDelims = 1
+    " to work around the silly merging of #183
+    let g:NERDCustomDelimiters = {
+        \'python': {'left': '#'},
+        \}
 endif
 " }}}
 " nerdtree {{{

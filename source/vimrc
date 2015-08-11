@@ -169,7 +169,7 @@
     for lvl in range(0,9)
         exec "nnoremap <unique> <Leader>z".lvl." :set foldlevel=".lvl."<CR>"
     endfor
-    nnoremap <unique> zo @=foldclosed(".")>0?"zv":"zc"<CR>
+    nnoremap <unique> <M-o> @=foldclosed(".")>0?"zv":"zc"<CR>
     nnoremap <unique> z] ]z
     nnoremap <unique> z[ [z
 " }}}
@@ -309,7 +309,6 @@
 " toggle options {{{
     inoremap <unique> <M-m> <C-o>:setlocal number!<CR>
     nnoremap <unique> <M-m> :setlocal number!<CR>
-    "nnoremap <M-r> :vertical resize 80<CR>
     inoremap <unique> <M-s> <C-o>:setlocal hlsearch!<CR>
     nnoremap <unique> <M-s> :setlocal hlsearch!<CR>
 " }}}
@@ -518,7 +517,7 @@
     "inoremap <unique> <Esc><C-k> <C-o>d$
     inoremap <unique> <C-w> <C-o>db
     inoremap <unique> <M-d> <C-o>de
-    inoremap <unique> <M-w> <C-o>de
+    " inoremap <unique> <M-w> <C-o>de
     inoremap <unique> <C-y> <C-r>-
     inoremap <unique> <C-s> <C-o>d
     inoremap <unique> <C-s>u <C-o>u
@@ -565,13 +564,12 @@
     cnoremap <unique> <Esc><C-k> <C-o>d$<C-c>
     cnoremap <unique> <C-w> <C-o>db<C-c>
     cnoremap <unique> <M-d> <C-o>de<C-c>
-    cnoremap <unique> <M-w> <C-o>de<C-c>
+    " cnoremap <unique> <M-w> <C-o>de<C-c>
     cnoremap <unique> <C-y> <C-r>-
     cnoremap <unique> <C-s> <C-o>d
 
     cnoremap <unique> <M-a> <C-o><C-a><C-c>
     cnoremap <unique> <M-x> <C-o><C-x><C-c>
-    "cnoremap <C-w> <C-c><C-w>
     " }}}
     " quicknormal {{{
     noremap <unique> <C-a> ^
@@ -586,8 +584,8 @@
     noremap <unique> <Esc><C-e> e
     noremap <unique> <C-j> 4j
     noremap <unique> <C-k> 4k
-    noremap <unique> <Esc><C-j> }
-    noremap <unique> <Esc><C-k> {
+    noremap <unique> <Esc><C-j> 8j
+    noremap <unique> <Esc><C-k> 8k
 
     nnoremap <unique> <C-h> :call SmartMove('b','gel')<CR>
     nnoremap <unique> <C-l> :call SmartMove('w','el')<CR>
@@ -735,8 +733,8 @@
             normal! w
         endtry
     endfunc
-    noremap <unique> <M-o> <C-w>w
-    noremap <unique> <M-r> <C-w>W
+    noremap <unique> <M-r> <C-w>w
+    noremap <unique> <Esc><C-r> <C-w>W
     noremap <unique> <M-w> :call GotoLastWindow()<CR>
 
     noremap <unique> <C-w>+ 5<C-w>+
@@ -1385,8 +1383,7 @@ endif
 " }}}
 " syntastic {{{
 if PluginInstalled('syntastic')
-    nnoremap <unique> <Leader>kk :SyntasticCheck<CR>
-    nnoremap <unique> <Leader>ke :Errors<CR>
+    nnoremap <unique> <Leader>kk :SyntasticCheck<CR>:Errors<CR>
 endif
 " }}}
 " cscope conf {{{

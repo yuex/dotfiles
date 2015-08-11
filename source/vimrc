@@ -728,14 +728,16 @@
     noremap <unique> <C-w>=_ <C-w>_
     noremap <unique> <C-w>=\| <C-w>\|
 
-    "noremap! <M-w> <C-c><C-w>w
-    "noremap! <M-r> <C-c><C-w>W
-    "noremap! <M-o> <C-c><C-w><C-p>
+    function GotoLastWindow()
+        try
+            normal! P
+        catch /^Vim\%((\a\+)\)\=:E441/
+            normal! w
+        endtry
+    endfunc
     noremap <unique> <M-o> <C-w>w
     noremap <unique> <M-r> <C-w>W
-    noremap <unique> <M-w> <C-w><C-p>
-    "noremap <unique> <C-w><C-p> <C-w><C-p>
-    "noremap <unique> <C-w><M-o> <C-w><C-o>
+    noremap <unique> <M-w> :call GotoLastWindow()<CR>
 
     noremap <unique> <C-w>+ 5<C-w>+
     noremap <unique> <C-w>- 5<C-w>-

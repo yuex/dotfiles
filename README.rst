@@ -122,6 +122,7 @@ My ``vimrc`` contains some self-customed key mappings and home-made scripts in `
     Plugin 'a.vim'
     Plugin 'Valloric/YouCompleteMe'
     Plugin 'Shougo/neocomplcache'
+    Plugin 'neilagabriel/vim-geeknote'
     Plugin 'Rykka/riv.vim'
     Plugin 'plasticboy/vim-markdown'
     Plugin 'utl.vim'

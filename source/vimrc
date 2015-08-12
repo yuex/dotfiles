@@ -4,14 +4,6 @@
 " Source:       http://github.com/yuex/dotfiles
 
 " vundle {{{
-    " :BundleLis           - Brief help
-    " :BundleList          - list configured bundles
-    " :BundleInstall(!)    - install(update) bundles
-    " :BundleSearch(!) foo - search(or refresh cache first) for foo
-    " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-    "
-    " see :h vundle for more details or wiki for FAQ
-    " NOTE: comments after Bundle command are not allowed..t
     set nocompatible
     filetype off
     set rtp+=~/.vim/bundle/Vundle.vim
@@ -60,6 +52,7 @@
     Plugin 'Yggdroot/indentLine'
     Plugin 'sukima/xmledit'
     Plugin 'a.vim'
+    " Plugin 'wlangstroth/vim-racket'
     " Plugin 'severin-lemaignan/vim-minimap'
     " use astyle for C#/C++/C/Java, jsbeautify for Javascript
     " autopep8 for python, tidy for HTML/XHTML/XML
@@ -81,24 +74,25 @@
     "Plugin 'HTML-AutoCloseTag'
 "}}}
 " notetaking {{{
-    "Plugin 'vimwiki/vimwiki'
-    "Plugin 'kakkyz81/evervim'
-    "Plugin 'yuex/vimwiki'
+    " Plugin 'vimwiki/vimwiki'
+    " Plugin 'kakkyz81/evervim'
+    " Plugin 'yuex/vimwiki'
+    Plugin 'neilagabriel/vim-geeknote'
     Plugin 'Rykka/riv.vim'
-    "Plugin 'aaronbieber/quicktask'
-    "Plugin 'VOoM'
+    " Plugin 'aaronbieber/quicktask'
+    " Plugin 'VOoM'
     Plugin 'plasticboy/vim-markdown'
-    "Plugin 'VimOrganizer'
+    " Plugin 'VimOrganizer'
     Plugin 'utl.vim'
     " depends on gem github-markup tilt redcarpet but it doesn't work :(.
     " Maybe after I learned myself a byte of ruby to fix it
-    "Plugin 'matthias-guenther/hammer.vim'
+    " Plugin 'matthias-guenther/hammer.vim'
     " real-time preview
-    "Plugin 'suan/vim-instant-markdown'
-    "Plugin 'jtratner/vim-flavored-markdown'
-    "Plugin 'samsonw/vim-task'
+    " Plugin 'suan/vim-instant-markdown'
+    " Plugin 'jtratner/vim-flavored-markdown'
+    " Plugin 'samsonw/vim-task'
     " provide calendar support in vimwiki
-    "Plugin 'mattn/calendar-vim'
+    " Plugin 'mattn/calendar-vim'
 " }}}
 
     call vundle#end()
@@ -186,8 +180,18 @@
     let g:solarized_contrast="high"
     let g:solarized_visibility="high"
 " }}}
+" iskeyword {{{
+    " I wanna my iskeyword
+    function! GiveMeKeyword()
+        if exists('b:give_me_keyword') && !b:give_me_keyword
+            return
+        endif
+        set iskeyword&
+        set iskeyword-=_
+    endfunc
+    autocmd Filetype help let b:give_me_keyword=0
+    call GiveMeKeyword()
 " }}}
-" keymapping {{{
 " leader {{{
     let mapleader = ';'
     let maplocalleader = ','
@@ -209,6 +213,80 @@
         exec "inoremap \<Esc>".i." <M-".i.">"
     endfor
 " }}}
+" }}}
+" autocommand {{{
+    " set filetype for *.conf
+    "autocmd BufRead,BufNewFile *.conf setfiletype conf
+" autocmd executable {{{
+    let g:_executable_env = '#!/usr/bin/env ' "{{{
+    let g:_executable = {
+                \'python': 'python',
+                \'ruby': 'ruby',
+                \'sh': 'sh',
+                \'racket': ['racket', '#lang racket'],
+                \'scheme': ['racket', '#lang racket'],
+                \} "}}}
+    for k in keys(g:_executable) "{{{
+        let v = g:_executable[k]
+        if type(v) == type('')
+            let g:_executable[k] = g:_executable_env . v
+        elseif type(v) == type([])
+            let v[0] = g:_executable_env . v[0]
+            let g:_executable[k] = v
+        endif
+        unlet v
+    endfor "}}}
+    function! AddHeader() "{{{
+        if !exists('g:_executable')
+                    \|| !has_key(g:_executable, &ft)
+                    \|| match(getline(1),'#!', 0) >= 0
+            return
+        endif
+
+        let header = g:_executable[&ft]
+        if type(header) == type('') || type(header) == type([])
+            call append(0, header)
+        endif
+    endfunc "}}}
+    function! AddXPerm() "{{{
+        if !exists('g:_executable') || !has_key(g:_executable, &ft)
+            return
+        endif
+
+        let ft_save = &ft
+        !chmod a+x %
+        edit!
+        doautocmd Syntax
+        redraw!
+    endfunc "}}}
+    autocmd FileType * call AddHeader()
+    autocmd BufWritePost * call AddXPerm()
+" }}}
+" autocmd make {{{
+    " quick :make
+    nnoremap <unique><silent> <F5> :make!<CR>
+    " hack for python2 on archlinux
+    autocmd FileType python set makeprg=python\ %
+    autocmd FileType ruby set makeprg=ruby\ %
+    autocmd FileType tcl set makeprg=tclsh\ %
+    autocmd FileType sh set makeprg=bash\ %
+    autocmd FileType lisp set makeprg=clisp\ %
+    autocmd FileType tex set makeprg=pdflatex\ %
+    autocmd FileType c set makeprg=gcc\ -Wall\ -o%<\ %;./%<
+    autocmd FileType haskell set makeprg=runhaskell\ %
+    autocmd Filetype go set makeprg=go\ run\ %
+" }}}
+" autocmd indent {{{
+    autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
+    autocmd FileType java setlocal tabstop=4 shiftwidth=4 softtabstop=4
+    autocmd FileType c,cpp setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType xml,html,css,htmldjango
+                \ setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType make setlocal noexpandtab
+" }}}
+" }}}
+" smart mode, keymappings {{{
 " change cd {{{
     cnoremap <unique> cwd lcd %:p:h
     cnoremap <unique> cd. lcd %:p:h
@@ -319,69 +397,14 @@
     map <unique> gt T
     map <unique> gf F
 " }}}
-" }}}
-" autocommand {{{
-    " set filetype for *.conf
-    "autocmd BufRead,BufNewFile *.conf setfiletype conf
-" autocmd executable {{{
-    autocmd BufNewFile *.py call append(0,"#!/usr/bin/env python")
-    autocmd BufNewFile *.rb call append(0,"#!/usr/bin/env ruby")
-    autocmd BufNewFile *.tcl call append(0,"#!/usr/bin/env tclsh")
-    autocmd BufNewFile *.sh call append(0,"#!/usr/bin/env sh")
-    autocmd BufNewFile *.lisp call append(0,"#!/usr/bin/env clisp")
-    autocmd BufNewFile *.rkt call append(0,"#!/usr/bin/env racket")
-    autocmd BufNewFile *.rkt call append(1,"#lang racket")
-
-    autocmd BufWritePost *.sh,*.py,*.rb,*.tcl,*.lisp,*.rkt
-                \  exec "!chmod a+x %"
-                \| exec "redraw"
-
-    " I wanna my iskeyword
-    function! GiveMeKeyword()
-        if exists('b:give_me_keyword') && !b:give_me_keyword
-            return
-        endif
-        set iskeyword&
-        set iskeyword-=_
-    endfunc
-    autocmd Filetype help let b:give_me_keyword=0
-    call GiveMeKeyword()
-" }}}
-" autocmd make {{{
-    " quick :make
-    nnoremap <unique><silent> <F5> :make!<CR>
-    " hack for python2 on archlinux
-    autocmd FileType python
-                \ nnoremap <unique><silent><buffer> <F6> :!python2 %<CR>
-    autocmd FileType python set makeprg=python\ %
-    autocmd FileType ruby set makeprg=ruby\ %
-    autocmd FileType tcl set makeprg=tclsh\ %
-    autocmd FileType sh set makeprg=bash\ %
-    autocmd FileType lisp set makeprg=clisp\ %
-    autocmd FileType tex set makeprg=pdflatex\ %
-    autocmd FileType c set makeprg=gcc\ -Wall\ -o%<\ %;./%<
-    autocmd FileType haskell set makeprg=runhaskell\ %
-    autocmd Filetype go set makeprg=go\ run\ %
-" }}}
-" autocmd indent {{{
-    autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
-    autocmd FileType java setlocal tabstop=4 shiftwidth=4 softtabstop=4
-    autocmd FileType c,cpp setlocal tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType xml,html,css,htmldjango
-                \ setlocal tabstop=2 shiftwidth=2 softtabstop=2
-    autocmd FileType make setlocal noexpandtab
-" }}}
-" }}}
-" smart mode, keymappings {{{
-    " quickevil {{{
+" quickevil {{{
     inoremap <unique> <silent> <Left>  <nop>
     inoremap <unique> <silent> <Right> <nop>
     inoremap <unique> <silent> <Up>    <nop>
     inoremap <unique> <silent> <Down>  <nop>
-    " }}}
-    " SmartMove() {{{
-    function SmartMove(moveToNext, moveToEnd, ...)
+" }}}
+" quickmode {{{
+    function SmartMove(moveToNext, moveToEnd, ...) "{{{
         " if line number changed, use moveToEnd, otherwise use moveToNext
         " will ensure cursor get changed to avoid deadlock
         " a:type to deal with visualmode
@@ -418,10 +441,8 @@
                 " exec "normal! " . prefix. a:moveToNext
             " endif
         endif
-    endfunc
-    " }}}
-    " SmartWrite() {{{
-    func SmartWrite(...)
+    endfunc " }}}
+    func SmartWrite(...) "{{{
         let cmd = 'w'
         if a:0 > 0
             let cmd = a:1
@@ -454,10 +475,8 @@
         endif
 
         call inputrestore()
-    endfunction
-    "}}}
-    " Smart Execution {{{
-    func CmdExecute(cmds, force)
+    endfunction "}}}
+    func CmdExecute(cmds, force) "{{{
         if a:force
             let cmd = a:cmds[0].'! '.join(a:cmds[1:])
         else
@@ -478,16 +497,13 @@
             "echo v:exception
             call SmartWriteWithName()
         endtry
-    endfunction
-    " }}}
-    " smartwrite mapping {{{
+    endfunction " }}}
     "nnoremap <unique> <Esc><Leader><M-w> :w !sudo tee % >/dev/null
     "nnoremap <unique> <Esc><Leader><Esc><Leader> :
     nnoremap <unique> <Esc><Leader><Esc><Leader> :
     nnoremap <unique> <Esc><Leader><M-w>  :call SmartWrite()<CR>
     nnoremap <unique> <Esc><Leader><M-e>  :w<Space>
     nnoremap <unique> <Esc><Leader><M-q>  :x<CR>
-    " }}}
     " quickinsert inoremap {{{
     " it seems <C-Left> and <C-Right> in insert mode
     let g:omni_sql_no_default_maps=1
@@ -517,7 +533,7 @@
     "inoremap <unique> <Esc><C-k> <C-o>d$
     inoremap <unique> <C-w> <C-o>db
     inoremap <unique> <M-d> <C-o>de
-    " inoremap <unique> <M-w> <C-o>de
+    inoremap <unique> <M-w> <C-o>de
     inoremap <unique> <C-y> <C-r>-
     inoremap <unique> <C-s> <C-o>d
     inoremap <unique> <C-s>u <C-o>u
@@ -564,7 +580,7 @@
     cnoremap <unique> <Esc><C-k> <C-o>d$<C-c>
     cnoremap <unique> <C-w> <C-o>db<C-c>
     cnoremap <unique> <M-d> <C-o>de<C-c>
-    " cnoremap <unique> <M-w> <C-o>de<C-c>
+    cnoremap <unique> <M-w> <C-o>de<C-c>
     cnoremap <unique> <C-y> <C-r>-
     cnoremap <unique> <C-s> <C-o>d
 
@@ -609,6 +625,7 @@
     "noremap <unique> <M-h> X
     "noremap <unique> <M-l> x
     " }}}
+" }}}
 " quick shift {{{
     vmap <unique> <Esc>, <gv
     vmap <unique> <Esc>. >gv
@@ -715,6 +732,22 @@
     " paste after the curor, rare case
     inoremap <unique> <Esc><C-v> <C-o>"+P
 " }}}
+" quick register editing {{{
+    function RegisterEdit() "{{{
+        let reg = nr2char(getchar())
+        if reg !~# '["[:alnum:]-:.%#=*+~_/]'
+            echohl WarningMsg
+            echo "Wrong Register Name!"
+            echohl None
+            return
+        endif
+        call inputsave()
+        let content = input('@'.reg.'=')
+        call inputrestore()
+        call setreg(reg, content)
+    endfunc "}}}
+    nnoremap <silent><unique> <Leader>qq :call RegisterEdit()<CR>
+" }}}
 " quickwindow {{{
     "nnoremap <C-w><C-m> :vnew<CR>
     "nnoremap <C-w>m     :vnew<CR>
@@ -726,12 +759,13 @@
     noremap <unique> <C-w>=_ <C-w>_
     noremap <unique> <C-w>=\| <C-w>\|
 
-    function GotoLastWindow()
-        try
-            normal! P
-        catch /^Vim\%((\a\+)\)\=:E441/
-            normal! w
-        endtry
+    function! GotoLastWindow()
+        let last = winnr()
+        wincmd p
+        let curr = winnr()
+        if last == curr
+            wincmd w
+        endif
     endfunc
     noremap <unique> <M-r> <C-w>w
     noremap <unique> <Esc><C-r> <C-w>W
@@ -746,17 +780,9 @@
     "noremap <unique> <C-w>O <C-w>W
     noremap <unique> <C-w><C-t> <C-w>T
 " }}}
-" mottos" {{{
-    let g:mottos_prompt = "省» "
-    noremap <unique><silent> <C-s>
-                \ :<C-u>echoh Question
-                \\| echo g:mottos_prompt.substitute(system('mottos',&winwidth-strlen(g:mottos_prompt)),'','','')
-                \\| echoh None<CR>
-" }}}
 " quickfix {{{
-    " function QuickfixToggle() {{{
+    function QuickfixToggle(type) "{{{
     " todo, fixme, and xxx vimgrep
-    function QuickfixToggle(type)
         let flagname = 'b:quickfix_'.a:type.'_opened'
         let cmdopen = a:type.'window'
         let cmdclose = a:type.'close'
@@ -777,10 +803,8 @@
             " in the quickfix window
             exec "let ".flagname." = 0 "
         endif
-    endfunc
-    " }}}
-    " function QuickfixCompile() {{{
-    function QuickfixCompile(type)
+    endfunc " }}}
+    function QuickfixCompile(type) "{{{
         let flagname = 'b:quickfix_' . a:type . '_compiled'
         if !exists(flagname)
             exec "let " . flagname . " = 0"
@@ -804,8 +828,7 @@
             endtry
             exec "let " . flagname . " = 1"
         endif
-    endfunc
-    " }}}
+    endfunc " }}}
     "nnoremap <unique> <Leader>td :vimgrep /TODO\\|FIXME\\|XXX/ %<CR>
                 "\ :call QuickfixToggle('c')<CR>
     "nnoremap <unique> <Leader>ld :lvimgrep /TODO\\|FIXME\\|XXX/ %<CR>
@@ -842,9 +865,25 @@
     "inoremap <unique> <M-q> <Del>
     "inoremap <unique> <Esc><C-q> <Del>
 " }}}
+" smartbinary, smart binary {{{
+    function ToggleBinaryMode() "{{{
+        if !exists('b:_binary_on')
+            let b:_binary_on = 0
+        endif
+        if !b:_binary_on
+            setlocal binary
+            exec "%!xxd"
+            let b:_binary_on = 1
+        else
+            exec "%!xxd -r"
+            setlocal nobinary
+            let b:_binary_on = 0
+        endif
+    endfunc "}}}
+    nnoremap <unique> <Leader>bb :call ToggleBinaryMode()<CR>
+" }}}
 " strip space at the end of line {{{
-    " functoin AutoSpaceCJK() {{{
-    function! AutoSpaceCJK(mode)
+    function! AutoSpaceCJK(mode) "{{{
         "let range = "'" . 'A-Z0-9a-z~!@#$%\^&*()_+`-=\[\]{}:;"<>,./?\\|'
         let pat_range = '"'
                     \. "A-Z0-9a-z~!@#$%^&*()=_+`[{}:;". "'<>,./?|"
@@ -868,10 +907,8 @@
         exec range . 'substitute/\v'. pat_no .'\zs(' . pat_ya . ')\ze/ \1/ge'
         exec range . 'substitute/\v\zs('. pat_ya .')\ze' . pat_no . '/\1 /ge'
         redraw!
-    endfunc
-    " }}}
-    " function SpaceFormat() {{{
-    function! SpaceFormat()
+    endfunc " }}}
+    function! SpaceFormat() "{{{
         let praise = "Neat Yo!"
         let trailing_space_replace = '%s/\s\+$//g'
         exec 'retab'
@@ -880,8 +917,7 @@
         catch /^Vim\%((\a\+)\)\=:E486/
             echo praise
         endtry
-    endfunc
-    "}}}
+    endfunc "}}}
     "nnoremap <unique> <Leader>fs :retab<CR>:%s/\s\+$//g<CR>
     nnoremap <unique> <Leader>fs :call SpaceFormat()<CR>
     nnoremap <unique> <Leader>fc gg=G
@@ -912,19 +948,38 @@
         exec a:cmd
     endfun
 " }}}
+" hammer {{{
+" poor man's hammer
+    "autocmd FileType vimwiki,markdown nnoremap <Leader>hh
+    autocmd FileType vimwiki,markdown nnoremap <buffer> <Leader>hh
+                \ :silent !pandoc -r markdown -w html "%" > "/tmp/%:t.html"<CR>
+                \ :silent !xdg-open "/tmp/%:t.html"<CR>
+                \ :redraw!<CR>
+    autocmd FileType rst nnoremap <buffer> <Leader>hh
+                \ :silent !pandoc -r rst -w html "%" > "/tmp/%:t.html"<CR>
+                \ :silent !xdg-open "/tmp/%:t.html"<CR>
+                \ :redraw!<CR>
+    "nnoremap <unique> <Leader>hh :Hammer<CR>
+" }}}
+" mottos" {{{
+    let g:mottos_prompt = "省» "
+    noremap <unique><silent> <C-s>
+                \ :<C-u>echoh Question
+                \\| echo g:mottos_prompt.substitute(system('mottos',&winwidth-strlen(g:mottos_prompt)),'','','')
+                \\| echoh None<CR>
+" }}}
 " }}}
 " plugins {{{
-" function PluginInstalled {{{
+function PluginInstalled(plugin,...) "{{{
 " PluginInstalled("plugin name")
-" PluginInstalled("plugin name",g:bundle_name)
+" PluginInstalled("plugin name",g:_bundle_name)
 " return 1 or 0
-function PluginInstalled(plugin,...)
-    " if g:bundle_name doesn't exist, create it
-    if !exists("g:bundle_name")
-        let g:bundle_name = map(copy(g:vundle#bundles), 'v:val.name')
+    " if g:_bundle_name doesn't exist, create it
+    if !exists("g:_bundle_name")
+        let g:_bundle_name = map(copy(g:vundle#bundles), 'v:val.name')
     endif
     if a:0 == 0
-        let installed = g:bundle_name
+        let installed = g:_bundle_name
     else
         let installed = a:1
     endif
@@ -932,21 +987,19 @@ function PluginInstalled(plugin,...)
         return 1
     endif
     return 0
-endfun
-" }}}
-" unite {{{
-if PluginInstalled('unite.vim')
+endfun " }}}
+if PluginInstalled('unite.vim') "{{{
     let g:unite_source_history_yank_enable=1
     let g:unite_source_history_yank_save_clipboard=1
+    nnoremap <unique> <Leader>uu :Unite 
     nnoremap <unique> <Leader>uf :Unite file<CR>
     nnoremap <unique> <Leader>up :Unite file -input=
     nnoremap <unique> <Leader>ua :Unite file_rec/async<CR>
     nnoremap <unique> <Leader>ug :Unite file_rec/git<CR>
     nnoremap <unique> <Leader>um :Unite neomru/file neomru/directory<CR>
 
-    nnoremap <unique> <Leader>uh :Unite history/yank<CR>
+    nnoremap <unique> <Leader>uh :Unite help<CR>
     nnoremap <unique> <Leader>uy :Unite history/yank<CR>
-
     nnoremap <unique> <Leader>ub :Unite buffer<CR>
     nnoremap <unique> <Leader>ut :Unite tab<CR>
     nnoremap <unique> <Leader>ur :Unite register<CR>
@@ -954,22 +1007,15 @@ if PluginInstalled('unite.vim')
     nnoremap <unique> <Leader>us :Unite grep:%
     nnoremap <unique> <Leader>uj :Unite jump<CR>
     nnoremap <unique> <Leader>uc :Unite change<CR>
-endif
-" }}}
-" vim-surround {{{
-if PluginInstalled('vim-surround')
+endif " }}}
+if PluginInstalled('vim-surround') "{{{
     " function! del
     " nnoremap ds<Space> F<Space>xf<Space>x
-endif
-" }}}
-" project.tar.gz {{{
-"if match(g:bundle_name, 'project.tar.gz') >= 0
-if PluginInstalled('project.tar.gz')
+endif " }}}
+if PluginInstalled('project.tar.gz') "{{{
     nmap <unique> <M-g> <Plug>ToggleProject
-endif
-" }}}
-" easymotion and insert mode motion {{{
-if PluginInstalled('vim-easymotion')
+endif " }}}
+if PluginInstalled('vim-easymotion') "{{{
     " to have more choice for insert mode eaasymotion
     " for exmaple, <M-o>ge, <M-o>gE
     let g:EasyMotion_leader_key = '<M-v>'
@@ -1015,10 +1061,8 @@ if PluginInstalled('vim-easymotion')
             "exec "imap <unique> <Esc><C-".key."> <C-o><Plug>(easymotion-".act.")"
         "endif
     "endfor
-endif
-" }}}
-" vim-textobj-user {{{
-if PluginInstalled('vim-textobj-user')
+endif " }}}
+if PluginInstalled('vim-textobj-user') "{{{
     call textobj#user#plugin('php', {
         \   'code': {
         \       'pattern': ['<?php\>','?>'],
@@ -1036,10 +1080,8 @@ if PluginInstalled('vim-textobj-user')
         \     'select': ['at', 'it'],
         \   },
         \ })
-endif
-" }}}
-" indentLine {{{
-if PluginInstalled('indentLine')
+endif " }}}
+if PluginInstalled('indentLine') "{{{
     nnoremap <unique> <Leader>il :IndentLinesToggle<CR>
     "let g:indentLine_enabled = 1
     let g:indentLine_showFirstIndentLevel = 1
@@ -1049,35 +1091,16 @@ if PluginInstalled('indentLine')
     let g:indentLine_faster = 1
     let g:indentLine_fileTypeExclude = []
     let g:indentLine_fileType = ['c','cpp','python']
-endif
-" }}}
-" a.vim {{{
-if PluginInstalled('a.vim')
+endif " }}}
+if PluginInstalled('a.vim') "{{{
     nnoremap <unique> <M-a> :A<CR>
-endif
-" }}}
-" quicktask {{{
-if PluginInstalled('quicktask')
+endif " }}}
+if PluginInstalled('quicktask') "{{{
     let g:quicktask_snip_path= '~/snips'
     let g:quicktask_snip_default_filetype = 'markdown'
     nnoremap <unique> <Leader>ti Go# vim:ft=quicktask<Esc><C-o>
-endif
-" }}}
-" hammer {{{
-" poor man's hammer
-    "autocmd FileType vimwiki,markdown nnoremap <Leader>hh
-    autocmd FileType vimwiki,markdown nnoremap <buffer> <Leader>hh
-                \ :silent !pandoc -r markdown -w html "%" > "/tmp/%:t.html"<CR>
-                \ :silent !xdg-open "/tmp/%:t.html"<CR>
-                \ :redraw!<CR>
-    autocmd FileType rst nnoremap <buffer> <Leader>hh
-                \ :silent !pandoc -r rst -w html "%" > "/tmp/%:t.html"<CR>
-                \ :silent !xdg-open "/tmp/%:t.html"<CR>
-                \ :redraw!<CR>
-    "nnoremap <unique> <Leader>hh :Hammer<CR>
-" }}}
-" vimwiki {{{
-if PluginInstalled('vimwiki')
+endif " }}}
+if PluginInstalled('vimwiki') "{{{
     " use :hammer to have a quick preview of markdown
     " use pandoc to convert markdown to html in batch es
     " use grip to have a instant view of github flavoured markdown
@@ -1120,17 +1143,22 @@ if PluginInstalled('vimwiki')
     autocmd FileType vimwiki inoremap <buffer> <C-G><C-J> <C-O>:VimwikiListChangeMarker next i<CR>
     autocmd FileType vimwiki inoremap <buffer> <C-G><C-K> <C-O>:VimwikiListChangeMarker prev i<CR>
     autocmd FileType vimwiki inoremap <buffer> <C-G><C-M> <Esc>:call vimwiki#lst#toggle_list_item()<CR>
-endif
-" }}}
-" riv.vim {{{
-if PluginInstalled('riv.vim')
+endif " }}}
+if PluginInstalled('vim-geeknote') "{{{
+    autocmd FileType geeknote setlocal foldlevel=1 nonumber
+    nnoremap <unique> <Leader>ee :Geeknote<CR>
+    nnoremap <unique> <Leader>en :GeeknoteCreateNote 
+    nnoremap <unique> <Leader>eb :GeeknoteCreateNotebook 
+    nnoremap <unique> <Leader>ew :GeeknoteSaveAsNote<CR>
+    nnoremap <unique> <Leader>eu :GeeknoteSync<CR>
+    nnoremap <unique> <Leader>es :GeeknoteSearch 
+endif " }}}
+if PluginInstalled('riv.vim') "{{{
     " XXX: to see the list of options, check autoload/riv.vim. search
     " default.options
     let g:riv_global_leader = '<Leader>r'
-endif
-" }}}
-" VOoM {{{
-if PluginInstalled('VOoM')
+endif " }}}
+if PluginInstalled('VOoM') "{{{
     autocmd FileType voomtree nnoremap <buffer> j j:<C-u>call Voom_TreeSelect(1)<CR>
     autocmd FileType voomtree nnoremap <buffer> k k:<C-u>call Voom_TreeSelect(1)<CR>
     autocmd FileType voomtree nnoremap <buffer> h :<C-u>call Voom_TreeLeft()<CR>
@@ -1192,10 +1220,8 @@ if PluginInstalled('VOoM')
     let g:voom_ft_modes = {
                 \'vimwiki':'markdown',
                 \}
-endif
-" }}}
-" YouCompleteMe {{{
-if PluginInstalled('YouCompleteMe')
+endif " }}}
+if PluginInstalled('YouCompleteMe') "{{{
     let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
     let g:ycm_always_populate_location_list = 1
     "let g:ycm_error_symbol = 'E'
@@ -1208,17 +1234,13 @@ if PluginInstalled('YouCompleteMe')
     " visual mode. Now the only way I can think of is to map another key
     " binding to <C-u> :(
     "inoremap <Space> <Space><C-o><Esc>
-endif
-" }}}
-" ctrlp {{{
-if PluginInstalled('ctrlp')
+endif " }}}
+if PluginInstalled('ctrlp') "{{{
     let g:ctrlp_map = '<Leader><Leader>'
     "nnoremap <Leader>p :CtrlP<CR>
     nnoremap <unique> <Leader>pp :CtrlP<CR>
     nnoremap <unique> <Leader>pb :CtrlPBuffer<CR>
     nnoremap <unique> <Leader>pm :CtrlPMRU<CR>
-    nnoremap <unique> <Leader>bb :CtrlPBuffer<CR>
-    nnoremap <unique> <Leader>mm :CtrlPMRU<CR>
     let g:ctrlp_working_path_mode = 2
     let g:ctrlp_custom_ignore = {
         \ 'dir':  '\.git$\|\.hg$\|\.svn$',
@@ -1231,19 +1253,15 @@ if PluginInstalled('ctrlp')
         \ },
         \ 'fallback': 'find %s -type f'
     \ }
-endif
-" }}}
-" vim-fugitive {{{
-if PluginInstalled('vim-fugitive')
+endif " }}}
+if PluginInstalled('vim-fugitive') "{{{
     nnoremap <unique> <Leader>gs :Gstatus<CR>
     nnoremap <unique> <Leader>gc :Gcommit<CR>
     nnoremap <unique> <Leader>ga :Gcommit -a<CR>
     nnoremap <unique> <Leader>gp :Git push<CR>
     nnoremap <unique> <Leader>gd :Gdiff<CR>
-endif
-" }}}
-" delimitMate {{{
-if PluginInstalled('delimitMate')
+endif " }}}
+if PluginInstalled('delimitMate') "{{{
     "set matchpairs+=<:>
     let delimitMate_expand_space = 1
     let delimitMate_expand_cr = 1
@@ -1255,21 +1273,15 @@ if PluginInstalled('delimitMate')
     "autocmd FileType vimwiki let b:delimitMate_quotes = "\" ' ` * -"
     "autocmd FileType vimwiki let b:delimitMate_nesting_quotes = ['"','*','-',"'",'`']
     "autocmd FileType c,cpp,java let b:delimitMate_matchpairs=&matchpairs.",=:;"
-endif
-" }}}
-" matchit.zip {{{
-if PluginInstalled('matchit.zip')
+endif " }}}
+if PluginInstalled('matchit.zip') "{{{
     "let b:match_words = '<:>,\<if\>:\<else\>:\<endif\>'
-endif
-" }}}
-" vim-powerline {{{
-if PluginInstalled('vim-powerline')
+endif " }}}
+if PluginInstalled('vim-powerline') "{{{
     let g:Powerline_symbols = 'fancy'
     let g:Powerline_stl_path_style = 'short'
-endif
-" }}}
-" tagbar {{{
-if PluginInstalled('tagbar')
+endif " }}}
+if PluginInstalled('tagbar') "{{{
     let g:tagbar_sort = 1
     "autocmd Filetype tagbar,c,cpp,python,ruby,vim nnoremap <buffer> <Tab> :TagbarToggle<CR>
     " following 3 lines make tagbar autofocus only when using :TagbarToggle,
@@ -1312,19 +1324,15 @@ if PluginInstalled('tagbar')
             \ 'variable': 'v',
             \ },
         \ }
-endif
-" }}}
-" nerdcommenter {{{
-if PluginInstalled('nerdcommenter')
+endif " }}}
+if PluginInstalled('nerdcommenter') "{{{
     let g:NERDSpaceDelims = 1
     " to work around the silly merging of #183
     let g:NERDCustomDelimiters = {
         \'python': {'left': '#'},
         \}
-endif
-" }}}
-" nerdtree {{{
-if PluginInstalled('nerdtree')
+endif " }}}
+if PluginInstalled('nerdtree') "{{{
     "nnoremap <leader>e :NERDTreeTabsOpen<CR>:NERDTreeSteppedClose<CR>:NERDTreeFind<CR>
 
     nnoremap <unique> <M-e> :NERDTree %:p:h<CR>
@@ -1338,16 +1346,12 @@ if PluginInstalled('nerdtree')
     let NERDTreeShowHidden=0
     let NERDTreeKeepTreeInNewTab=1
     let g:nerdtree_tabs_open_on_gui_startup=0
-endif
-" }}}
-" undotree {{{
-if PluginInstalled('undotree')
+endif " }}}
+if PluginInstalled('undotree') "{{{
     nnoremap <unique> <M-u> :UndotreeToggle<CR>
     let g:undotree_SetFocusWhenToggle=1
-endif
-" }}}
-" YankRing.vim {{{
-if PluginInstalled('YankRing.vim')
+endif " }}}
+if PluginInstalled('YankRing.vim') "{{{
     nnoremap <unique> <M-y> :YRShow<CR>
     "let g:yankring_replace_n_pkey = '<M-p>'
     "let g:yankring_replace_n_nkey = '<M-n>'
@@ -1357,11 +1361,8 @@ if PluginInstalled('YankRing.vim')
     "function! YRRunAfterMaps()
         "nnoremap Y   :<C-U>YRYankCount 'y$'<CR>
     "endfunction
-endif
-" }}}
-" tabular {{{
-" align table
-if PluginInstalled('tabular')
+endif " }}}
+if PluginInstalled('tabular') "{{{
     " :Tabularize /:/l1r0
     " algin by :, insert 1 space to left, and 0 to right.default to l1r1
     "nnoremap <unique> <Leader>a& :Tabularize /&<CR>
@@ -1376,76 +1377,56 @@ if PluginInstalled('tabular')
     "vnoremap <unique> <Leader>a, :Tabularize /,<CR>
     "nnoremap <unique> <Leader>a<Bar> :Tabularize /<Bar><CR>
     "vnoremap <unique> <Leader>a<Bar> :Tabularize /<Bar><CR>
-endif
-" }}}
-" sessionman.vim {{{
-if PluginInstalled('sessionman.vim')
+endif " }}}
+if PluginInstalled('sessionman.vim') "{{{
     set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
     nnoremap <leader>sl :SessionList<CR>
     nnoremap <leader>ss :SessionSave<CR>
-endif
-" }}}
-" syntastic {{{
-if PluginInstalled('syntastic')
+endif " }}}
+if PluginInstalled('syntastic') "{{{
     nnoremap <unique> <Leader>kk :SyntasticCheck<CR>:Errors<CR>
-endif
-" }}}
-" cscope conf {{{
-if has("cscope")
+endif " }}}
+if has("cscope") "{{{
      " use both cscope and ctag for 'ctrl-]', ':ta', 'vim'
      set cscopetag
      " search cscope first, then ctags
      set csto=0
      " add cscope database
      set nocsverb
-     if filereadable("cscope.out")
-         cscope add cscope.out
-     elseif $CSCOPE_DB != ""
-         cscope add $CSCOPE_DB
-     endif
      set csverb
 
-     " s - symbol
-     " g - definition
-     " d - functions called by this function"
-     " c - functions calling this function
-     " t - text string"
-     " e - egrep pattern"
-     " f - file
-     " i - files #including this file"
-     let g:cscope_help_msg = "help for cscope:"
-                 \. "\n s - symbol"
-                 \. "\n g - definition"
-                 \. "\n d - functions called by this function"
-                 \. "\n c - functions calling this function"
-                 \. "\n t - text string"
-                 \. "\n e - egrep pattern"
-                 \. "\n f - file"
-                 \. "\n i - files #including this file"
-     nnoremap <Leader>ph :echo g:cscope_help_msg<CR>
-     nnoremap <Leader>pp :echo g:cscope_help_msg<CR>
+     if filereadable("cscope.files")
+         exec "silent! !cscope -Rb"
+     endif
+     if filereadable("cscope.out")
+         silent cscope add cscope.out
+     endif
+     if filereadable($CSCOPE_DB)
+         silent cscope add $CSCOPE_DB
+     endif
+
+     nnoremap <unique> <Leader>ph :cscope help<CR>
 
      " normal mode map for cscope
-     nnoremap <Leader>ps :cscope find s <C-R>=expand("<cword>")<CR>
-     nnoremap <Leader>pg :cscope find g <C-R>=expand("<cword>")<CR>
-     nnoremap <Leader>pd :cscope find d <C-R>=expand("<cword>")<CR>
-     nnoremap <Leader>pc :cscope find c <C-R>=expand("<cword>")<CR>
-     nnoremap <Leader>pt :cscope find t <C-R>=expand("<cword>")<CR>
-     nnoremap <Leader>pe :cscope find e <C-R>=expand("<cword>")<CR>
-     nnoremap <Leader>pf :cscope find f <C-R>=expand("<cfile>")<CR>
-     nnoremap <Leader>pi :cscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+     nnoremap <unique> <Leader>ps :cscope find s <C-R>=expand("<cword>")<CR>
+     nnoremap <unique> <Leader>pg :cscope find g <C-R>=expand("<cword>")<CR>
+     nnoremap <unique> <Leader>pd :cscope find d <C-R>=expand("<cword>")<CR>
+     nnoremap <unique> <Leader>pc :cscope find c <C-R>=expand("<cword>")<CR>
+     nnoremap <unique> <Leader>pt :cscope find t <C-R>=expand("<cword>")<CR>
+     nnoremap <unique> <Leader>pe :cscope find e <C-R>=expand("<cword>")<CR>
+     nnoremap <unique> <Leader>pf :cscope find f <C-R>=expand("<cfile>")<CR>
+     nnoremap <unique> <Leader>pi :cscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
      " visual mode map for cscope
-     vnoremap <Leader>ps :<C-u>cscope find s <C-R>*<CR>
-     vnoremap <Leader>pg :<C-u>cscope find g <C-R>*<CR>
-     vnoremap <Leader>pd :<C-u>cscope find d <C-R>*<CR>
-     vnoremap <Leader>pc :<C-u>cscope find c <C-R>*<CR>
-     vnoremap <Leader>pt :<C-u>cscope find t <C-R>*<CR>
-     vnoremap <Leader>pe :<C-u>cscope find e <C-R>*<CR>
-     vnoremap <Leader>pf :<C-u>cscope find f <C-R>*<CR>
-     vnoremap <Leader>pi :<C-u>cscope find i ^<C-R>*$<CR>
-endif
-" }}}
+     vnoremap <unique> <Leader>ps :<C-u>cscope find s <C-R>*<CR>
+     vnoremap <unique> <Leader>pg :<C-u>cscope find g <C-R>*<CR>
+     vnoremap <unique> <Leader>pd :<C-u>cscope find d <C-R>*<CR>
+     vnoremap <unique> <Leader>pc :<C-u>cscope find c <C-R>*<CR>
+     vnoremap <unique> <Leader>pt :<C-u>cscope find t <C-R>*<CR>
+     vnoremap <unique> <Leader>pe :<C-u>cscope find e <C-R>*<CR>
+     vnoremap <unique> <Leader>pf :<C-u>cscope find f <C-R>*<CR>
+     vnoremap <unique> <Leader>pi :<C-u>cscope find i ^<C-R>*$<CR>
+endif " }}}
 " }}}
 
 let s:vimrc_private = "$HOME/.vimrc-private"

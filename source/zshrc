@@ -84,6 +84,9 @@ bindkey -M yuexmap 'h'   vi-backward-word
 bindkey -M yuexmap 'l'   vi-forward-word
 bindkey -M yuexmap ''    backward-char
 bindkey -M yuexmap ''    forward-char
+# bindkey -M yuexmap ''    up-line-or-history
+# XXX: curiously, only ^J not working
+# bindkey -M yuexmap '^J'    down-line-or-history
 bindkey -M yuexmap ''  down-case-word
 bindkey -M yuexmap ''    up-case-word
 bindkey -M yuexmap ''    history-incremental-pattern-search-forward

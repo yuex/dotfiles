@@ -32,7 +32,7 @@
     Plugin 'Lokaltog/vim-easymotion'
     " Plugin 'junegunn/vim-easy-align'
     Plugin 'terryma/vim-expand-region'
-    Plugin 'terryma/vim-multiple-cursors'
+    " Plugin 'terryma/vim-multiple-cursors'
     Plugin 'matchit.zip'
     Plugin 'altercation/vim-colors-solarized'
     " Plugin 'tomasr/molokai'
@@ -97,7 +97,24 @@
 
     call vundle#end()
     filetype plugin indent on
-
+    function! PluginInstalled(plugin,...) "{{{
+    " PluginInstalled("plugin name")
+    " PluginInstalled("plugin name",g:_bundle_name)
+    " return 1 or 0
+    " if g:_bundle_name doesn't exist, create it
+    if !exists("g:_bundle_name")
+        let g:_bundle_name = map(copy(g:vundle#bundles), 'v:val.name')
+    endif
+    if a:0 == 0
+        let installed = g:_bundle_name
+    else
+        let installed = a:1
+    endif
+    if match(installed, a:plugin) >= 0
+        return 1
+    endif
+    return 0
+    endfun " }}}
 " }}}
 " general options {{{
 " editing {{{
@@ -746,7 +763,27 @@
         call inputrestore()
         call setreg(reg, content)
     endfunc "}}}
-    nnoremap <silent><unique> <Leader>qq :call RegisterEdit()<CR>
+    function RegisterEdit2() "{{{
+        call inputsave()
+        registers
+        echo '@'
+        let reg = nr2char(getchar())
+        if reg !~# '["[:alnum:]-:.%#=*+~_/]'
+            redraw!
+            echohl WarningMsg
+            echo "Wrong Register Name!"
+            echohl None
+            return
+        endif
+        redraw!
+        " exec 'register '.reg
+        echo '"'.reg.'   '.getreg(reg)
+        let content = input('@'.reg.' = ')
+        call setreg(reg, content)
+        call inputrestore()
+    endfunc "}}}
+    " nnoremap <silent><unique> <Leader>qq :registers<CR>
+    nnoremap <silent><unique> <Leader>qq :call RegisterEdit2()<CR>
 " }}}
 " quickwindow {{{
     "nnoremap <C-w><C-m> :vnew<CR>
@@ -970,32 +1007,36 @@
 " }}}
 " }}}
 " plugins {{{
-function PluginInstalled(plugin,...) "{{{
-" PluginInstalled("plugin name")
-" PluginInstalled("plugin name",g:_bundle_name)
-" return 1 or 0
-    " if g:_bundle_name doesn't exist, create it
-    if !exists("g:_bundle_name")
-        let g:_bundle_name = map(copy(g:vundle#bundles), 'v:val.name')
-    endif
-    if a:0 == 0
-        let installed = g:_bundle_name
-    else
-        let installed = a:1
-    endif
-    if match(installed, a:plugin) >= 0
-        return 1
-    endif
-    return 0
-endfun " }}}
 if PluginInstalled('unite.vim') "{{{
     let g:unite_source_history_yank_enable=1
     let g:unite_source_history_yank_save_clipboard=1
+    function! ChooseFileMode() "{{{
+        call inputsave()
+        redraw!
+        echon 'mode:'
+        let char = nr2char(getchar())
+        if char ==# 'f'
+            exec 'Unite file'
+        elseif char ==# 'g'
+            exec 'Unite file_rec/git'
+        elseif char ==# 'i'
+            let path = input('-input=','', 'file')
+            exec 'Unite file -input'.path
+        elseif char ==# 'a'
+            exec 'Unite file_rec/async'
+        else
+            echohl WarningMsg
+            echo "Unkown mode"
+            echohl None
+        endif
+        call inputrestore()
+    endfunc "}}}
     nnoremap <unique> <Leader>uu :Unite 
-    nnoremap <unique> <Leader>uf :Unite file<CR>
-    nnoremap <unique> <Leader>up :Unite file -input=
-    nnoremap <unique> <Leader>ua :Unite file_rec/async<CR>
-    nnoremap <unique> <Leader>ug :Unite file_rec/git<CR>
+    " nnoremap <unique> <Leader>uf :Unite file<CR>
+    nnoremap <unique> <Leader>uf :call ChooseFileMode()<CR>
+    " nnoremap <unique> <Leader>uss :Unite file -input=
+    " nnoremap <unique> <Leader>usa :Unite file_rec/async<CR>
+    " nnoremap <unique> <Leader>usg :Unite file_rec/git<CR>
     nnoremap <unique> <Leader>um :Unite neomru/file neomru/directory<CR>
 
     nnoremap <unique> <Leader>uh :Unite help<CR>
@@ -1004,7 +1045,7 @@ if PluginInstalled('unite.vim') "{{{
     nnoremap <unique> <Leader>ut :Unite tab<CR>
     nnoremap <unique> <Leader>ur :Unite register<CR>
     nnoremap <unique> <Leader>uw :Unite window<CR>
-    nnoremap <unique> <Leader>us :Unite grep:%
+    nnoremap <unique> <Leader>ug :Unite grep:%
     nnoremap <unique> <Leader>uj :Unite jump<CR>
     nnoremap <unique> <Leader>uc :Unite change<CR>
 endif " }}}
@@ -1148,10 +1189,13 @@ if PluginInstalled('vim-geeknote') "{{{
     autocmd FileType geeknote setlocal foldlevel=1 nonumber
     nnoremap <unique> <Leader>ee :Geeknote<CR>
     nnoremap <unique> <Leader>en :GeeknoteCreateNote 
+    nnoremap <unique> <Leader>ec :GeeknoteCreateNote 
     nnoremap <unique> <Leader>eb :GeeknoteCreateNotebook 
-    nnoremap <unique> <Leader>ew :GeeknoteSaveAsNote<CR>
+    nnoremap <unique> <Leader>et :GeeknoteCreateNotebook 
+    nnoremap <unique> <Leader>es :GeeknoteSaveAsNote<CR>
     nnoremap <unique> <Leader>eu :GeeknoteSync<CR>
-    nnoremap <unique> <Leader>es :GeeknoteSearch 
+    nnoremap <unique> <Leader>er :GeeknoteSync<CR>
+    nnoremap <unique> <Leader>ef :GeeknoteSearch 
 endif " }}}
 if PluginInstalled('riv.vim') "{{{
     " XXX: to see the list of options, check autoload/riv.vim. search

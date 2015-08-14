@@ -105,7 +105,6 @@ My ``vimrc`` contains some self-customed key mappings and home-made scripts in `
     Plugin 'godlygeek/tabular'
     Plugin 'Lokaltog/vim-easymotion'
     Plugin 'terryma/vim-expand-region'
-    Plugin 'terryma/vim-multiple-cursors'
     Plugin 'matchit.zip'
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'mileszs/ack.vim'

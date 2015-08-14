@@ -25,6 +25,7 @@
 " general {{{
     Plugin 'Raimondi/delimitMate'
     Plugin 'tpope/vim-surround'
+    Plugin 'tpope/vim-unimpaired'
     Plugin 'kana/vim-textobj-user'
     Plugin 'mbbill/undotree'
     "Plugin 'YankRing.vim'
@@ -48,6 +49,7 @@
     Plugin 'yuex/vim-autopep8'
     Plugin 'scrooloose/syntastic'
     Plugin 'scrooloose/nerdcommenter'
+    " Plugin 'tpope/vim-commentary'
     Plugin 'majutsushi/tagbar'
     Plugin 'Yggdroot/indentLine'
     Plugin 'sukima/xmledit'
@@ -644,19 +646,19 @@
     " }}}
 " }}}
 " quick shift {{{
-    vmap <unique> <Esc>, <gv
-    vmap <unique> <Esc>. >gv
-    vmap <unique> < <gv
-    vmap <unique> > >gv
+    vnoremap <unique> <Esc>, <gv
+    vnoremap <unique> <Esc>. >gv
+    vnoremap <unique> < <gv
+    vnoremap <unique> > >gv
     " use <c-d> and <c-t> in i-mode to keep cursor's position
-    "inoremap <unique> <Esc>, <C-d>
-    "inoremap <unique> <Esc>. <C-t>
-    nnoremap <unique> < <<
-    nnoremap <unique> > >>
-    imap <unique> <Esc>, <C-o><
-    imap <unique> <Esc>. <C-o>>
-    nmap <unique> <Esc>, <
-    nmap <unique> <Esc>. >
+    " inoremap <unique> <Esc>, <C-d>
+    " inoremap <unique> <Esc>. <C-t>
+    " nnoremap <unique> < <<
+    " nnoremap <unique> > >>
+    inoremap <unique> <Esc>, <C-d>
+    inoremap <unique> <Esc>. <C-t>
+    nnoremap <unique> <Esc>, <<
+    nnoremap <unique> <Esc>. >>
     cnoremap <unique> <Esc>, <C-o>i<C-d><C-c>
     cnoremap <unique> <Esc>. <C-o>i<C-t><C-c>
 " }}}
@@ -1375,6 +1377,14 @@ if PluginInstalled('nerdcommenter') "{{{
     let g:NERDCustomDelimiters = {
         \'python': {'left': '#'},
         \}
+endif " }}}
+if PluginInstalled('vim-commentary') "{{{
+    xmap <Leader>c <Plug>Commentary
+    omap <Leader>c <Plug>Commentary
+    nmap <Leader>c <Plug>Commentary
+    nmap <Leader>cc <Plug>CommentaryLine
+    nmap <Leader>cg <Plug>ChangeCommentary
+    nmap <Leader>cu <Plug>Commentary<Plug>Commentary
 endif " }}}
 if PluginInstalled('nerdtree') "{{{
     "nnoremap <leader>e :NERDTreeTabsOpen<CR>:NERDTreeSteppedClose<CR>:NERDTreeFind<CR>

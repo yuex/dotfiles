@@ -95,6 +95,7 @@ My ``vimrc`` contains some self-customed key mappings and home-made scripts in `
     Plugin 'Lokaltog/vim-powerline'
     Plugin 'Raimondi/delimitMate'
     Plugin 'tpope/vim-surround'
+    Plugin 'tpope/vim-unimpaired'
     Plugin 'kana/vim-textobj-user'
     Plugin 'mbbill/undotree'
     Plugin 'godlygeek/tabular'

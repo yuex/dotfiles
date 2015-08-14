@@ -1,7 +1,3 @@
-###############
-Yuex's Dotfiles
-###############
-
 * Contents:
 
   + 1 Introduction_
@@ -24,7 +20,7 @@ $(cat source/rc_module|sed 's/^/* /g')
 Installation
 ============
 
-Basics
+Comman
 ------
 
 Trying out by creating a new account is recommended::
@@ -58,7 +54,6 @@ Zsh
 My ``zshrc`` depends on `oh-my-zsh`_ and `dircolors-solarized`_. ``make zsh`` will do most work. But you need to manually change the default login shell::
 
     chsh -s /usr/bin/zsh
-
 
 Vim
 ---

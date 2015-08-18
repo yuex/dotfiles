@@ -15,7 +15,7 @@
     Plugin 'Shougo/unite-help'
     Plugin 'Shougo/vimproc'
     Plugin 'Shougo/neomru.vim'
-    Plugin 'kien/ctrlp.vim'
+    " Plugin 'kien/ctrlp.vim'
     Plugin 'scrooloose/nerdtree'
     Plugin 'jistr/vim-nerdtree-tabs'
     Plugin 'project.tar.gz'
@@ -31,8 +31,9 @@
     "Plugin 'YankRing.vim'
     Plugin 'godlygeek/tabular'
     Plugin 'Lokaltog/vim-easymotion'
+    " Plugin 'junegunn/vader.vim'
     " Plugin 'junegunn/vim-easy-align'
-    Plugin 'terryma/vim-expand-region'
+    " Plugin 'terryma/vim-expand-region'
     " Plugin 'terryma/vim-multiple-cursors'
     Plugin 'matchit.zip'
     Plugin 'altercation/vim-colors-solarized'
@@ -79,22 +80,19 @@
     " Plugin 'vimwiki/vimwiki'
     " Plugin 'kakkyz81/evervim'
     " Plugin 'yuex/vimwiki'
-    Plugin 'neilagabriel/vim-geeknote'
+    " Plugin 'neilagabriel/vim-geeknote'
+    Plugin 'mrtazz/simplenote.vim'
+    " Plugin 'mattn/webapi-vim'
+    " Plugin 'mattn/vimplenote-vim'
+    Plugin 'jszakmeister/rst2ctags'
     Plugin 'Rykka/riv.vim'
     " Plugin 'aaronbieber/quicktask'
-    " Plugin 'VOoM'
-    Plugin 'plasticboy/vim-markdown'
+    Plugin 'VOoM'
+    " Plugin 'plasticboy/vim-markdown'
+    Plugin 'jszakmeister/markdown2ctags'
+    Plugin 'yuex/vim-markdown'
     " Plugin 'VimOrganizer'
     Plugin 'utl.vim'
-    " depends on gem github-markup tilt redcarpet but it doesn't work :(.
-    " Maybe after I learned myself a byte of ruby to fix it
-    " Plugin 'matthias-guenther/hammer.vim'
-    " real-time preview
-    " Plugin 'suan/vim-instant-markdown'
-    " Plugin 'jtratner/vim-flavored-markdown'
-    " Plugin 'samsonw/vim-task'
-    " provide calendar support in vimwiki
-    " Plugin 'mattn/calendar-vim'
 " }}}
 
     call vundle#end()
@@ -165,7 +163,7 @@
 " }}}
 " listchars {{{
     set list
-    set listchars=tab:×·,trail:·,extends:#,nbsp:.
+    set listchars=tab:×•,trail:•,extends:#,nbsp:•
 " }}}
 " linewrap {{{
     " using gq
@@ -799,6 +797,10 @@
     noremap <unique> <C-w>=\| <C-w>\|
 
     function! GotoLastWindow()
+        if v:count > 0
+            exec v:count.'wincmd w'
+            return
+        endif
         let last = winnr()
         wincmd p
         let curr = winnr()
@@ -1027,8 +1029,9 @@ if PluginInstalled('unite.vim') "{{{
         elseif char ==# 'a'
             exec 'Unite file_rec/async'
         else
+            redraw!
             echohl WarningMsg
-            echo "Unkown mode"
+            echo "mode unknown"
             echohl None
         endif
         call inputrestore()
@@ -1049,6 +1052,7 @@ if PluginInstalled('unite.vim') "{{{
     nnoremap <unique> <Leader>uw :Unite window<CR>
     nnoremap <unique> <Leader>ug :Unite grep:%
     nnoremap <unique> <Leader>uj :Unite jump<CR>
+    nnoremap <unique> <Leader>u` :Unite jump<CR>
     nnoremap <unique> <Leader>uc :Unite change<CR>
 endif " }}}
 if PluginInstalled('vim-surround') "{{{
@@ -1188,7 +1192,9 @@ if PluginInstalled('vimwiki') "{{{
     autocmd FileType vimwiki inoremap <buffer> <C-G><C-M> <Esc>:call vimwiki#lst#toggle_list_item()<CR>
 endif " }}}
 if PluginInstalled('vim-geeknote') "{{{
+    " let g:GeeknoteFormat = 'markdown'
     autocmd FileType geeknote setlocal foldlevel=1 nonumber
+    autocmd FileType geeknote nmap <buffer> <M-o> <CR>
     nnoremap <unique> <Leader>ee :Geeknote<CR>
     nnoremap <unique> <Leader>en :GeeknoteCreateNote 
     nnoremap <unique> <Leader>ec :GeeknoteCreateNote 
@@ -1199,73 +1205,26 @@ if PluginInstalled('vim-geeknote') "{{{
     nnoremap <unique> <Leader>er :GeeknoteSync<CR>
     nnoremap <unique> <Leader>ef :GeeknoteSearch 
 endif " }}}
+if PluginInstalled('simplenote.vim') "{{{
+    let g:SimplenoteNoteFormat = "[%F][%T] %N %>%-20D"
+    let g:SimplenoteStrftime = "%F %R"
+    let g:SimplenoteSortOrder = "pinned,tags"
+    let g:SimplenoteFileType = "markdown"
+    " let g:SimplenoteListHeight = 30
+endif "}}}
+if PluginInstalled('vim-markdown') "{{{
+    autocmd Filetype markdown nnoremap + :.HeaderIncrease<CR>
+    autocmd Filetype markdown vnoremap + :HeaderIncrease<CR>gv
+    autocmd Filetype markdown nnoremap _ :.HeaderDecrease<CR>
+    autocmd Filetype markdown vnoremap _ :HeaderDecrease<CR>gv
+endif "}}}
 if PluginInstalled('riv.vim') "{{{
     " XXX: to see the list of options, check autoload/riv.vim. search
     " default.options
     let g:riv_global_leader = '<Leader>r'
 endif " }}}
 if PluginInstalled('VOoM') "{{{
-    autocmd FileType voomtree nnoremap <buffer> j j:<C-u>call Voom_TreeSelect(1)<CR>
-    autocmd FileType voomtree nnoremap <buffer> k k:<C-u>call Voom_TreeSelect(1)<CR>
-    autocmd FileType voomtree nnoremap <buffer> h :<C-u>call Voom_TreeLeft()<CR>
-    autocmd FileType voomtree nnoremap <buffer> l :<C-u>call Voom_TreeRight()<CR>
-    autocmd FileType voomtree nnoremap <buffer> <Down> <Down>
-    autocmd FileType voomtree nnoremap <buffer> <Up> <Up>
-    autocmd FileType voomtree nnoremap <buffer> <Left> <Left>
-    autocmd FileType voomtree nnoremap <buffer> <Right> <Right>
-    autocmd FileType voomtree nnoremap <buffer><silent> <C-K> :<C-u>call Voom_Oop('up', 'n')<CR>
-    autocmd FileType voomtree vnoremap <buffer><silent> <C-K> :<C-u>call Voom_Oop('up', 'v')<CR>
-
-    autocmd FileType voomtree nnoremap <buffer><silent> <C-J> :<C-u>call Voom_Oop('down', 'n')<CR>
-    autocmd FileType voomtree vnoremap <buffer><silent> <C-J> :<C-u>call Voom_Oop('down', 'v')<CR>
-
-    autocmd FileType voomtree nnoremap <buffer><silent> <C-H> :<C-u>call Voom_Oop('left', 'n')<CR>
-    autocmd FileType voomtree vnoremap <buffer><silent> <C-H> :<C-u>call Voom_Oop('left', 'v')<CR>
-
-    autocmd FileType voomtree nnoremap <buffer><silent> <C-L> :<C-u>call Voom_Oop('right', 'n')<CR>
-    autocmd FileType voomtree vnoremap <buffer><silent> <C-L> :<C-u>call Voom_Oop('right', 'v')<CR>
-    autocmd BufEnter * nnoremap <buffer><silent> <M-q>
-                \ :if exists("b:voomopen") && b:voomopen
-                    \\| let b:voomopen=0
-                    \\| exec "Voomquit"
-                \\| else
-                    \\|let b:voomopen=1
-                    \\| exec "Voom"
-                \\| endif<CR>
-    autocmd FileType voomtree nnoremap <buffer><silent> <M-q>
-                \ :call Voom_ToTreeOrBodyWin()<CR>
-                \ :if exists("b:voomopen") && b:voomopen
-                    \\| let b:voomopen=0
-                \\| endif<CR>
-                \ :call Voom_ToTreeOrBodyWin()<CR>
-                \ :quit<CR>
-    autocmd BufWinLeave,QuitPre *
-                \ if &ft != 'voomtree'
-                    \| if exists('b:voomopen') && b:voomopen
-                        \| let b:voomopen=0
-                        \| call Voom_ToTreeOrBodyWin()
-                        \| exec "quit"
-                    \| endif
-                \| else
-                    \| call Voom_ToTreeOrBodyWin()
-                    \| if exists("b:voomopen")
-                        \| let b:voomopen=0
-                    \| endif
-                    \| call Voom_ToTreeOrBodyWin()
-                \| endif
-    "autocmd BufWinEnter *
-                "\ if &ft != 'voomtree'
-                    "\| if exists('b:voomopen') && b:voomopen
-                        "\| exec "Voom"
-                    "\| endif
-                "\|endif
-
-    "nmap <M-q> :VoomToggle<CR>
-    let g:voom_return_key = "<Tab>"
-    let g:voom_tab_key = "<C-Tab>"
-    let g:voom_ft_modes = {
-                \'vimwiki':'markdown',
-                \}
+    nnoremap <M-q> :exec 'VoomToggle '.&ft<CR>
 endif " }}}
 if PluginInstalled('YouCompleteMe') "{{{
     let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
@@ -1328,48 +1287,44 @@ if PluginInstalled('vim-powerline') "{{{
     let g:Powerline_stl_path_style = 'short'
 endif " }}}
 if PluginInstalled('tagbar') "{{{
-    let g:tagbar_sort = 1
-    "autocmd Filetype tagbar,c,cpp,python,ruby,vim nnoremap <buffer> <Tab> :TagbarToggle<CR>
     " following 3 lines make tagbar autofocus only when using :TagbarToggle,
     " but not when using :TagOpen
     let g:tagbar_autofocus = 1
+    let g:tagbar_sort = 1
     nnoremap <unique> <silent> <M-p> :TagbarToggle<CR>
     "autocmd Filetype c,cpp,python :TagbarOpen
     autocmd Filetype tagbar nmap <buffer> <C-j> jp
     autocmd Filetype tagbar nmap <buffer> <C-k> kp
-    let g:tagbar_type_vimwiki = {
-        \ 'ctagstype': 'vimwiki',
-        \ 'kinds': [
-            \ 'w:[[ WikiLinks ]]:0:0',
-            \ 'h:# Heading_L1:0',
-            \ 'i:## Heading_L2:1',
-            \ 'j:### Heading_L3:1',
-            \ 'k:#### Heading_L4:1',
-            \ 'l:##### Heading_L5:1',
-            \ 'm:###### Heading_L6:1',
-            \ ],
-        \ }
-    let g:tagbar_type_mytype = {
-        \ 'ctagstype': 'Python',
-        \ 'kinds': [
-            \ 'i:imports:1:0',
-            \ 'c:classes',
-            \ 'f:functions',
-            \ 'm:members',
-            \ 'v:variables:0:0',
-            \ ],
-        \ 'sro': '@',
-        \ 'kind2scope': {
-            \ 'c': 'class',
-            \ 'm': 'member',
-            \ 'v': 'variable',
-            \ },
-        \ 'scope2kind': {
-            \ 'class': 'c',
-            \ 'member': 'm',
-            \ 'variable': 'v',
-            \ },
-        \ }
+    " markdown supoort "{{{
+    let g:tagbar_type_markdown = {
+        \ 'ctagstype': 'markdown',
+        \ 'ctagsbin' : '~/.vim/bundle/markdown2ctags/markdown2ctags.py',
+        \ 'ctagsargs' : '-f - --sort=yes',
+        \ 'kinds' : [
+            \ 's:sections',
+            \ 'i:images'
+        \ ],
+        \ 'sro' : '|',
+        \ 'kind2scope' : {
+            \ 's' : 'section',
+        \ },
+        \ 'sort': 0,
+    \ } "}}}
+    " rst supoort "{{{
+    let g:tagbar_type_rst = {
+        \ 'ctagstype': 'rst',
+        \ 'ctagsbin' : '~/.vim/bundle/rst2ctags/rst2ctags.py',
+        \ 'ctagsargs' : '-f - --sort=yes',
+        \ 'kinds' : [
+            \ 's:sections',
+            \ 'i:images'
+        \ ],
+        \ 'sro' : '|',
+        \ 'kind2scope' : {
+            \ 's' : 'section',
+        \ },
+        \ 'sort': 0,
+    \ } "}}}
 endif " }}}
 if PluginInstalled('nerdcommenter') "{{{
     let g:NERDSpaceDelims = 1
@@ -1441,45 +1396,57 @@ if PluginInstalled('syntastic') "{{{
     nnoremap <unique> <Leader>kk :SyntasticCheck<CR>:Errors<CR>
 endif " }}}
 if has("cscope") "{{{
-     " use both cscope and ctag for 'ctrl-]', ':ta', 'vim'
-     set cscopetag
-     " search cscope first, then ctags
-     set csto=0
-     " add cscope database
-     set nocsverb
-     set csverb
+    function! LoadCscope() " {{{
+        if filereadable("cscope.out")
+            exec "silent cscope add cscope.out"
+        endif
+        if filereadable($CSCOPE_DB)
+            exec "silent cscope add $CSCOPE_DB"
+        endif
+    endfunc " }}}
+    function! MakeCscope() "{{{
+        if !filereadable("cscope.files")
+            let pattern = '*.' . expand('%:e')
+            if pattern !=# '*.'
+                exec "silent! !find -name '".pattern."' > cscope.files"
+                exec "silent! !cscope -Rb"
+            endif
+        endif
+        exec "silent! !cscope -Rb"
+        call LoadCscope()
+        redraw!
+    endfunc "}}}
+    " use both cscope and ctag for 'ctrl-]', ':ta', 'vim'
+    set cscopetag
+    " search cscope first, then ctags
+    set csto=0
+    " add cscope database
+    set nocsverb
+    set csverb
+    call LoadCscope()
 
-     if filereadable("cscope.files")
-         exec "silent! !cscope -Rb"
-     endif
-     if filereadable("cscope.out")
-         silent cscope add cscope.out
-     endif
-     if filereadable($CSCOPE_DB)
-         silent cscope add $CSCOPE_DB
-     endif
+    nnoremap <unique> <Leader>pm :call MakeCscope()<CR>
+    nnoremap <unique> <Leader>ph :cscope help<CR>
 
-     nnoremap <unique> <Leader>ph :cscope help<CR>
+    " normal mode map for cscope
+    nnoremap <unique> <Leader>ps :cscope find s <C-R>=expand("<cword>")<CR>
+    nnoremap <unique> <Leader>pg :cscope find g <C-R>=expand("<cword>")<CR>
+    nnoremap <unique> <Leader>pd :cscope find d <C-R>=expand("<cword>")<CR>
+    nnoremap <unique> <Leader>pc :cscope find c <C-R>=expand("<cword>")<CR>
+    nnoremap <unique> <Leader>pt :cscope find t <C-R>=expand("<cword>")<CR>
+    nnoremap <unique> <Leader>pe :cscope find e <C-R>=expand("<cword>")<CR>
+    nnoremap <unique> <Leader>pf :cscope find f <C-R>=expand("<cfile>")<CR>
+    nnoremap <unique> <Leader>pi :cscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
-     " normal mode map for cscope
-     nnoremap <unique> <Leader>ps :cscope find s <C-R>=expand("<cword>")<CR>
-     nnoremap <unique> <Leader>pg :cscope find g <C-R>=expand("<cword>")<CR>
-     nnoremap <unique> <Leader>pd :cscope find d <C-R>=expand("<cword>")<CR>
-     nnoremap <unique> <Leader>pc :cscope find c <C-R>=expand("<cword>")<CR>
-     nnoremap <unique> <Leader>pt :cscope find t <C-R>=expand("<cword>")<CR>
-     nnoremap <unique> <Leader>pe :cscope find e <C-R>=expand("<cword>")<CR>
-     nnoremap <unique> <Leader>pf :cscope find f <C-R>=expand("<cfile>")<CR>
-     nnoremap <unique> <Leader>pi :cscope find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-
-     " visual mode map for cscope
-     vnoremap <unique> <Leader>ps :<C-u>cscope find s <C-R>*<CR>
-     vnoremap <unique> <Leader>pg :<C-u>cscope find g <C-R>*<CR>
-     vnoremap <unique> <Leader>pd :<C-u>cscope find d <C-R>*<CR>
-     vnoremap <unique> <Leader>pc :<C-u>cscope find c <C-R>*<CR>
-     vnoremap <unique> <Leader>pt :<C-u>cscope find t <C-R>*<CR>
-     vnoremap <unique> <Leader>pe :<C-u>cscope find e <C-R>*<CR>
-     vnoremap <unique> <Leader>pf :<C-u>cscope find f <C-R>*<CR>
-     vnoremap <unique> <Leader>pi :<C-u>cscope find i ^<C-R>*$<CR>
+    " visual mode map for cscope
+    vnoremap <unique> <Leader>ps :<C-u>cscope find s <C-R>*<CR>
+    vnoremap <unique> <Leader>pg :<C-u>cscope find g <C-R>*<CR>
+    vnoremap <unique> <Leader>pd :<C-u>cscope find d <C-R>*<CR>
+    vnoremap <unique> <Leader>pc :<C-u>cscope find c <C-R>*<CR>
+    vnoremap <unique> <Leader>pt :<C-u>cscope find t <C-R>*<CR>
+    vnoremap <unique> <Leader>pe :<C-u>cscope find e <C-R>*<CR>
+    vnoremap <unique> <Leader>pf :<C-u>cscope find f <C-R>*<CR>
+    vnoremap <unique> <Leader>pi :<C-u>cscope find i ^<C-R>*$<CR>
 endif " }}}
 " }}}
 

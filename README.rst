@@ -104,6 +104,7 @@ My ``vimrc`` contains some self-customed key mappings and home-made scripts in `
     Plugin 'mileszs/ack.vim'
     Plugin 'kshenoy/vim-signature'
     Plugin 'tpope/vim-fugitive'
+    Plugin 'tpope/vim-sleuth'
     Plugin 'airblade/vim-gitgutter'
     Plugin 'hynek/vim-python-pep8-indent'
     Plugin 'yuex/vim-autopep8'

@@ -425,39 +425,35 @@
     function SmartMove(moveToNext, moveToEnd, ...) "{{{
         " if line number changed, use moveToEnd, otherwise use moveToNext
         " will ensure cursor get changed to avoid deadlock
-        " a:type to deal with visualmode
+        " a:operator to deal with visualmode
         " a:withLine to confine the movement within one line
+        let l:operator = ''
+        let l:withinLine = 0
         if a:0 > 0
-            let a:type = a:1
+            let l:operator = a:1
         endif
         if a:0 > 1
-            let a:withinLine = a:2
+            let l:withinLine = a:2
         endif
-        let prevpos = getpos('.')
-        let line = prevpos[1]
-        let col  = prevpos[2]
+        let l:prev_pos = getpos('.')
+        let [_,l:prev_line,l:prev_col,_] = l:prev_pos
 
-        if exists("a:type") && a:type
-            let prefix = 'gv'
+        exec "normal! " . a:moveToNext
+
+        let l:post_line = line('.')
+        call setpos('.', l:prev_pos)
+
+        if l:post_line ==# l:prev_line
+            exec "normal! " . l:operator . a:moveToNext
         else
-            let prefix = ''
-        endif
-
-        if col ==# col('$')
-            exec "normal! " . prefix . a:moveToNext
-            return
-        endif
-
-        exec "normal! " . prefix . a:moveToNext
-        if line !=# line('.')
-            call setpos('.', prevpos)
-            if exists("a:withinLine") && a:withinLine
-                return
+            if l:withinLine
+                exec "normal! " . l:operator . a:moveToEnd
+            elseif (l:post_line <=# l:prev_line && col('.') ==# 1)
+                \|| (l:post_line >=# l:prev_line && col('.') >=# len(getline('.')))
+                exec "normal! " . l:operator . a:moveToNext
+            else
+                exec "normal! " . l:operator . a:moveToEnd
             endif
-            exec "normal! " . prefix . a:moveToEnd
-            " if prevpos ==# getpos('.')
-                " exec "normal! " . prefix. a:moveToNext
-            " endif
         endif
     endfunc " }}}
     func SmartWrite(...) "{{{
@@ -529,15 +525,10 @@
     inoremap <unique> <C-e> <End>
     inoremap <unique> <C-h> <Left>
     inoremap <unique> <C-l> <Right>
-    inoremap <unique> <Esc><C-h> <C-o>:call SmartMove('b','gel')<CR>
-    inoremap <unique> <Esc><C-l> <C-o>:call SmartMove('w','el')<CR>
-    inoremap <unique> <M-b> <C-o>:call SmartMove('b','gel')<CR>
-    inoremap <unique> <M-f> <C-o>:call SmartMove('w','el')<CR>
-    "inoremap <unique> <M-h> <BS>
-    "inoremap <unique> <M-l> <Del>
-
-    "inoremap <unique> <M-h> <C-o>:call SmartMove('B','gEl')<CR>
-    "inoremap <unique> <M-l> <C-o>:call SmartMove('W','$l')<CR>
+    inoremap <unique> <Esc><C-h> <C-o>:call SmartMove('b','0')<CR>
+    inoremap <unique> <Esc><C-l> <C-o>:call SmartMove('w','w')<CR>
+    inoremap <unique> <M-b> <C-o>:call SmartMove('b','0')<CR>
+    inoremap <unique> <M-f> <C-o>:call SmartMove('w','w')<CR>
 
     inoremap <unique> <C-j> <C-o>g<Down>
     inoremap <unique> <C-k> <C-o>g<Up>
@@ -549,9 +540,9 @@
     inoremap <unique> <M-u> <C-o>d$
     inoremap <unique> <Esc><C-u> <C-o>d^
     "inoremap <unique> <Esc><C-k> <C-o>d$
-    inoremap <unique> <C-w> <C-o>db
-    inoremap <unique> <M-d> <C-o>de
-    inoremap <unique> <M-w> <C-o>de
+    inoremap <unique> <C-w> <C-o>:call SmartMove('b','0','d')<CR>
+    inoremap <unique> <M-d> <C-o>:call SmartMove('e','$','d')<CR>
+    inoremap <unique> <M-w> <C-o>:call SmartMove('e','$','d')<CR>
     inoremap <unique> <C-y> <C-r>-
     inoremap <unique> <C-s> <C-o>d
     inoremap <unique> <C-s>u <C-o>u
@@ -571,10 +562,10 @@
     cnoremap <unique> <C-e> <End>
     cnoremap <unique> <C-h> <Left>
     cnoremap <unique> <C-l> <Right>
-    cnoremap <unique> <Esc><C-h> <C-o>:call SmartMove('B','B',0,1)<CR><C-c>
-    cnoremap <unique> <Esc><C-l> <C-o>:call SmartMove('W','W',0,1)<CR><C-c>
-    cnoremap <unique> <M-h> <C-o>:call SmartMove('b','b',0,1)<CR><C-c>
-    cnoremap <unique> <M-l> <C-o>:call SmartMove('w','w',0,1)<CR><C-c>
+    cnoremap <unique> <Esc><C-h> <C-o>:call SmartMove('B','0','',1)<CR><C-c>
+    cnoremap <unique> <Esc><C-l> <C-o>:call SmartMove('W','$','',1)<CR><C-c>
+    cnoremap <unique> <M-h> <C-o>:call SmartMove('b','0','',1)<CR><C-c>
+    cnoremap <unique> <M-l> <C-o>:call SmartMove('w','$','',1)<CR><C-c>
     " cnoremap <unique> <Esc><C-h> <C-o>B<C-c>
     " cnoremap <unique> <Esc><C-l> <C-o>W<C-c>
     " cnoremap <unique> <M-h> <C-o>b<C-c>
@@ -621,19 +612,19 @@
     noremap <unique> <Esc><C-j> 8j
     noremap <unique> <Esc><C-k> 8k
 
-    nnoremap <unique> <C-h> :call SmartMove('b','gel')<CR>
-    nnoremap <unique> <C-l> :call SmartMove('w','el')<CR>
-    nnoremap <unique> <M-b> :<C-u>call SmartMove('b','gel')<CR>
-    nnoremap <unique> <M-f> :<C-u>call SmartMove('w','el')<CR>
-    nnoremap <unique> <Esc><C-h> :<C-u>call SmartMove('B','gEl')<CR>
-    nnoremap <unique> <Esc><C-l> :<C-u>call SmartMove('W','El')<CR>
+    nnoremap <unique> <C-h> :call SmartMove('ge','gel')<CR>
+    nnoremap <unique> <C-l> :call SmartMove('e','el')<CR>
+    nnoremap <unique> <M-b> :<C-u>call SmartMove('ge','gel')<CR>
+    nnoremap <unique> <M-f> :<C-u>call SmartMove('e','el')<CR>
+    nnoremap <unique> <Esc><C-h> :<C-u>call SmartMove('gE','gEl')<CR>
+    nnoremap <unique> <Esc><C-l> :<C-u>call SmartMove('E','El')<CR>
 
-    vnoremap <unique> <C-h> <Esc>:<C-u>call SmartMove('b','gel',visualmode())<CR>
-    vnoremap <unique> <C-l> <Esc>:<C-u>call SmartMove('w','el',visualmode())<CR>
-    vnoremap <unique> <M-b> <Esc>:<C-u>call SmartMove('b','gel',visualmode())<CR>
-    vnoremap <unique> <M-f> <Esc>:<C-u>call SmartMove('w','el',visualmode())<CR>
-    vnoremap <unique> <Esc><C-h> <Esc>:<C-u>call SmartMove('B','gEl',visualmode())<CR>
-    vnoremap <unique> <Esc><C-l> <Esc>:<C-u>call SmartMove('W','El',visualmode())<CR>
+    vnoremap <unique> <C-h> <Esc>:<C-u>call SmartMove('ge','gel','gv')<CR>
+    vnoremap <unique> <C-l> <Esc>:<C-u>call SmartMove('e','el','gv')<CR>
+    vnoremap <unique> <M-b> <Esc>:<C-u>call SmartMove('ge','gel','gv')<CR>
+    vnoremap <unique> <M-f> <Esc>:<C-u>call SmartMove('e','el','gv')<CR>
+    vnoremap <unique> <Esc><C-h> <Esc>:<C-u>call SmartMove('gE','gEl','gv')<CR>
+    vnoremap <unique> <Esc><C-l> <Esc>:<C-u>call SmartMove('E','El','gv')<CR>
 
     nnoremap <unique> Y y$
 

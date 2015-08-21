@@ -39,7 +39,7 @@ plugins=(\
     catimg encode64 fasd rand-quote \
     git git-extra git-flow-avh mercurial \
     python pip pep8 autopep8 \
-    cabal docker \
+    cabal docker vagrant \
 )
 
 # tmux plugin

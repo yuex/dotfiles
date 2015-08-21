@@ -32,9 +32,6 @@
     Plugin 'godlygeek/tabular'
     Plugin 'Lokaltog/vim-easymotion'
     " Plugin 'junegunn/vader.vim'
-    " Plugin 'junegunn/vim-easy-align'
-    " Plugin 'terryma/vim-expand-region'
-    " Plugin 'terryma/vim-multiple-cursors'
     Plugin 'matchit.zip'
     Plugin 'altercation/vim-colors-solarized'
     " Plugin 'tomasr/molokai'
@@ -54,45 +51,23 @@
     " Plugin 'tpope/vim-commentary'
     Plugin 'majutsushi/tagbar'
     Plugin 'Yggdroot/indentLine'
-    Plugin 'sukima/xmledit'
     Plugin 'a.vim'
-    " Plugin 'wlangstroth/vim-racket'
-    " Plugin 'severin-lemaignan/vim-minimap'
-    " use astyle for C#/C++/C/Java, jsbeautify for Javascript
-    " autopep8 for python, tidy for HTML/XHTML/XML
-    "Plugin 'Chiel92/vim-autoformat'
-    "Plugin 'einars/js-beautify'
-" }}}
-" snippet and autocomplete {{{
     Plugin 'Valloric/YouCompleteMe'
     Plugin 'Shougo/neocomplcache'
-    "Plugin 'Shougo/neosnippet'
-    " snipMate cant be configured to disable completion after space(\s), first of line(^), also in confilict with supertab
-    "Plugin 'snipMate'
-    "Plugin 'honza/snipmate-snippets'
-    " code semantic and fuzzy completion
-    " tab complete all, (C-xC-o, C-xC-k, etc), including English word
-    "Plugin 'ervandew/supertab'
-    "Plugin 'Rip-Rip/clang_complete'
-    "let g:SuperTabDefaultCompletionType='context'
-    "Plugin 'HTML-AutoCloseTag'
+    Plugin 'sukima/xmledit'
+    Plugin 'Glench/Vim-Jinja2-Syntax'
+    Plugin 'alvan/vim-closetag'
+    " Plugin 'Shougo/neosnippet'
+    " Plugin 'snipMate'
 "}}}
 " notetaking {{{
-    " Plugin 'vimwiki/vimwiki'
-    " Plugin 'kakkyz81/evervim'
-    " Plugin 'yuex/vimwiki'
-    " Plugin 'neilagabriel/vim-geeknote'
     Plugin 'mrtazz/simplenote.vim'
-    " Plugin 'mattn/webapi-vim'
-    " Plugin 'mattn/vimplenote-vim'
     Plugin 'jszakmeister/rst2ctags'
     Plugin 'Rykka/riv.vim'
-    " Plugin 'aaronbieber/quicktask'
     Plugin 'VOoM'
-    " Plugin 'plasticboy/vim-markdown'
     Plugin 'jszakmeister/markdown2ctags'
+    " Plugin 'plasticboy/vim-markdown'
     Plugin 'yuex/vim-markdown'
-    " Plugin 'VimOrganizer'
     Plugin 'utl.vim'
 " }}}
 
@@ -546,6 +521,8 @@
     inoremap <unique> <C-y> <C-r>-
     inoremap <unique> <C-s> <C-o>d
     inoremap <unique> <C-s>u <C-o>u
+    inoremap <unique> <C-t> <C-o>~
+    inoremap <unique> <M-t> <Left><C-o>~<Left>
 
     inoremap <unique> <M-a> <C-o><C-a>
     inoremap <unique> <M-x> <C-o><C-x>
@@ -1265,6 +1242,7 @@ if PluginInstalled('delimitMate') "{{{
     imap <unique> <C-g><C-g> <Plug>delimitMateS-Tab
     imap <unique> <C-g><C-e> <Plug>delimitMateJumpMany
     autocmd FileType tex let b:delimitMate_quotes = "\" ' ` $"
+    autocmd FileType html,xml,jinja let b:delimitMate_matchpairs = '(:),{:},[:]'
     "imap <Space> <Plug>delimitMateSpace
     "autocmd FileType vimwiki let b:delimitMate_matchpairs=&matchpairs
     "autocmd FileType vimwiki let b:delimitMate_quotes = "\" ' ` * -"
@@ -1274,6 +1252,9 @@ endif " }}}
 if PluginInstalled('matchit.zip') "{{{
     "let b:match_words = '<:>,\<if\>:\<else\>:\<endif\>'
 endif " }}}
+if PluginInstalled('vim-closetag') "{{{
+    let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.j2,*.jinja,*.jinja2"
+endif "}}}
 if PluginInstalled('vim-powerline') "{{{
     let g:Powerline_symbols = 'fancy'
     let g:Powerline_stl_path_style = 'short'

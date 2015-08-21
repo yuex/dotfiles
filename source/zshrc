@@ -78,7 +78,7 @@ if command -v git-flow &>/dev/null; then # {{{
     alias gff='git flow feature finish --no-ff'
 fi # }}}
 # }}}
-# Keymap {{{
+# keymap {{{
 # disable terminal flow control <C-s> and <C-q>, save two prefix for vim
 stty stop ''
 stty start ''
@@ -108,20 +108,19 @@ bindkey -M yuexmap ''    forward-char
 # bindkey -M yuexmap ''    up-line-or-history
 # XXX: curiously, only ^J not working
 # bindkey -M yuexmap '^J'    down-line-or-history
-bindkey -M yuexmap ''  down-case-word
-bindkey -M yuexmap ''    up-case-word
 bindkey -M yuexmap ''    history-incremental-pattern-search-forward
 bindkey -M yuexmap ''    history-incremental-pattern-search-backward
 bindkey -M yuexmap ''    clear-screen
 bindkey -M yuexmap 'm'   run-help
 bindkey -M yuexmap ''    get-line #be consistent with ^Q (push-line)
-
+bindkey -M yuexmap ''    vi-swap-case
+bindkey -M yuexmap -s 't'    'ODOD'
 bindkey -M yuexmap -s 's' 'qls'
-bindkey -M yuexmap -s 't'  'tmux attach -t $USER || tmux new-session -s $USER'
+bindkey -M yuexmap -s 'a'  'tmux attach -t $USER || tmux new-session -s $USER'
 
 bindkey -A yuexmap main
 # }}}
-# Prompt {{{
+# prompt {{{
 # disable auto correction of zsh
 # unsetopt correct_all
 

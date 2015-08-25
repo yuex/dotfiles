@@ -3,9 +3,10 @@
   + 1 Introduction_
   + 2 Installation_
 
-    + 2.1 Basics_
-    + 2.2 Zsh_
-    + 2.3 Vim_
+    + 2.1 Requirements_
+    + 2.2 `Common Stuff`_
+    + 2.3 `Zsh Extras`_
+    + 2.4 `Vim Extras`_
 
   + 3 `Backup and Restore`_
   + 4 Update_
@@ -21,11 +22,20 @@ A collection of my dotfiles, including:
 * vim
 * zsh
 
+
 Installation
 ============
 
-Comman
-------
+
+Requirements
+------------
+
+In the ``Makefile``, the syntax ``.ONESHELL`` introduced in ``make 3.82`` is used.
+Hence, before rocking you have to upgrade your ``make``.
+
+
+Common Stuff
+------------
 
 Trying out by creating a new account is recommended::
 
@@ -56,15 +66,16 @@ Or, install a specific dotfile, one at a time::
 	make zsh
 
 
-Zsh
----
+Zsh Extras
+----------
 
 My ``zshrc`` depends on `oh-my-zsh`_ and `dircolors-solarized`_. ``make zsh`` will do most work. But you need to manually change the default login shell::
 
     chsh -s /usr/bin/zsh
 
-Vim
----
+
+Vim Extras
+----------
 
 ``vim`` depends on `Vundle.vim`_ to manage vim plugins. ``make vim`` will install plugins automatically. But the compilation of `YouCompleteMe`_ needs some extra work because it provides a compiling choice and really takes time.
 

@@ -59,8 +59,8 @@ backup: |$(BAK_DIR) $(DST_DIR)
 	for f in $(RC_INCLUDE) $(RC_DEPENDS); do
 		src_file=${DST_DIR}/.$$f
 		dst_file=${BAK_DIR}/.$$f
-		[ -f $$dst_file ] && rm -rf $$dst_file
-		[ -f $$src_file ] && cp -fa $$src_file $$dst_file || > $$dst_file
+		[ -e $$dst_file ] && rm -rf $$dst_file
+		[ -e $$src_file ] && cp -fa $$src_file $$dst_file || > $$dst_file
 	done && touch ${BAK_LOCK}
 
 .ONESHELL:

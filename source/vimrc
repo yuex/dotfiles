@@ -57,10 +57,12 @@
     Plugin 'sukima/xmledit'
     Plugin 'Glench/Vim-Jinja2-Syntax'
     Plugin 'alvan/vim-closetag'
+    Plugin 'merijn/haskellFoldIndent'
     " Plugin 'Shougo/neosnippet'
     " Plugin 'snipMate'
 "}}}
 " notetaking {{{
+    Plugin 'mtth/scratch.vim'
     Plugin 'mrtazz/simplenote.vim'
     Plugin 'jszakmeister/rst2ctags'
     Plugin 'Rykka/riv.vim'
@@ -1304,6 +1306,7 @@ if PluginInstalled('nerdcommenter') "{{{
     " to work around the silly merging of #183
     let g:NERDCustomDelimiters = {
         \'python': {'left': '#'},
+        \'haskell': {'left': '--'},
         \}
 endif " }}}
 if PluginInstalled('vim-commentary') "{{{

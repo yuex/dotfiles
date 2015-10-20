@@ -129,6 +129,8 @@ My ``vimrc`` contains some self-customed key mappings and home-made scripts in `
     Plugin 'sukima/xmledit'
     Plugin 'Glench/Vim-Jinja2-Syntax'
     Plugin 'alvan/vim-closetag'
+    Plugin 'merijn/haskellFoldIndent'
+    Plugin 'mtth/scratch.vim'
     Plugin 'mrtazz/simplenote.vim'
     Plugin 'jszakmeister/rst2ctags'
     Plugin 'Rykka/riv.vim'

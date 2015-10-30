@@ -333,20 +333,20 @@
 " tabpage {{{
     " XXX: use <kHome>/<kEnd> to hack around <M-Home>/<M-End>.  although <M-X>
     " mapping with these two keys still won't work, <Esc><X> do.
-    nnoremap <unique> <Esc><Home>      :tabnew<CR>
-    nnoremap <unique> <Esc><End>       :tabclose<CR>
+    nnoremap <unique> <Esc><Home>      :tabedit<Space>
+    nnoremap <unique> <Esc><End>       :tabclose
     nnoremap <unique> <Esc><PageUp>    :tabprevious<CR>
     nnoremap <unique> <Esc><PageDown>  :tabnext<CR>
-    nnoremap <unique> <Esc><kHome>     :tabnew<CR>
-    nnoremap <unique> <Esc><kEnd>      :tabclose<CR>
+    nnoremap <unique> <Esc><kHome>     :tabedit<Space>
+    nnoremap <unique> <Esc><kEnd>      :tabclose
     nnoremap <unique> <Esc><kPageUp>   :tabprevious<CR>
     nnoremap <unique> <Esc><kPageDown> :tabnext<CR>
 
     " move tab left or right
     nnoremap <unique> <silent> <Esc><Left>  :tabmove -1<CR>
     nnoremap <unique> <silent> <Esc><Right> :tabmove +1<CR>
-    nnoremap <unique> <silent> <Esc><Up>    :tabnew %<CR>
-    nnoremap <unique> <silent> <Esc><Down>  :tabclose<CR>
+    nnoremap <unique> <silent> <Esc><Up>    :tabnew<Space>
+    nnoremap <unique> <silent> <Esc><Down>  :tabclose
 
     " move to tab #1-#9, #0 is last"
     nnoremap <unique> <C-g>0 :tablast<CR>

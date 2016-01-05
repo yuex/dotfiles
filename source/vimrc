@@ -68,8 +68,8 @@
     Plugin 'Rykka/riv.vim'
     Plugin 'VOoM'
     Plugin 'jszakmeister/markdown2ctags'
-    " Plugin 'plasticboy/vim-markdown'
-    Plugin 'yuex/vim-markdown'
+    Plugin 'plasticboy/vim-markdown'
+    " Plugin 'yuex/vim-markdown'
     Plugin 'utl.vim'
 " }}}
 
@@ -333,19 +333,19 @@
 " tabpage {{{
     " XXX: use <kHome>/<kEnd> to hack around <M-Home>/<M-End>.  although <M-X>
     " mapping with these two keys still won't work, <Esc><X> do.
-    nnoremap <unique> <Esc><Home>      :tabedit<Space>
-    nnoremap <unique> <Esc><End>       :tabclose
-    nnoremap <unique> <Esc><PageUp>    :tabprevious<CR>
-    nnoremap <unique> <Esc><PageDown>  :tabnext<CR>
-    nnoremap <unique> <Esc><kHome>     :tabedit<Space>
-    nnoremap <unique> <Esc><kEnd>      :tabclose
-    nnoremap <unique> <Esc><kPageUp>   :tabprevious<CR>
-    nnoremap <unique> <Esc><kPageDown> :tabnext<CR>
+    nnoremap <unique> <Esc><Home>      :tabfirst<CR>
+    nnoremap <unique> <Esc><kHome>     :tabfirst<CR>
+    nnoremap <unique> <Esc><End>       :tablast<CR>
+    nnoremap <unique> <Esc><kEnd>      :tablast<CR>
 
-    " move tab left or right
-    nnoremap <unique> <silent> <Esc><Left>  :tabmove -1<CR>
-    nnoremap <unique> <silent> <Esc><Right> :tabmove +1<CR>
-    nnoremap <unique> <silent> <Esc><Up>    :tabnew<Space>
+    nnoremap <unique> <Esc><PageUp>    :tabmove -1<CR>
+    nnoremap <unique> <Esc><kPageUp>   :tabmove -1<CR>
+    nnoremap <unique> <Esc><PageDown>  :tabmove +1<CR>
+    nnoremap <unique> <Esc><kPageDown> :tabmove +1<CR>
+
+    nnoremap <unique> <silent> <Esc><Left>  :tabprevious<CR>
+    nnoremap <unique> <silent> <Esc><Right> :tabnext<CR>
+    nnoremap <unique> <silent> <Esc><Up>    :tabedit<Space>
     nnoremap <unique> <silent> <Esc><Down>  :tabclose
 
     " move to tab #1-#9, #0 is last"

@@ -44,7 +44,7 @@ plugins=(\
 )
 
 # tmux plugin
-export TERM='screen-256color'
+export TERM='xterm-256color'
 ZSH_TMUX_AUTOSTART=true
 ZSH_TMUX_AUTOSTART_NAME="$USER"
 ZSH_TMUX_AUTOQUIT=false
@@ -116,6 +116,8 @@ bindkey -M yuexmap ''    clear-screen
 bindkey -M yuexmap 'm'   run-help
 bindkey -M yuexmap ''    get-line #be consistent with ^Q (push-line)
 bindkey -M yuexmap ''    vi-swap-case
+bindkey -M yuexmap '[1~' beginning-of-line
+bindkey -M yuexmap '[4~' end-of-line
 bindkey -M yuexmap -s 't' 'ODOD'
 bindkey -M yuexmap -s 's' 'qls'
 bindkey -M yuexmap -s 'a' 'tmux attach -t $USER || tmux new-session -s $USER'

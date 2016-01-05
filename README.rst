@@ -136,7 +136,7 @@ My ``vimrc`` contains some self-customed key mappings and home-made scripts in `
     Plugin 'Rykka/riv.vim'
     Plugin 'VOoM'
     Plugin 'jszakmeister/markdown2ctags'
-    Plugin 'yuex/vim-markdown'
+    Plugin 'plasticboy/vim-markdown'
     Plugin 'utl.vim'
 
 Backup and Restore

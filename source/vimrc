@@ -62,6 +62,7 @@
     " Plugin 'snipMate'
 "}}}
 " notetaking {{{
+    Plugin 'DrawIt'
     Plugin 'mtth/scratch.vim'
     Plugin 'mrtazz/simplenote.vim'
     Plugin 'jszakmeister/rst2ctags'

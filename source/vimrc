@@ -191,10 +191,6 @@
 " leader {{{
     let mapleader = ';'
     let maplocalleader = ','
-    noremap <Esc>; :
-    inoremap <Esc>; <C-o>:
-    noremap \ ;
-    noremap <C-\> ,
 " }}}
 " meta key {{{
 " vim hacks fix meta-keys which generate <Esc>a .. <Esc>z
@@ -283,12 +279,10 @@
 " }}}
 " }}}
 " smart mode, keymappings {{{
-" change cd {{{
+" cd and sudo {{{
     cnoremap <unique> cwd lcd %:p:h
     cnoremap <unique> cd. lcd %:p:h
-" }}}
-" sudo {{{
-" when u forget to sudo.. really write the file
+    " when u forget to sudo.. really write the file
     cnoremap <unique> w!! w !sudo tee % >/dev/null
 " }}}
 " smartquit {{{
@@ -393,12 +387,6 @@
     map <unique> gt T
     map <unique> gf F
 " }}}
-" quickevil {{{
-    inoremap <unique> <silent> <Left>  <nop>
-    inoremap <unique> <silent> <Right> <nop>
-    inoremap <unique> <silent> <Up>    <nop>
-    inoremap <unique> <silent> <Down>  <nop>
-" }}}
 " quickmode {{{
     function SmartMove(moveToNext, moveToEnd, ...) "{{{
         " if line number changed, use moveToEnd, otherwise use moveToNext
@@ -492,6 +480,9 @@
     endfunction " }}}
     "nnoremap <unique> <Esc><Leader><M-w> :w !sudo tee % >/dev/null
     "nnoremap <unique> <Esc><Leader><Esc><Leader> :
+    noremap \ ;
+    noremap <C-\> ,
+    noremap <Esc><Leader> :
     nnoremap <unique> <Esc><Leader><Esc><Leader> :
     nnoremap <unique> <Esc><Leader><M-w>  :call SmartWrite()<CR>
     nnoremap <unique> <Esc><Leader><M-e>  :w<Space>
@@ -499,6 +490,9 @@
     " quickinsert inoremap {{{
     " it seems <C-Left> and <C-Right> in insert mode
     let g:omni_sql_no_default_maps=1
+    inoremap <Esc><Leader> <C-o>:
+    inoremap <unique> <Esc><Leader><Esc><Leader> <C-o>:
+    inoremap <unique> <Esc><Leader><M-w> <C-o>:call SmartWrite()<CR>
     inoremap <unique> <C-a> <C-o>^
     inoremap <unique> <C-e> <End>
     inoremap <unique> <C-h> <Left>
@@ -857,27 +851,6 @@
     nnoremap <unique> <Leader>lo :lopen<CR>
     nnoremap <unique> <Leader>lc :lclose<CR>
 " }}}
-" quick deletion using <C-s> {{{
-    "inoremap <unique> <C-s><C-a> <C-o>d<Home>
-    "inoremap <unique> <C-s><C-e> <C-o>d<End>
-    "inoremap <unique> <C-s><C-w> <C-o>dB
-    "inoremap <unique> <C-s><C-d> <C-o>dW
-    "inoremap <unique> <C-s><M-w> <C-o>dB
-    "inoremap <unique> <C-s><M-d> <C-o>dW
-    "inoremap <unique> <C-s><Esc>e <C-o>de
-    "inoremap <unique> <C-s><Esc><C-e> <C-o>dge
-    "inoremap <unique> <C-s><C-f> <C-o>dw
-    "inoremap <unique> <C-s><C-b> <C-o>db
-    "inoremap <unique> <C-s><C-u> <C-o>d^
-    "inoremap <unique> <C-s><C-k> <C-o>d$
-    "inoremap <unique> <C-s><C-d> <C-o>d
-    "inoremap <unique> <C-s>u <C-o>u
-    "inoremap <unique> <C-s><C-y> <C-o>P
-    "inoremap <unique> <C-s><C-j> <C-o>J
-    "inoremap <unique> <C-q> <BS>
-    "inoremap <unique> <M-q> <Del>
-    "inoremap <unique> <Esc><C-q> <Del>
-" }}}
 " smartbinary, smart binary {{{
     function ToggleBinaryMode() "{{{
         if !exists('b:_binary_on')
@@ -940,19 +913,10 @@
 " zz, zt, zb, place current line on screen {{{
     for key in ['z','t','b']
         exec "inoremap <unique> <C-z><C-".key."> <C-o>z".key
-        exec "inoremap <unique> <C-z>".key." <C-o>z".key
     endfor
     for key in ['H','L','M']
-        exec "inoremap <unique> <C-z>".key." <C-o>".key
+        exec "inoremap <unique> <C-z><C-".tolower(key)."> <C-o>".key
     endfor
-    nnoremap <unique> zh zt
-    nnoremap <unique> zl zb
-    vnoremap <unique> zh zt
-    vnoremap <unique> zl zb
-    inoremap <unique> <C-z>h <C-o>zt
-    inoremap <unique> <C-z>l <C-o>zb
-    inoremap <unique> <C-z><C-h> <C-o>zt
-    inoremap <unique> <C-z><C-l> <C-o>zb
 " }}}
 " exec function in insert mode {{{
     " insert mode <C-r>=Funcexec(cmd)
@@ -961,8 +925,7 @@
         exec a:cmd
     endfun
 " }}}
-" hammer {{{
-" poor man's hammer
+" poor man's hammer {{{
     "autocmd FileType vimwiki,markdown nnoremap <Leader>hh
     autocmd FileType vimwiki,markdown nnoremap <buffer> <Leader>hh
                 \ :silent !pandoc -r markdown -w html "%" > "/tmp/%:t.html"<CR>
@@ -974,7 +937,7 @@
                 \ :redraw!<CR>
     "nnoremap <unique> <Leader>hh :Hammer<CR>
 " }}}
-" mottos" {{{
+" mottos {{{
     let g:mottos_prompt = "省» "
     noremap <unique><silent> <C-s>
                 \ :<C-u>echoh Question
@@ -1056,7 +1019,7 @@ if PluginInstalled('vim-easymotion') "{{{
         endif
         exec "imap <unique> <Esc><C-".key."> <C-o><Plug>(easymotion-iskeyword-".key.")"
     endfor
-    let g:EasyMotion_startofline = 0
+    " let g:EasyMotion_startofline = 0
     for key in ['j','k']
         exec "map  <unique> <M-".key."> <Plug>(easymotion-".key.")"
         exec "imap <unique> <M-".key."> <C-o><Plug>(easymotion-".key.")"

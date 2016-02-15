@@ -906,9 +906,9 @@
     endfunc "}}}
     "nnoremap <unique> <Leader>fs :retab<CR>:%s/\s\+$//g<CR>
     nnoremap <unique> <Leader>fs :call SpaceFormat()<CR>
-    nnoremap <unique> <Leader>fc gg=G
-    nnoremap <unique> <Leader>ff :call AutoSpaceCJK('n')<CR>
-    vnoremap <unique> <Leader>ff :<C-u>call AutoSpaceCJK(visualmode())<CR>
+    nnoremap <unique> <Leader>fe gg=G
+    nnoremap <unique> <Leader>fc :call AutoSpaceCJK('n')<CR>
+    vnoremap <unique> <Leader>fc :<C-u>call AutoSpaceCJK(visualmode())<CR>
 " }}}
 " zz, zt, zb, place current line on screen {{{
     for key in ['z','t','b']

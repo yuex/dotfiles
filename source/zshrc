@@ -116,8 +116,9 @@ bindkey -M yuexmap ''    clear-screen
 bindkey -M yuexmap 'm'   run-help
 bindkey -M yuexmap ''    get-line #be consistent with ^Q (push-line)
 bindkey -M yuexmap ''    vi-swap-case
+
 bindkey -M yuexmap -s 't' 'ODOD'
-bindkey -M yuexmap -s 's' 'qls'
+bindkey -M yuexmap -s 's' 'qls -lh'
 bindkey -M yuexmap -s 'a' 'tmux attach -t $USER || tmux new-session -s $USER'
 
 bindkey -A yuexmap main

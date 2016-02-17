@@ -329,48 +329,56 @@
     " XXX: use <kHome>/<kEnd> to hack around <M-Home>/<M-End>.  although <M-X>
     " mapping with these two keys still won't work, <Esc><X> do.
     nnoremap <unique> <Esc><Home>      :tabfirst<CR>
-    nnoremap <unique> <Esc><kHome>     :tabfirst<CR>
+    inoremap <unique> <Esc><Home> <Esc>:tabfirst<CR>
     nnoremap <unique> <Esc><End>       :tablast<CR>
-    nnoremap <unique> <Esc><kEnd>      :tablast<CR>
+    inoremap <unique> <Esc><End>  <Esc>:tablast<CR>
 
-    nnoremap <unique> <Esc><PageUp>    :tabmove -1<CR>
-    nnoremap <unique> <Esc><kPageUp>   :tabmove -1<CR>
-    nnoremap <unique> <Esc><PageDown>  :tabmove +1<CR>
-    nnoremap <unique> <Esc><kPageDown> :tabmove +1<CR>
+    nnoremap <unique> <Esc><PageUp>        :tabmove -1<CR>
+    inoremap <unique> <Esc><PageUp>        <Esc>:tabmove -1<CR>
+    nnoremap <unique> <Esc><PageDown>      :tabmove +1<CR>
+    inoremap <unique> <Esc><PageDown> <Esc>:tabmove +1<CR>
 
     nnoremap <unique> <silent> <Esc><Left>  :tabprevious<CR>
     nnoremap <unique> <silent> <Esc><Right> :tabnext<CR>
-    nnoremap <unique> <silent> <Esc><Up>    :tabedit<Space>
+    nnoremap <unique>          <Esc><Up>    :tabedit<Space>
     nnoremap <unique> <silent> <Esc><Down>  :tabclose
 
+    nnoremap <unique> <silent> <PageUp>        :tabprevious<CR>
+    inoremap <unique> <silent> <PageUp>   <Esc>:tabprevious<CR>
+    nnoremap <unique> <silent> <PageDown>      :tabnext<CR>
+    inoremap <unique> <silent> <PageDown> <Esc>:tabnext<CR>
+    nnoremap <unique> <silent> <Esc><C-[>      :tabprevious<CR>
+    inoremap <unique> <silent> <Esc><C-[> <Esc>:tabprevious<CR>
+    nnoremap <unique> <silent> <Esc><C-]>      :tabnext<CR>
+    inoremap <unique> <silent> <Esc><C-]> <Esc>:tabnext<CR>
+
+    nnoremap <unique> <C-g><C-e>      :tabedit<Space>
+    inoremap <unique> <C-g><C-e> <Esc>:tabedit<Space>
+
     " move to tab #1-#9, #0 is last"
-    nnoremap <unique> <C-g>0 :tablast<CR>
-    inoremap <unique> <C-g>0 <C-o>:tablast<CR>
+    nnoremap <unique> <M-0>      :tablast<CR>
+    inoremap <unique> <M-0> <C-o>:tablast<CR>
     let c = '1'
     while c <= '9'
-        exec "nnoremap <unique> <C-g>".c." :tabnext ".c."<CR>"
-        exec "inoremap <unique> <C-g>".c." <Esc>:tabnext ".c."<CR>"
+        exec "nnoremap <unique> <M-".c.">      :tabnext ".c."<CR>"
+        exec "inoremap <unique> <M-".c."> <Esc>:tabnext ".c."<CR>"
         let c = nr2char(1+char2nr(c))
     endw
 " }}}
 " buffer {{{
-    nnoremap <unique> <silent> <C-g><C-u>   :buffers<CR>
-    nnoremap <unique> <silent> <C-g><C-p>   :bprevious<CR>
-    nnoremap <unique> <silent> <C-g><C-n>   :bnext<CR>
-    "nnoremap <unique> <silent> <PageUp>     :bprevious<CR>
-    "nnoremap <unique> <silent> <PageDown>   :bnext<CR>
+    nnoremap <unique> <silent> <C-g><C-b>      :buffers<CR>
+    inoremap <unique> <silent> <C-g><C-b> <C-o>:buffers<CR>
+    nnoremap <unique> <silent> <C-g><C-[>      :bprevious<CR>
+    inoremap <unique> <silent> <C-g><C-[> <Esc>:bprevious<CR>
+    nnoremap <unique> <silent> <C-g><C-]>      :bnext<CR>
+    inoremap <unique> <silent> <C-g><C-]> <Esc>:bnext<CR>
 
-    inoremap <unique> <silent> <C-g><C-p>   <Esc>:bprevious<CR>
-    inoremap <unique> <silent> <C-g><C-n>   <Esc>:bnext<CR>
-    "inoremap <unique> <silent> <PageUp>     <Esc>:bprevious<CR>
-    "inoremap <unique> <silent> <PageDown>   <Esc>:bnext<CR>
-
-    nnoremap <unique> <M-0> :blast<CR>
-    inoremap <unique> <M-0> <C-o>:blast<CR>
+    nnoremap <unique> <C-g>0      :blast<CR>
+    inoremap <unique> <C-g>0 <C-o>:blast<CR>
     let c = '1'
     while c <= '9'
-        exec "nnoremap <unique> <M-".c."> :buffer ".c."<CR>"
-        exec "inoremap <unique> <M-".c."> <Esc>:buffer ".c."<CR>"
+        exec "nnoremap <unique> <C-g>".c."      :buffer ".c."<CR>"
+        exec "inoremap <unique> <C-g>".c." <Esc>:buffer ".c."<CR>"
         let c = nr2char(1+char2nr(c))
     endw
 " }}}
@@ -1072,7 +1080,7 @@ if PluginInstalled('indentLine') "{{{
     let g:indentLine_noConcealCursor = 1
     let g:indentLine_faster = 1
     let g:indentLine_fileTypeExclude = []
-    let g:indentLine_fileType = ['c','cpp','python']
+    let g:indentLine_fileType = ["c","cpp","python"]
 endif " }}}
 if PluginInstalled('a.vim') "{{{
     nnoremap <unique> <M-a> :A<CR>
@@ -1205,8 +1213,7 @@ if PluginInstalled('delimitMate') "{{{
     "set matchpairs+=<:>
     let delimitMate_expand_space = 1
     let delimitMate_expand_cr = 1
-    imap <unique> <C-g><C-g> <Plug>delimitMateS-Tab
-    imap <unique> <C-g><C-e> <Plug>delimitMateJumpMany
+    imap <unique> <C-g><C-g> <Plug>delimitMateJumpMany
     autocmd FileType tex let b:delimitMate_quotes = "\" ' ` $"
     autocmd FileType html,xml,jinja let b:delimitMate_matchpairs = '(:),{:},[:]'
     "imap <Space> <Plug>delimitMateSpace

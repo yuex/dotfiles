@@ -44,7 +44,8 @@ plugins=(\
 )
 
 # tmux plugin
-export TERM='screen.xterm-256color'
+# export TERM='screen.xterm-256color'
+export TERM='xterm-256color'
 ZSH_TMUX_AUTOSTART=true
 ZSH_TMUX_AUTOSTART_NAME="$USER"
 ZSH_TMUX_AUTOQUIT=false
@@ -89,31 +90,19 @@ stty -ixoff
 # man zshzle
 bindkey -N yuexmap emacs
 
-bindkey -M yuexmap ''    clear-screen
-bindkey -M yuexmap ''    backward-kill-line
-bindkey -M yuexmap 'u'   kill-line
-bindkey -M yuexmap ''  kill-whole-line
-bindkey -M yuexmap ''    backward-kill-word
-bindkey -M yuexmap 'w'   kill-word
+bindkey -M yuexmap ''  backward-kill-line
+bindkey -M yuexmap ''  kill-whole-line
+
 bindkey -M yuexmap 'p'   up-line-or-search
 bindkey -M yuexmap 'n'   down-line-or-search
 bindkey -M yuexmap 'k'   history-beginning-search-backward
 bindkey -M yuexmap 'j'   history-beginning-search-forward
-bindkey -M yuexmap ''  vi-backward-blank-word
-bindkey -M yuexmap ''  vi-forward-blank-word
-bindkey -M yuexmap 'b'   vi-backward-word
-bindkey -M yuexmap 'f'   vi-forward-word
-bindkey -M yuexmap 'h'   vi-backward-word
-bindkey -M yuexmap 'l'   vi-forward-word
-bindkey -M yuexmap ''    backward-char
-bindkey -M yuexmap ''    forward-char
-# bindkey -M yuexmap ''    up-line-or-history
-# XXX: curiously, only ^J not working
-# bindkey -M yuexmap '^J'    down-line-or-history
-bindkey -M yuexmap ''    history-incremental-pattern-search-forward
-bindkey -M yuexmap ''    history-incremental-pattern-search-backward
-bindkey -M yuexmap ''    clear-screen
-bindkey -M yuexmap 'm'   run-help
+
+bindkey -M yuexmap ''    vi-backward-blank-word
+bindkey -M yuexmap ''    vi-forward-blank-word
+# bindkey -M yuexmap 'b'   vi-backward-word
+# bindkey -M yuexmap 'f'   vi-forward-word
+
 bindkey -M yuexmap ''    get-line #be consistent with ^Q (push-line)
 bindkey -M yuexmap ''    vi-swap-case
 

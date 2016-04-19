@@ -91,7 +91,11 @@ stty -ixoff
 bindkey -N yuexmap emacs
 
 bindkey -M yuexmap ''  backward-kill-line
-bindkey -M yuexmap ''  kill-whole-line
+bindkey -M yuexmap ''  push-line
+bindkey -M yuexmap ''  get-line #be consistent with ^Q (push-line)
+bindkey -M yuexmap ''  vi-swap-case
+bindkey -M yuexmap '' kill-whole-line
+bindkey -M yuexmap '' kill-whole-line
 
 bindkey -M yuexmap 'p'   up-line-or-search
 bindkey -M yuexmap 'n'   down-line-or-search
@@ -102,9 +106,6 @@ bindkey -M yuexmap ''    vi-backward-blank-word
 bindkey -M yuexmap ''    vi-forward-blank-word
 # bindkey -M yuexmap 'b'   vi-backward-word
 # bindkey -M yuexmap 'f'   vi-forward-word
-
-bindkey -M yuexmap ''    get-line #be consistent with ^Q (push-line)
-bindkey -M yuexmap ''    vi-swap-case
 
 bindkey -M yuexmap -s 't' 'ODOD'
 bindkey -M yuexmap -s 's' 'qls -lh'

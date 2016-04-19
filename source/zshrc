@@ -96,15 +96,16 @@ bindkey -M yuexmap ''  vi-swap-case
 bindkey -M yuexmap '' kill-whole-line
 bindkey -M yuexmap '' kill-whole-line
 
-bindkey -M yuexmap 'p'   up-line-or-search
-bindkey -M yuexmap 'n'   down-line-or-search
-bindkey -M yuexmap 'k'   history-beginning-search-backward
-bindkey -M yuexmap 'j'   history-beginning-search-forward
+bindkey -M yuexmap 'p'  up-line-or-search
+bindkey -M yuexmap 'n'  down-line-or-search
+bindkey -M yuexmap 'k'  history-beginning-search-backward
+bindkey -M yuexmap 'j'  history-beginning-search-forward
 
-bindkey -M yuexmap ''    vi-backward-blank-word
-bindkey -M yuexmap ''    vi-forward-blank-word
-# bindkey -M yuexmap 'b'   vi-backward-word
-# bindkey -M yuexmap 'f'   vi-forward-word
+# emacs M-b and M-f will jump over punctuation. so we use the vi-style here
+bindkey -M yuexmap 'b'  vi-backward-word
+bindkey -M yuexmap 'f'  vi-forward-word
+bindkey -M yuexmap '' vi-backward-blank-word
+bindkey -M yuexmap '' vi-forward-blank-word
 
 bindkey -M yuexmap -s 't' 'ODOD'
 bindkey -M yuexmap -s 's' 'qls -lh'

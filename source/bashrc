@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 #
 # ~/.bashrc
 #
@@ -16,7 +17,6 @@ alias tmux='TERM=screen-256color tmux'
 alias curl='curl -L'
 alias vim='vim -p'
 
-export EDITOR=vim
 HISTSIZE=404
 
 PATH=$HOME/bin:$PATH:$HOME/.gem/ruby/2.1.0/bin

@@ -69,7 +69,6 @@ source $ZSH/oh-my-zsh.sh
 # zsh options {{{
 # enable {a-z}, {0-9} in zsh
 setopt braceccl
-export EDITOR=vim
 # }}}
 # alias {{{
 alias .=source

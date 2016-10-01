@@ -41,9 +41,11 @@
 " programming {{{
     " git integration
     Plugin 'tpope/vim-fugitive'
-    Plugin 'tpope/vim-sleuth'
+    " Plugin 'tpope/vim-sleuth'
     Plugin 'airblade/vim-gitgutter'
-    " automatic syntax checker
+    " automatic syntax checker. to work with them, you have to install flake8
+    " or pylint. I recommend to install them via package manager of your system
+    " like virtuanenv and virtualenvwrapper instead of pip
     Plugin 'hynek/vim-python-pep8-indent'
     Plugin 'yuex/vim-autopep8'
     Plugin 'scrooloose/syntastic'
@@ -52,12 +54,13 @@
     Plugin 'majutsushi/tagbar'
     Plugin 'Yggdroot/indentLine'
     Plugin 'a.vim'
-    Plugin 'Valloric/YouCompleteMe'
+    " Plugin 'Valloric/YouCompleteMe'
     Plugin 'Shougo/neocomplcache'
     Plugin 'sukima/xmledit'
     Plugin 'Glench/Vim-Jinja2-Syntax'
     Plugin 'alvan/vim-closetag'
-    Plugin 'merijn/haskellFoldIndent'
+    " Plugin 'merijn/haskellFoldIndent'
+    Plugin 'neovimhaskell/haskell-vim'
     " Plugin 'Shougo/neosnippet'
     " Plugin 'snipMate'
 "}}}
@@ -271,7 +274,7 @@
 " autocmd indent {{{
     autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4
     autocmd FileType java setlocal tabstop=4 shiftwidth=4 softtabstop=4
-    autocmd FileType c,cpp setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    autocmd FileType c,cpp setlocal tabstop=2 shiftwidth=4 softtabstop=4
     autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
     autocmd FileType xml,html,css,htmldjango
                 \ setlocal tabstop=2 shiftwidth=2 softtabstop=2
@@ -1170,7 +1173,7 @@ if PluginInstalled('VOoM') "{{{
     nnoremap <M-q> :exec 'VoomToggle '.&ft<CR>
 endif " }}}
 if PluginInstalled('YouCompleteMe') "{{{
-    let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
     let g:ycm_always_populate_location_list = 1
     "let g:ycm_error_symbol = 'E'
     "let g:ycm_warning_symbol = 'W'
@@ -1277,7 +1280,7 @@ if PluginInstalled('nerdcommenter') "{{{
     " to work around the silly merging of #183
     let g:NERDCustomDelimiters = {
         \'python': {'left': '#'},
-        \'haskell': {'left': '--'},
+        \'haskell': {'left': '--', 'leftAlt': '{-', 'rightAlt': '-}'},
         \}
 endif " }}}
 if PluginInstalled('vim-commentary') "{{{
@@ -1340,7 +1343,7 @@ if PluginInstalled('sessionman.vim') "{{{
     nnoremap <leader>ss :SessionSave<CR>
 endif " }}}
 if PluginInstalled('syntastic') "{{{
-    nnoremap <unique> <Leader>kk :SyntasticCheck<CR>:Errors<CR>
+    nnoremap <unique> <Leader>ee :SyntasticCheck<CR>:Errors<CR>
 endif " }}}
 if has("cscope") "{{{
     function! LoadCscope() " {{{

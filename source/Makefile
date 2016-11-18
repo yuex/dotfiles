@@ -9,5 +9,8 @@ vim_plugin: vimrc
 clean:
 	rm $$(ls|grep -v Makefile)
 
+init.el: $(SRC_DIR)/.emacs.d/init.el
+	cp $< $@
+
 %: $(SRC_DIR)/.%
 	cp $< $@

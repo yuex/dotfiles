@@ -67,7 +67,7 @@
 " notetaking {{{
     Plugin 'DrawIt'
     Plugin 'mtth/scratch.vim'
-    Plugin 'mrtazz/simplenote.vim'
+    " Plugin 'mrtazz/simplenote.vim'
     Plugin 'jszakmeister/rst2ctags'
     Plugin 'Rykka/riv.vim'
     Plugin 'VOoM'
@@ -197,6 +197,7 @@
 " }}}
 " meta key {{{
 " vim hacks fix meta-keys which generate <Esc>a .. <Esc>z
+if !has('nvim')
     for i in range(char2nr('a'), char2nr('z'))
         let i = nr2char(i)
         exec "set <M-".i.">=\<Esc>".i
@@ -207,6 +208,7 @@
         exec "set <M-".i.">=\<Esc>".i
         exec "inoremap \<Esc>".i." <M-".i.">"
     endfor
+endif
 " }}}
 " }}}
 " autocommand {{{
@@ -393,6 +395,7 @@
 " }}}
 " jkTF motion {{{
     " go as u see
+    noremap <unique> K i<CR><Esc>
     noremap <unique> j gj
     noremap <unique> k gk
     map <unique> gt T
@@ -1035,25 +1038,10 @@ if PluginInstalled('vim-easymotion') "{{{
         exec "map  <unique> <M-".key."> <Plug>(easymotion-".key.")"
         exec "imap <unique> <M-".key."> <C-o><Plug>(easymotion-".key.")"
     endfor
-    map  <unique> <M-h> <Plug>(easymotion-Fl)
-    map  <unique> <M-l> <Plug>(easymotion-fl)
-    imap <unique> <M-h> <C-o><Plug>(easymotion-Fl)
-    imap <unique> <M-l> <C-o><Plug>(easymotion-fl)
-    "for key in ['t','T','f','F','w','b','e','W','B','E',"ge","gE"]
-        "let act = key
-
-        "if key ==# 'w' || key ==# 'b' || key ==# 'e' || key ==# 'ge'
-            "let act = "iskeyword-".key
-        "endif
-
-        "exec "map <unique> ".key." <Plug>(easymotion-".act.")"
-
-        "if strlen(key) != 1 || key < 'a' || key > 'z'
-            "continue
-        "else
-            "exec "imap <unique> <Esc><C-".key."> <C-o><Plug>(easymotion-".act.")"
-        "endif
-    "endfor
+    map <unique> <leader><leader> <Plug>(easymotion-repeat)
+    map <unique> <leader><leader>n <Plug>(easymotion-n)
+    map <unique> <leader><leader>p <Plug>(easymotion-N)
+    map <unique> <leader><leader>s <Plug>(easymotion-s)
 endif " }}}
 if PluginInstalled('vim-textobj-user') "{{{
     call textobj#user#plugin('php', {
@@ -1343,7 +1331,9 @@ if PluginInstalled('sessionman.vim') "{{{
     nnoremap <leader>ss :SessionSave<CR>
 endif " }}}
 if PluginInstalled('syntastic') "{{{
+    let g:syntastic_python_checkers = ['flake8']
     nnoremap <unique> <Leader>ee :SyntasticCheck<CR>:Errors<CR>
+    nnoremap <unique> <Leader>et :SyntasticToggleMode<CR>
 endif " }}}
 if has("cscope") "{{{
     function! LoadCscope() " {{{

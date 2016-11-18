@@ -130,7 +130,6 @@ My ``vimrc`` contains some self-customed key mappings and home-made scripts in `
     Plugin 'neovimhaskell/haskell-vim'
     Plugin 'DrawIt'
     Plugin 'mtth/scratch.vim'
-    Plugin 'mrtazz/simplenote.vim'
     Plugin 'jszakmeister/rst2ctags'
     Plugin 'Rykka/riv.vim'
     Plugin 'VOoM'

@@ -51,6 +51,9 @@
   (setq airline-display-directory nil)
   (load-theme 'airline-powerlineish t))
 
+(use-package rainbow-mode
+  :diminish rainbow-mode)
+
 (use-package rainbow-delimiters)
 
 (use-package git-gutter
@@ -203,6 +206,8 @@
 
 (use-package flycheck)
 
+(use-package insert-shebang)
+
 (use-package jedi)
 
 (use-package flycheck-pyflakes)
@@ -274,9 +279,10 @@
     "tec" 'evil-escape-mode
     "tws" 'global-whitespace-mode
     "tgg" 'global-git-gutter-mode
-    "tee" 'flycheck-mode
+    "tfc" 'flycheck-mode
     "tsh" 'shell-script-mode
     "twk" 'which-key-mode
+    "trr" 'rainbow-mode
     "tcjk" 'pangu-spacing-mode
 
     ;; quick toggle troublesome plugins
@@ -286,7 +292,7 @@
     "il" 'indent-guide-mode
 
     ;; flycheck
-    "ee" 'flycheck-mode
+    "fl" 'flycheck-list-errors
 
     ;; find file
     "ff" 'find-file-in-project
@@ -348,9 +354,11 @@
 
   ;; set paren pair
   (show-paren-mode t)
+  (setq show-paren-style 'expression)
   (setq show-paren-dely 0)
   (add-hook 'prog-mode-hook #'electric-pair-mode)
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'prog-mode-hook #'rainbow-mode)
 
   ;; show tabs and trailing space
   (global-whitespace-mode t)
@@ -396,9 +404,15 @@
       (aggressive-indent-mode t)
       (cond
        ((eq major-mode 'go-mode)
-        (add-hook 'before-save-hook #'gofmt-before-save))))
+        (add-hook 'before-save-hook #'gofmt-before-save))
+       ((eq major-mode 'emacs-lisp-mode)
+        (eldoc-mode t))
+       ))
      ))
   (add-hook 'prog-mode-hook 'config-prog-mode)
+
+  ;; ibuffer
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
 
   ;; nil leader key
   (define-key evil-normal-state-map (kbd ";") nil)
@@ -479,8 +493,8 @@
        (define-key evil-operator-state-map (kbd evil-key) cmd)
        (global-set-key (kbd emac-key) cmd)
        ))
-   '(("SPC" . avy-goto-char-2)
-     ("f"   . avy-goto-char)
+   '(("SPC" . avy-goto-char)
+     ("f"   . avy-goto-char-2)
      ("s"   . avy-goto-subword-1)
      ("d"   . avy-goto-subword-0)
      ("j"   . avy-goto-line-below)

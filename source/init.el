@@ -150,6 +150,8 @@
 
 (use-package find-file-in-project)
 
+(use-package imenu-anywhere)
+
 (use-package ido
   :config
 
@@ -227,6 +229,12 @@
   :config
   (flycheck-bashate-setup))
 
+(use-package yaml-mode)
+
+(use-package evil-visual-mark-mode
+  :config
+  (evil-visual-mark-mode t))
+
 (use-package evil-numbers)
 
 (use-package evil-escape
@@ -270,7 +278,51 @@
       (call-interactively 'git-gutter-mode nil)
       (setq yuex/linum-mode-enabled t))))
 
+  (defun selective-display-increase ()
+    (interactive)
+    (set-selective-display
+     (if selective-display
+         (+ selective-display evil-shift-width)
+       evil-shift-width)))
+
+  (defun selective-display-decrease ()
+    (interactive)
+    (when selective-display
+      (set-selective-display
+       (if (< (- selective-display evil-shift-width) evil-shift-width)
+           evil-shift-width
+         (- selective-display evil-shift-width)))))
+
+  (defun selective-display-all ()
+    (interactive)
+    (set-selective-display nil))
+
+  (defun selective-display-none ()
+    (interactive)
+    (set-selective-display evil-shift-width))
+
+  (defun selective-display-toggle ()
+    (interactive)
+    (if selective-display
+        (call-interactively 'selective-display-all)
+      (call-interactively 'selective-display-none)))
+
   (evil-leader/set-key
+    ;; poorman's folding
+    "za" 'selective-display-toggle
+
+    "zr" 'selective-display-increase
+    "zo" 'selective-display-increase
+    "zm" 'selective-display-decrease
+    "zc" 'selective-display-decrease
+
+    "zR" 'selective-display-all
+    "zO" 'selective-display-all
+    "zM" 'selective-display-none
+    "zC" 'selective-display-none
+
+    "zz" 'imenu-anywhere
+
     ;; toggle modes
     "til" 'indent-guide-mode
     "tii" 'fci-mode
@@ -385,10 +437,12 @@
      ((eq major-mode 'haskell-mode)
       (hindent-mode t)
       (outline-minor-mode t)
+
       (set
        (make-local-variable 'outline-regexp)
        (rx
-        (* anything) (or "do" "mdo" "where")
+        (* anything)
+        (or "do" "mdo" "where")
         symbol-end))
       (set
        (make-local-variable 'outline-level)
@@ -397,6 +451,13 @@
            (save-excursion
              (skip-chars-forward "    \n")
              (current-column))))))
+
+     ;; yaml mode
+     ((eq major-mode 'yaml-mode)
+      (setq evil-shift-width yaml-indent-offset)
+      (setq tab-width yaml-indent-offset)
+      ;; (setq indent-line-function 'indent-relative)
+      )
 
      ;; default mode
      (t
@@ -410,6 +471,7 @@
        ))
      ))
   (add-hook 'prog-mode-hook 'config-prog-mode)
+  (add-hook 'text-mode-hook 'config-prog-mode)
 
   ;; ibuffer
   (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -495,8 +557,10 @@
        ))
    '(("SPC" . avy-goto-char)
      ("f"   . avy-goto-char-2)
+     ("g"   . avy-goto-char-in-line)
      ("s"   . avy-goto-subword-1)
      ("d"   . avy-goto-subword-0)
+
      ("j"   . avy-goto-line-below)
      ("k"   . avy-goto-line-above)
      ("p"   . avy-isearch)

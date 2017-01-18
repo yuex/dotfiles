@@ -28,57 +28,18 @@ COMPLETION_WAITING_DOTS="true"
 # much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="false"
 # "}}}
-# Plugins {{{
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(\
-    archlinux tmux tmuxinator systemd \
-    sudo compleat history last-working-dir wd colorize \
-    web-search jsontools urltools httpie \
-    catimg encode64 fasd rand-quote \
-    git git-extra git-flow-avh mercurial \
-    python pip pep8 autopep8 \
-    golang \
-    cabal docker vagrant \
-)
 
-# tmux plugin
-# export TERM='screen.xterm-256color'
-export TERM='xterm-256color'
-ZSH_TMUX_AUTOSTART=true
-ZSH_TMUX_AUTOSTART_NAME="$USER"
-ZSH_TMUX_AUTOQUIT=false
-# ZSH_TMUX_FIXTERM_WITH_256COLOR="xterm-256color"
-# # set the right $TERM, if in pts, use 256-color, else use 8-color by default
-# if [ `tty|cut -d'/' -f3` = 'pts' ];then
-    # export TERM=xterm-256color
-# fi
-# # poor man's tmux plugin
-# if [ ${USER} != "root" ] && [ -z $TMUX ] && which tmux &>/dev/null; then
-    # if tmux has-session -t "$USER" &>/dev/null; then
-        # tmux new-window -t "$USER" && tmux attach -t "$USER"
-    # else
-        # tmux new-session -s "$USER"
-    # fi
-# fi
-# }}}
+_ZSHRC_PRIVATE=$HOME/.zshrc-private
+[ -r "${_ZSHRC_PRIVATE}" ] && source "${_ZSHRC_PRIVATE}"
 
 source $ZSH/oh-my-zsh.sh
 
-# zsh options {{{
-# enable {a-z}, {0-9} in zsh
-setopt braceccl
-# }}}
-# alias {{{
+export TERM='xterm-256color'
 alias .=source
 
-if command -v git-flow &>/dev/null; then # {{{
-    alias gf='git flow'
-    alias gfs='git flow feature start'
-    alias gff='git flow feature finish --no-ff'
-fi # }}}
-# }}}
+# enable {a-z}, {0-9} in zsh
+setopt braceccl
+
 # keymap {{{
 # disable terminal flow control <C-s> and <C-q>, save two prefix for vim
 stty stop ''
@@ -87,31 +48,31 @@ stty -ixon
 stty -ixoff
 
 # man zshzle
-bindkey -N yuexmap emacs
+bindkey -N mymap emacs
 
-bindkey -M yuexmap ''  backward-kill-line
-bindkey -M yuexmap ''  push-line
-bindkey -M yuexmap ''  get-line #be consistent with ^Q (push-line)
-bindkey -M yuexmap ''  vi-swap-case
-bindkey -M yuexmap '' kill-whole-line
-bindkey -M yuexmap '' kill-whole-line
+bindkey -M mymap ''  backward-kill-line
+bindkey -M mymap ''  push-line
+bindkey -M mymap ''  get-line #be consistent with ^Q (push-line)
+bindkey -M mymap ''  vi-swap-case
+bindkey -M mymap '' kill-whole-line
+bindkey -M mymap '' kill-whole-line
 
-bindkey -M yuexmap 'p'  up-line-or-search
-bindkey -M yuexmap 'n'  down-line-or-search
-bindkey -M yuexmap 'k'  history-beginning-search-backward
-bindkey -M yuexmap 'j'  history-beginning-search-forward
+bindkey -M mymap 'p'  up-line-or-search
+bindkey -M mymap 'n'  down-line-or-search
+bindkey -M mymap 'k'  history-beginning-search-backward
+bindkey -M mymap 'j'  history-beginning-search-forward
 
-# emacs M-b and M-f will jump over punctuation. so we use the vi-style here
-bindkey -M yuexmap 'b'  vi-backward-word
-bindkey -M yuexmap 'f'  vi-forward-word
-bindkey -M yuexmap '' vi-backward-blank-word
-bindkey -M yuexmap '' vi-forward-blank-word
+# emacs M-bmy M-f will jump over punctuation. so we use the vi-style here
+bindkey -M mymap 'b'  vi-backward-word
+bindkey -M mymap 'f'  vi-forward-word
+bindkey -M mymap '' vi-backward-blank-word
+bindkey -M mymap '' vi-forward-blank-word
 
-bindkey -M yuexmap -s 't' 'ODOD'
-bindkey -M yuexmap -s 's' 'qls -lh'
-bindkey -M yuexmap -s 'a' 'tmux attach -t $USER || tmux new-session -s $USER'
+bindkey -M mymap -s 't' 'ODOD'
+bindkey -M mymap -s 's' 'qls -lh'
+bindkey -M mymap -s 'a' 'tmux attach -t $USER || tmux new-session -s $USER'
 
-bindkey -A yuexmap main
+bindkey -A mymap main
 # }}}
 # prompt {{{
 # disable auto correction of zsh
@@ -161,16 +122,6 @@ $(git_prompt_info)%(!.#.») '
 
 setprompt
 # }}}
-# virtualenvwrapper {{{
-if command -v virtualenvwrapper.sh &>/dev/null; then
-    if command -v python2 &>/dev/null; then
-        export VIRTUALENVWRAPPER_PYTHON=$(command -v python2)
-    fi
-    export WORKON_HOME=${HOME}/.virtualenvs
-    export PROJECT_HOME=${HOME}/Devel
-    source $(command -v virtualenvwrapper.sh)
-fi
-# }}}
 # dirstack history {{{
 DIRSTACKSIZE=9
 DIRSTACKFILE=~/.zdirs
@@ -182,8 +133,5 @@ chpwd() {
     print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
 }
 # }}}
-
-_ZSHRC_PRIVATE=$HOME/.zshrc-private
-[ -r "${_ZSHRC_PRIVATE}" ] && source "${_ZSHRC_PRIVATE}"
 
 # vim:fdm=marker

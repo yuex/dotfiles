@@ -1201,7 +1201,7 @@ if PluginInstalled('vim-fugitive') "{{{
     nnoremap <unique> <Leader>gd :Gdiff<CR>
 endif " }}}
 if PluginInstalled('delimitMate') "{{{
-    "set matchpairs+=<:>
+    set backspace=2
     let delimitMate_expand_space = 1
     let delimitMate_expand_cr = 1
     imap <unique> <C-g><C-g> <Plug>delimitMateJumpMany

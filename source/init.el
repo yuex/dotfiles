@@ -462,7 +462,7 @@
      ;; default mode
      (t
       (hs-minor-mode t)
-      (aggressive-indent-mode t)
+      ;; (aggressive-indent-mode t)
       (cond
        ((eq major-mode 'go-mode)
         (add-hook 'before-save-hook #'gofmt-before-save))

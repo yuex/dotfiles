@@ -12,7 +12,7 @@
   (package-install 'diminish))
 
 ;; Set default font
-(set-frame-font "Inconsolata-g for Powerline-7.5")
+(set-frame-font "Inconsolata-g for Powerline-11")
 
 (setq use-package-always-ensure t)
 
@@ -242,7 +242,7 @@
   :config
   (evil-escape-mode t)
   ;; override this keybinding in all modes
-  (bind-key* (kbd "C-c C-c") 'evil-escape)
+  ; (bind-key* (kbd "C-c C-c") 'evil-escape)
   (bind-key* (kbd "C-q") 'evil-escape)
   ;; (global-set-key (kbd "C-c C-c") 'evil-escape)
   )
@@ -321,8 +321,6 @@
     "zM" 'selective-display-none
     "zC" 'selective-display-none
 
-    "zz" 'imenu-anywhere
-
     ;; toggle modes
     "til" 'indent-guide-mode
     "tii" 'fci-mode
@@ -340,8 +338,11 @@
     ;; quick toggle troublesome plugins
     "ll" 'toggle-linum-gitgutter
 
-    "ii" 'fci-mode
-    "il" 'indent-guide-mode
+    ;; imenu quick fire
+    "ii" 'imenu-anywhere
+
+    ; "ii" 'fci-mode
+    ; "il" 'indent-guide-mode
 
     ;; flycheck
     "fl" 'flycheck-list-errors
@@ -395,7 +396,7 @@
   (add-hook 'text-mode-hook #'auto-fill-mode)
 
   ;; scroll
-  (scroll-bar-mode -1)
+  ; (scroll-bar-mode -1)
   (setq scroll-step 1)
   (setq scroll-margin 2)
 
@@ -410,7 +411,7 @@
   (setq show-paren-dely 0)
   (add-hook 'prog-mode-hook #'electric-pair-mode)
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'prog-mode-hook #'rainbow-mode)
+  ;; (add-hook 'prog-mode-hook #'rainbow-mode)
 
   ;; show tabs and trailing space
   (global-whitespace-mode t)
@@ -462,7 +463,7 @@
      ;; default mode
      (t
       (hs-minor-mode t)
-      ;; (aggressive-indent-mode t)
+      ; (aggressive-indent-mode t)
       (cond
        ((eq major-mode 'go-mode)
         (add-hook 'before-save-hook #'gofmt-before-save))
@@ -555,9 +556,10 @@
        (define-key evil-operator-state-map (kbd evil-key) cmd)
        (global-set-key (kbd emac-key) cmd)
        ))
-   '(("SPC" . avy-goto-char)
-     ("f"   . avy-goto-char-2)
-     ("g"   . avy-goto-char-in-line)
+   '(
+     ("SPC"   . avy-goto-char-2)
+     ("f" . avy-goto-char-in-line)
+     ("g"   . avy-goto-char)
      ("s"   . avy-goto-subword-1)
      ("d"   . avy-goto-subword-0)
 

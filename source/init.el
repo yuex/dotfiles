@@ -30,6 +30,11 @@
   :config
   (benchmark-init/activate))
 
+(use-package keyfreq
+  :config
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
+
 (use-package which-key
   :diminish which-key-mode
   :config
@@ -231,9 +236,13 @@
 
 (use-package yaml-mode)
 
+(use-package markdown-mode)
+
 (use-package evil-visual-mark-mode
   :config
   (evil-visual-mark-mode t))
+
+(use-package evil-visualstar)
 
 (use-package evil-numbers)
 
@@ -241,11 +250,7 @@
   :diminish evil-escape-mode
   :config
   (evil-escape-mode t)
-  ;; override this keybinding in all modes
-  ; (bind-key* (kbd "C-c C-c") 'evil-escape)
-  (bind-key* (kbd "C-q") 'evil-escape)
-  ;; (global-set-key (kbd "C-c C-c") 'evil-escape)
-  )
+  (bind-key* (kbd "C-q") 'evil-escape))
 
 (use-package evil-matchit
   :config
@@ -543,6 +548,7 @@
   (define-key evil-normal-state-map (kbd "_") 'er/contract-region)
   (define-key evil-visual-state-map (kbd "+") 'er/expand-region)
   (define-key evil-visual-state-map (kbd "_") 'er/contract-region)
+  (global-evil-visualstar-mode)
 
   ;; avy jump
   (define-key evil-motion-state-map (kbd "SPC") nil)

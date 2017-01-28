@@ -61,6 +61,10 @@
 
 (use-package rainbow-delimiters)
 
+(use-package smartparens
+  :config
+  (require 'smartparens-config))
+
 (use-package git-gutter
   :diminish git-gutter-mode
   :config
@@ -414,9 +418,10 @@
   (show-paren-mode t)
   (setq show-paren-style 'expression)
   (setq show-paren-dely 0)
-  (add-hook 'prog-mode-hook #'electric-pair-mode)
+  (smartparens-global-mode t)
+  ;; (add-hook 'prog-mode-hook #'smartparens-mode)
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-  ;; (add-hook 'prog-mode-hook #'rainbow-mode)
+  (add-hook 'text-mode-hook #'rainbow-delimiters-mode)
 
   ;; show tabs and trailing space
   (global-whitespace-mode t)
@@ -549,6 +554,9 @@
   (define-key evil-visual-state-map (kbd "+") 'er/expand-region)
   (define-key evil-visual-state-map (kbd "_") 'er/contract-region)
   (global-evil-visualstar-mode)
+
+  ;; imenu
+  (global-set-key (kbd "M-i") 'imenu)
 
   ;; avy jump
   (define-key evil-motion-state-map (kbd "SPC") nil)

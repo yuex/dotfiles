@@ -88,20 +88,6 @@
 
 (use-package fill-column-indicator)
 
-;; (use-package origami
-;;   :config
-;;   (global-origami-mode t))
-
-;; (use-package evil-vimish-fold
-;;   :config
-;;   (evil-vimish-fold-mode t))
-
-;; (use-package yafolding
-;;   :ensure evil
-;;   :config
-;;   (yafolding-mode t)
-;;   )
-
 (use-package expand-region
   :config
   (bind-key "C-c =" 'er/expand-region))
@@ -224,6 +210,8 @@
 (use-package flycheck-pyflakes)
 
 (use-package haskell-mode)
+
+(use-package sml-mode)
 
 (use-package hindent
   :diminish hindent-mode)

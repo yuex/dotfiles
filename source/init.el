@@ -11,6 +11,14 @@
 (unless (package-installed-p 'diminish)
   (package-install 'diminish))
 
+;; set backup folder
+(setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
+(setq backup-by-copying t   ; don't clobber symlinks
+      version-control t     ; use versioned backups
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2)
+
 ;; Set default font
 (set-frame-font "Inconsolata-g for Powerline-11")
 

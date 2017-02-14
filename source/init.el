@@ -435,6 +435,11 @@
   ;; config for specific major prog mode
   (defun config-prog-mode ()
     (cond
+     ;; cc mode
+     ((eq major-mode 'c-mode)
+      (c-set-style "cc-mode")
+      (global-set-key (kbd "C-x a a") 'ff-find-other-file)
+      )
      ;; python mode
      ((eq major-mode 'python-mode)
       (jedi:setup)

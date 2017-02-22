@@ -312,6 +312,24 @@
         (call-interactively 'selective-display-all)
       (call-interactively 'selective-display-none)))
 
+  (defun indent-buffer-or-region ()
+    (interactive)
+    (save-excursion
+      (if (use-region-p)
+          (indent-region (region-beginning) (region-end) nil)
+        (indent-region (point-min) (point-max) nil))))
+
+  (defun ws-clean-buffer-or-region ()
+    (interactive)
+    (save-excursion
+      (if (use-region-p)
+          (progn
+            (untabify (region-beginning) (region-end))
+            (whitespace-cleanup-region (region-beginning) (region-end)))
+        (progn
+          (untabify (point-min) (point-max))
+          (whitespace-cleanup)))))
+
   (evil-leader/set-key
     ;; poorman's folding
     "za" 'selective-display-toggle
@@ -352,14 +370,13 @@
     ;; flycheck
     "fl" 'flycheck-list-errors
 
-    ;; find file
-    "ff" 'find-file-in-project
-
-    ;; space cleanup
-    "fs" (defun clean-tabs-and-space ()
+    ;; style
+    "fs" 'ws-clean-buffer-or-region
+    "fi" 'indent-buffer-or-region
+    "ff" (defun ws-indent-buffer-or-region ()
            (interactive)
-           (untabify (point-min) (point-max))
-           (whitespace-cleanup))
+           (ws-clean-buffer-or-region)
+           (indent-buffer-or-region))
 
     ;; number +/-
     "na" 'evil-numbers/inc-at-pt
@@ -487,6 +504,9 @@
 
   ;; ibuffer
   (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+  ;; find-file-in-project
+  (global-set-key (kbd "C-x C-g") 'find-file-in-project)
 
   ;; nil leader key
   (define-key evil-normal-state-map (kbd ";") nil)

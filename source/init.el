@@ -94,6 +94,8 @@
   (setq indent-guide-char "|")
   )
 
+(use-package clean-aindent-mode)
+
 (use-package fill-column-indicator)
 
 (use-package expand-region
@@ -437,9 +439,10 @@
   (add-hook 'text-mode-hook #'rainbow-delimiters-mode)
 
   ;; show tabs and trailing space
-  (global-whitespace-mode t)
-  (setq-default indent-tabs-mode nil)
   (setq-default tab-width 4)
+  (setq-default indent-tabs-mode nil)
+  (clean-aindent-mode t)
+  (global-whitespace-mode t)
   (setq whitespace-style '(face trailing tabs lines-tail))
 
   ;; highlight fixme
@@ -449,7 +452,13 @@
      '(("\\<\\(FIXME\\|TODO\\|BUG\\|XXX\\):" 1 font-lock-warning-face t))))
   (add-hook 'prog-mode-hook #'highlight-fixme)
 
-  ;; config for specific major prog mode
+  ;;                                                    __
+  ;;     ____  _________  ____ _   ____ ___  ____  ____/ /__
+  ;;    / __ \/ ___/ __ \/ __ `/  / __ `__ \/ __ \/ __  / _ \
+  ;;   / /_/ / /  / /_/ / /_/ /  / / / / / / /_/ / /_/ /  __/
+  ;;  / .___/_/   \____/\__, /  /_/ /_/ /_/\____/\__,_/\___/
+  ;; /_/               /____/
+  ;;
   (defun config-prog-mode ()
     (cond
      ;; cc mode

@@ -18,6 +18,8 @@ A collection of my dotfiles, including:
 
 $(cat source/rc_module|sed 's/^/* /g')
 
+Note: config for emacs is included as ``init.el``, but currently not managed
+by ``Makefile``
 
 Installation
 ============

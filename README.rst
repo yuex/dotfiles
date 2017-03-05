@@ -22,6 +22,8 @@ A collection of my dotfiles, including:
 * vim
 * zsh
 
+Note: config for emacs is included as ``init.el``, but currently not managed
+by ``Makefile``
 
 Installation
 ============

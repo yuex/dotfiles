@@ -385,7 +385,7 @@
     "ns" 'evil-numbers/dec-at-pt
 
     ;; evil-exchange
-    "xx"  'evil-exchange
+    "xx" 'evil-exchange
     "xc" 'evil-exchange-cancel
 
     ;; nerd commenter
@@ -601,9 +601,9 @@
        (global-set-key (kbd emac-key) cmd)
        ))
    '(
-     ("SPC"   . avy-goto-char-2)
-     ("f" . avy-goto-char-in-line)
-     ("g"   . avy-goto-char)
+     ("SPC" . avy-goto-char-in-line)
+     ("f"   . avy-goto-char)
+     ("g"   . avy-goto-char-2)
      ("s"   . avy-goto-subword-1)
      ("d"   . avy-goto-subword-0)
 

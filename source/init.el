@@ -217,7 +217,7 @@
 
 (use-package jedi)
 
-(use-package flycheck-pyflakes)
+; (use-package flycheck-pyflakes)
 
 (use-package haskell-mode)
 
@@ -557,6 +557,20 @@
   (define-key evil-motion-state-map (kbd "C-w ;") 'ace-window)
   (define-key evil-normal-state-map (kbd "C-w |") 'evil-window-vsplit)
   (define-key evil-normal-state-map (kbd "C-w _") 'evil-window-split)
+  (define-key evil-normal-state-map (kbd "C-w 1") 'delete-other-windows)
+
+  (define-key evil-normal-state-map (kbd "C-w C-h") 'evil-window-left)
+  (define-key evil-normal-state-map (kbd "C-w C-l") 'evil-window-right)
+  (define-key evil-normal-state-map (kbd "C-w C-j") 'evil-window-down)
+  (define-key evil-normal-state-map (kbd "C-w C-k") 'evil-window-up)
+
+  (define-key evil-normal-state-map (kbd "C-w C-o") 'evil-window-prev)
+  (define-key evil-normal-state-map (kbd "C-w C-w") 'evil-window-next)
+
+  (define-key evil-normal-state-map (kbd "C-w p") 'evil-window-prev)
+  (define-key evil-normal-state-map (kbd "C-w n") 'evil-window-next)
+  (define-key evil-normal-state-map (kbd "C-w C-p") 'evil-window-prev)
+  (define-key evil-normal-state-map (kbd "C-w C-n") 'evil-window-next)
 
   ;; shift
   (define-key evil-normal-state-map (kbd "M-,") 'evil-shift-left-line)

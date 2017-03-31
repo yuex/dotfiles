@@ -564,6 +564,8 @@
   (define-key evil-normal-state-map (kbd "C-w C-j") 'evil-window-down)
   (define-key evil-normal-state-map (kbd "C-w C-k") 'evil-window-up)
 
+  (define-key evil-normal-state-map (kbd "C-w o") 'evil-window-prev)
+  (define-key evil-normal-state-map (kbd "C-w w") 'evil-window-next)
   (define-key evil-normal-state-map (kbd "C-w C-o") 'evil-window-prev)
   (define-key evil-normal-state-map (kbd "C-w C-w") 'evil-window-next)
 
@@ -615,11 +617,11 @@
        (global-set-key (kbd emac-key) cmd)
        ))
    '(
-     ("SPC" . avy-goto-char-in-line)
-     ("f"   . avy-goto-char)
-     ("g"   . avy-goto-char-2)
-     ("s"   . avy-goto-subword-1)
-     ("d"   . avy-goto-subword-0)
+     ("SPC" . avy-goto-char-2)
+     ("f"   . avy-goto-char-in-line)
+     ("s"   . avy-goto-char)
+     ("w"   . avy-goto-subword-1)
+     ("e"   . avy-goto-subword-0)
 
      ("j"   . avy-goto-line-below)
      ("k"   . avy-goto-line-above)
@@ -627,6 +629,6 @@
      ("n"   . avy-isearch)
      ("y"   . avy-copy-region)
      ("m"   . avy-move-region)
-     ("i"   . avy-kill-region)
+     ("d"   . avy-kill-region)
      ))
   )

@@ -127,7 +127,7 @@ function precmd { # {{{
 } # }}}
 function setprompt { # {{{
     PROMPT='
-[ $my_cyan%n%{$reset_color%}@%B$my_cyan%M%{$reset_color%}%b | %$PWDLEN<...<%~%<< ] %*
+[ $my_cyan%n%{$reset_color%} @ %B$my_cyan%M%{$reset_color%}%b | %$PWDLEN<...<%~%<< ] %*
 [ $my_green%B$MOTTOS%b%{$reset_color%} ]
 $(git_prompt_info)%(!.#.») '
 

@@ -215,7 +215,7 @@
 
 (use-package insert-shebang)
 
-(use-package jedi)
+; (use-package jedi)
 
 ; (use-package flycheck-pyflakes)
 
@@ -468,7 +468,7 @@
       )
      ;; python mode
      ((eq major-mode 'python-mode)
-      (jedi:setup)
+      ; (jedi:setup)
       (outline-minor-mode t))
 
      ;; haskell mode
@@ -590,6 +590,18 @@
     (defun visual-shift-and-restore-right ()
       (interactive)
       (evil-shift-right (region-beginning) (region-end))
+      (evil-normal-state)
+      (evil-visual-restore)
+      ))
+
+  ;; indent, mode-nostic
+  (define-key evil-insert-state-map (kbd "TAB") 'indent-for-tab-command)
+  (define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
+  (define-key evil-visual-state-map (kbd "TAB")
+    (defun visual-indent-and-restore ()
+      ;; not working
+      (interactive)
+      (indent-for-tab-command)
       (evil-normal-state)
       (evil-visual-restore)
       ))

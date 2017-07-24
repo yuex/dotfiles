@@ -140,7 +140,7 @@
 
 (use-package ido-hacks)
 
-(use-package ido-ubiquitous)
+(use-package ido-completing-read+)
 
 (use-package ido-vertical-mode)
 

@@ -517,6 +517,9 @@
   ;; find-file-in-project
   (global-set-key (kbd "C-x C-g") 'find-file-in-project)
 
+  ;; imenu-anywhere (cross buffers)
+  (global-set-key (kbd "C-x M-i") 'imenu-anywhere)
+
   ;; nil leader key
   (define-key evil-normal-state-map (kbd ";") nil)
 

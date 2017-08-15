@@ -548,8 +548,10 @@
   (define-key evil-insert-state-map (kbd "C-n") 'evil-scroll-line-down)
 
   ;; move cursor, quick arrow
-  ; (define-key evil-normal-state-map (kbd "M-k") 'evil-previous-line)
-  ; (define-key evil-normal-state-map (kbd "M-j") 'evil-next-line)
+  (define-key evil-normal-state-map (kbd "M-k") 'evil-previous-line)
+  (define-key evil-normal-state-map (kbd "M-j") 'evil-next-line)
+  (define-key evil-normal-state-map (kbd "M-h") 'evil-backward-char)
+  (define-key evil-normal-state-map (kbd "M-l") 'evil-forward-char)
   (define-key evil-insert-state-map (kbd "M-k") 'evil-previous-line)
   (define-key evil-insert-state-map (kbd "M-j") 'evil-next-line)
   (define-key evil-insert-state-map (kbd "M-h") 'evil-backward-char)
@@ -566,6 +568,14 @@
   (define-key evil-normal-state-map (kbd "K") (kbd "i RET <escape>"))
   (define-key evil-insert-state-map (kbd "C-j") 'delete-indentation)
   (define-key evil-normal-state-map (kbd "C-j") 'delete-indentation)
+
+  ;; visual select, quick select
+  (define-key evil-normal-state-map (kbd "M-v") 'mark-paragraph)
+  (define-key evil-normal-state-map (kbd "C-x p") 'mark-paragraph)
+  (define-key evil-normal-state-map (kbd "C-x h") 'mark-whole-buffer)
+  (define-key evil-insert-state-map (kbd "M-v") 'mark-paragraph)
+  (define-key evil-insert-state-map (kbd "C-x p") 'mark-paragraph)
+  (define-key evil-insert-state-map (kbd "C-x h") 'mark-whole-buffer)
 
   ;; readlineish kill line
   (defun kill-line-backward (arg)

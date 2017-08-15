@@ -540,20 +540,26 @@
   (define-key evil-insert-state-map (kbd "C-e") 'end-of-line)
 
   ;; scroll one line
-  (define-key evil-normal-state-map (kbd "C-y") 'evil-scroll-line-up)
-  (define-key evil-normal-state-map (kbd "M-y") 'evil-scroll-line-down)
+  (define-key evil-normal-state-map (kbd "C-y") 'evil-buffer)
+  ; (define-key evil-normal-state-map (kbd "M-y") 'evil-scroll-line-down)
+  (define-key evil-normal-state-map (kbd "C-p") 'evil-scroll-line-up)
+  (define-key evil-normal-state-map (kbd "C-n") 'evil-scroll-line-down)
+  (define-key evil-insert-state-map (kbd "C-p") 'evil-scroll-line-up)
+  (define-key evil-insert-state-map (kbd "C-n") 'evil-scroll-line-down)
 
-  ;; paragraph move
-  (define-key evil-normal-state-map (kbd "M-k") 'evil-previous-line)
-  (define-key evil-normal-state-map (kbd "M-j") 'evil-next-line)
+  ;; move cursor, quick arrow
+  ; (define-key evil-normal-state-map (kbd "M-k") 'evil-previous-line)
+  ; (define-key evil-normal-state-map (kbd "M-j") 'evil-next-line)
   (define-key evil-insert-state-map (kbd "M-k") 'evil-previous-line)
   (define-key evil-insert-state-map (kbd "M-j") 'evil-next-line)
+  (define-key evil-insert-state-map (kbd "M-h") 'evil-backward-char)
+  (define-key evil-insert-state-map (kbd "M-l") 'evil-forward-char)
 
-  ;; insert previous/next line
-  (define-key evil-normal-state-map (kbd "C-p") 'evil-backward-paragraph)
-  (define-key evil-normal-state-map (kbd "C-n") 'evil-forward-paragraph)
-  (define-key evil-insert-state-map (kbd "C-p") 'evil-backward-paragraph)
-  (define-key evil-insert-state-map (kbd "C-n") 'evil-forward-paragraph)
+  ;; move cursor, paragraph jump
+  (define-key evil-normal-state-map (kbd "M-p") 'evil-backward-paragraph)
+  (define-key evil-normal-state-map (kbd "M-n") 'evil-forward-paragraph)
+  (define-key evil-insert-state-map (kbd "M-p") 'evil-backward-paragraph)
+  (define-key evil-insert-state-map (kbd "M-n") 'evil-forward-paragraph)
 
   ;; join/break lines
   (define-key evil-normal-state-map (kbd "J") 'evil-join)

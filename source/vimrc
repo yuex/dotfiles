@@ -324,11 +324,15 @@ endif
         endif
     endfunction
     " }}}
+    nnoremap <unique> <C-q> :call SmartQuit()<CR>
+    inoremap <unique> <C-q> <Esc>
+    vnoremap <unique> <C-q> <Esc>
+    cnoremap <unique> <C-q> <Esc>
+
     nnoremap <unique> <C-c> :call SmartQuit()<CR>
-    " make C-c to trigger InsertLeave to make ^V insert at head working
     inoremap <unique> <C-c> <Esc>
-    "vnoremap <unique> <C-c> <Esc>
-    "cnoremap <unique> <C-c> <Esc>
+    vnoremap <unique> <C-c> <Esc>
+    cnoremap <unique> <C-c> <Esc>
 " }}}
 " tabpage {{{
     " XXX: use <kHome>/<kEnd> to hack around <M-Home>/<M-End>.  although <M-X>

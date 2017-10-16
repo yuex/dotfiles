@@ -571,10 +571,10 @@
 
   ;; visual select, quick select
   (define-key evil-normal-state-map (kbd "M-v") 'mark-paragraph)
-  (define-key evil-normal-state-map (kbd "C-x p") 'mark-paragraph)
-  (define-key evil-normal-state-map (kbd "C-x h") 'mark-whole-buffer)
   (define-key evil-insert-state-map (kbd "M-v") 'mark-paragraph)
+  (define-key evil-normal-state-map (kbd "C-x p") 'mark-paragraph)
   (define-key evil-insert-state-map (kbd "C-x p") 'mark-paragraph)
+  (define-key evil-normal-state-map (kbd "C-x h") 'mark-whole-buffer)
   (define-key evil-insert-state-map (kbd "C-x h") 'mark-whole-buffer)
 
   ;; readlineish kill line

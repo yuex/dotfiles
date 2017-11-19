@@ -240,6 +240,18 @@
 
 (use-package markdown-mode)
 
+(use-package org
+  :config
+  (setq org-default-notes-file "~/org/notes.org")
+  (define-key org-mode-map (kbd "RET") 'org-return-indent)
+  (define-key org-mode-map (kbd "C-c l") 'org-store-link)
+  (define-key org-mode-map (kbd "C-c a") 'org-agenda)
+  (define-key org-mode-map (kbd "C-c c") 'org-capture)
+  (define-key org-mode-map (kbd "C-c b") 'org-iswitchb)
+  (setq org-export-backends '(ascii html latex md beamer odt)))
+
+(setq evil-want-C-i-jump nil)
+
 (use-package evil-visual-mark-mode
   :config
   (evil-visual-mark-mode t))
@@ -414,6 +426,7 @@
   (global-hl-line-mode t)
 
   ;; set word wrap
+  (setq-default sentence-end-double-space nil)
   (setq-default word-wrap t)
   (setq-default fill-column 80)
   (add-hook 'prog-mode-hook #'auto-fill-mode)
@@ -463,12 +476,13 @@
     (cond
      ;; cc mode
      ((eq major-mode 'c-mode)
+      (hs-minor-mode t)
       (c-set-style "cc-mode")
       (global-set-key (kbd "C-x a a") 'ff-find-other-file)
       )
      ;; python mode
      ((eq major-mode 'python-mode)
-      ; (jedi:setup)
+      (hs-minor-mode t)
       (outline-minor-mode t))
 
      ;; haskell mode
@@ -499,8 +513,8 @@
 
      ;; default mode
      (t
-      (hs-minor-mode t)
-      ; (aggressive-indent-mode t)
+      ;; (hs-minor-mode t)
+      ;; (aggressive-indent-mode t)
       (cond
        ((eq major-mode 'go-mode)
         (add-hook 'before-save-hook #'gofmt-before-save))
@@ -628,16 +642,16 @@
       ))
 
   ;; indent, mode-nostic
-  (define-key evil-insert-state-map (kbd "TAB") 'indent-for-tab-command)
-  (define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
-  (define-key evil-visual-state-map (kbd "TAB")
-    (defun visual-indent-and-restore ()
-      ;; not working
-      (interactive)
-      (indent-for-tab-command)
-      (evil-normal-state)
-      (evil-visual-restore)
-      ))
+  ;; (define-key evil-insert-state-map (kbd "TAB") 'indent-for-tab-command)
+  ;; (define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
+  ;; (define-key evil-visual-state-map (kbd "TAB")
+  ;;   (defun visual-indent-and-restore ()
+  ;;     ;; not working
+  ;;     (interactive)
+  ;;     (indent-for-tab-command)
+  ;;     (evil-normal-state)
+  ;;     (evil-visual-restore)
+  ;;     ))
 
   ;; expand region
   (define-key evil-normal-state-map (kbd "+") 'er/expand-region)

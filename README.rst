@@ -30,21 +30,30 @@ Installation
 Requirements
 ------------
 
-In the ``Makefile``, the syntax ``.ONESHELL`` introduced in ``make 3.82`` is used.
-Hence, before rocking you have to upgrade your ``make``.
+``make >= 3.82``.
+
+The ``Makefile`` uses a lot of ``.ONESHELL`` which is introduced in 3.82. If
+your global ``make`` is older than this required version, you can compile a
+newer version and install it to you home directory locally::
+
+    (download make, untar and cd to it)
+    ./configure --prefix=/home/<your-username>
+    make && make install
 
 
 Common Stuff
 ------------
 
-Trying out by creating a new account is recommended::
+Try it out by creating a new account is always recommended. Though I have
+implemented an automatic backup feature out of box, you shouldn't put your
+trust completely in my programming ability and thinking sanity::
 
     useradd -m dotfiles
     passwd dotfiles
     su -l dotfiles
     cd ~
 
-In case bad things happen or you don't like it, just remove the account  ::
+In case bad things happen or you don't like it, just remove the account::
 
     userdel -r dotfiles
 
@@ -53,11 +62,11 @@ To download::
     git clone https://github.com/yuex/dotfiles.git
     cd dotfiles
 
-If you are feeling lucky, you can just install and try out everything::
+If you like it, you can install by running::
 
     make install
 
-Or, install a specific dotfile, one at a time::
+Or, you can install a particular module, one by one::
 
 	make bash
 	make nethack
@@ -66,11 +75,16 @@ Or, install a specific dotfile, one at a time::
 	make vim
 	make emacs
 
+Note, the first time you install something, I will backup all your dotfiles
+that I may touch in `.backup/`. If the original files or folders are hidden,
+they will stay hidden in this backup directory.
+
 
 Zsh Extras
 ----------
 
-My ``zshrc`` depends on `oh-my-zsh`_ and `dircolors-solarized`_. ``make zsh`` will do most work. But you need to manually change the default login shell::
+My ``zshrc`` depends on `oh-my-zsh`_ and `dircolors-solarized`_. ``make zsh``
+will do most work. But you need to manually change the default login shell::
 
     chsh -s /usr/bin/zsh
 
@@ -78,7 +92,9 @@ My ``zshrc`` depends on `oh-my-zsh`_ and `dircolors-solarized`_. ``make zsh`` wi
 Vim Extras
 ----------
 
-``vim`` depends on `Vundle.vim`_ to manage vim plugins. ``make vim`` will install plugins automatically. But the compilation of `YouCompleteMe`_ needs some extra work because it provides a compiling choice and really takes time.
+``vim`` depends on `Vundle.vim`_ to manage vim plugins. ``make vim`` will
+install plugins automatically. But the compilation of `YouCompleteMe`_ needs
+some extra work because it provides a compiling choice and really takes time.
 
 In most cases, you can just run::
 
@@ -92,7 +108,9 @@ But if you want semantic support for C-family languages, take time to::
 
 If the YCM thing doesn't work, remember to check the newest docs at `YouCompleteMe`_.
 
-My ``vimrc`` contains some self-customed key mappings and home-made scripts in ``.vimrc`` and a collection of selected plugins managed by `Vundle.vim`_. Here's a short list::
+My ``vimrc`` contains some self-customed key mappings and home-made scripts in
+``.vimrc`` and a collection of selected plugins managed by `Vundle.vim`_.
+Here's a short list::
 
     Plugin 'gmarik/Vundle.vim'
     Plugin 'Shougo/unite.vim'
@@ -141,13 +159,16 @@ My ``vimrc`` contains some self-customed key mappings and home-made scripts in `
 Backup and Restore
 ==================
 
-Remember to backup your own dotfiles before trying out others'. By default, ``make install`` or ``make`` will backup related dotfiles in ``.backup`` automatically. But you can do it manually by::
+Remember to backup your own dotfiles before trying out others'. By default,
+``make install`` or ``make`` will backup related dotfiles in ``.backup/``
+automatically. But you can do it manually by::
 
     make backup
 
-To overwrite old backups, you have to remove ``.backup`` fold manually. For safety.
+To overwrite old backups, you have to remove ``.backup`` fold manually.
 
-Allright, perhaps what looks good to me doesn't looks good to you. But You can revert to your old dotfiles easily::
+What looks good to me may not look good to you. You can revert to your old
+dotfiles easily::
 
     make restore
 

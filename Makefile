@@ -19,17 +19,16 @@ BAK_LOCK=${BAK_DIR}/lock
 	$(DRC_DIR)/.rc_module \
 
 
-RC_MODULE=bash nethack tmux vim zsh
-RC_INCLUDE=bashrc nethackrc tmux.conf zshrc vimrc
+RC_MODULE=bash nethack tmux zsh vim emacs
+RC_INCLUDE=bashrc nethackrc tmux.conf zshrc vimrc emacs.d
 RC_DEPENDS=dircolors-solarized oh-my-zsh vundle vim
-RC_EMACS=init.el
 
 all: 
 	@echo 'RTFD :)'
 
 readme: README.rst
 
-compile: $(RC_INCLUDE) README.rst $(RC_EMACS)
+compile: $(RC_INCLUDE) README.rst
 
 .ONESHELL:
 README.rst: README.template.rst rc_module vim_plugin
@@ -37,7 +36,7 @@ README.rst: README.template.rst rc_module vim_plugin
 	$$(cat $<|sed 's/`/\\`/g')
 	EOF" > README.rst
 
-$(RC_INCLUDE) vim_plugin $(RC_EMACS): |$(DRC_DIR)
+$(RC_INCLUDE) vim_plugin: |$(DRC_DIR)
 	$(MAKE) -C $(DRC_DIR) $@
 
 rc_module: $(DRC_DIR)/rc_module
@@ -102,6 +101,13 @@ install-nethack install-zsh install-bash: install-%:$(DRC_DIR)/%rc plugin-%
 install-vim: install-%:$(DRC_DIR)/%rc plugin-%
 	$(rm-and-link)
 	vim -c 'PluginInstall' -c 'qa'
+
+.ONESHELL:
+install-emacs: $(DRC_DIR)/init.el
+	dst=$(DST_DIR)/.emacs.d
+	[ -e $$dst ] && rm -rf $$dst
+	mkdir $$dst
+	ln -fs $(abspath $<) $$dst/init.el
 
 plugin-tmux plugin-nethack: ;
 

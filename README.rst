@@ -19,11 +19,9 @@ A collection of my dotfiles, including:
 * bash
 * nethack
 * tmux
-* vim
 * zsh
-
-Note: config for emacs is included as ``init.el``, but currently not managed
-by ``Makefile``
+* vim
+* emacs
 
 Installation
 ============
@@ -64,8 +62,9 @@ Or, install a specific dotfile, one at a time::
 	make bash
 	make nethack
 	make tmux
-	make vim
 	make zsh
+	make vim
+	make emacs
 
 
 Zsh Extras

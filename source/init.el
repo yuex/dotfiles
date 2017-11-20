@@ -240,17 +240,8 @@
 
 (use-package markdown-mode)
 
-(use-package org
-  :config
-  (setq org-default-notes-file "~/org/notes.org")
-  (define-key org-mode-map (kbd "RET") 'org-return-indent)
-  (define-key org-mode-map (kbd "C-c l") 'org-store-link)
-  (define-key org-mode-map (kbd "C-c a") 'org-agenda)
-  (define-key org-mode-map (kbd "C-c c") 'org-capture)
-  (define-key org-mode-map (kbd "C-c b") 'org-iswitchb)
-  (setq org-export-backends '(ascii html latex md beamer odt)))
-
-(setq evil-want-C-i-jump nil)
+;; load org-mode config from a separate file
+(load (expand-file-name "org.el" user-emacs-directory) t)
 
 (use-package evil-visual-mark-mode
   :config
@@ -691,3 +682,7 @@
      ("d"   . avy-kill-region)
      ))
   )
+
+;; Keep emacs Custom-settings in separate file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file t) ;; report no error when file does not exist

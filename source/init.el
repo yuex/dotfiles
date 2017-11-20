@@ -50,7 +50,7 @@
 
 (use-package solarized-theme
   :config
-  (load-theme 'solarized-dark t))
+  (load-theme 'solarized-dark 'no-enable))
 
 (use-package powerline
   :config
@@ -62,7 +62,7 @@
 (use-package airline-themes
   :config
   (setq airline-display-directory nil)
-  (load-theme 'airline-powerlineish t))
+  (load-theme 'airline-powerlineish 'no-enable))
 
 (use-package rainbow-mode
   :diminish rainbow-mode)
@@ -241,7 +241,7 @@
 (use-package markdown-mode)
 
 ;; load org-mode config from a separate file
-(load (expand-file-name "org.el" user-emacs-directory) t)
+(load (expand-file-name "org.el" user-emacs-directory) 'noerror)
 
 (use-package evil-visual-mark-mode
   :config
@@ -685,4 +685,4 @@
 
 ;; Keep emacs Custom-settings in separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file t) ;; report no error when file does not exist
+(load custom-file 'noerror)

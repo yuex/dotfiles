@@ -1,4 +1,4 @@
-.PHONY: clean
+.PHONY: clean emacs.d
 SRC_DIR=~
 
 vim_plugin: vimrc
@@ -7,8 +7,10 @@ vim_plugin: vimrc
 clean:
 	rm $$(ls|grep -v Makefile)
 
+emacs.d: init.el
+
 .ONESHELL:
-emacs.d: $(SRC_DIR)/.emacs.d/init.el
+init.el: $(SRC_DIR)/.emacs.d/init.el
 	cp $< init.el
 
 %: $(SRC_DIR)/.%

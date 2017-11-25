@@ -120,6 +120,16 @@ dotfiles easily::
 
     make restore
 
+Privacy
+=======
+
+I keep private stuff in separated files such as ``.zshrc-private`` for zsh and
+``custom.el`` and ``org.el`` for emacs. A trick I found easier to manage them is
+put them all in dropbox or google drive and then create some symbolic links. In
+this way, those private stuff could be synchronized automatically between your
+personal laptops so that you don't need to copy them yourself unless you login
+into some servers.
+
 
 Update
 ======

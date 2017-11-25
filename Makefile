@@ -23,7 +23,7 @@ RC_MODULE=bash nethack tmux zsh vim emacs
 RC_INCLUDE=bashrc nethackrc tmux.conf zshrc vimrc emacs.d
 RC_DEPENDS=dircolors-solarized oh-my-zsh vundle vim
 
-all: 
+all:
 	@echo 'RTFD :)'
 
 readme: README.rst

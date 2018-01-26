@@ -10,18 +10,14 @@
 
   + 3 `Backup and Restore`_
   + 4 Update_
+  + 5 FAQ_
 
 Introduction
 ============
 
 A collection of my dotfiles, including:
 
-* bash
-* nethack
-* tmux
-* zsh
-* vim
-* emacs
+* bashnnethackntmuxnzshnvimnemacs
 
 Installation
 ============
@@ -68,12 +64,7 @@ If you like it, you can install by running::
 
 Or, you can install a particular module, one by one::
 
-	make bash
-	make nethack
-	make tmux
-	make zsh
-	make vim
-	make emacs
+tmake bashnnethackntmuxnzshnvimnemacs
 
 Note, the first time you install something, I will backup all your dotfiles
 that I may touch in `.backup/`. If the original files or folders are hidden,
@@ -192,6 +183,20 @@ In case you like it, to update this dotfiles to the lastest, just::
 
 and then ``make`` what module you want to update.
 
+FAQ
+===
+
+Emacs' Color is Weired
+----------------------
+
+Older version emacs don't support 24bit full color. You have to patch it. But
+hopefully, the patch will be integrated into emacs 26.
+
+Inconsolata is not working
+--------------------------
+
+Try to compile and use newest tmux. Older version tmux such as 2.2 has many
+issues. But most of them are fixed in newer versions such as 2.6.
 
 .. _`oh-my-zsh`: https://github.com/robbyrussell/oh-my-zsh
 .. _`dircolors-solarized`: https://github.com/seebi/dircolors-solarized

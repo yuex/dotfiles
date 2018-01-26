@@ -64,7 +64,7 @@ If you like it, you can install by running::
 
 Or, you can install a particular module, one by one::
 
-$(cat source/rc_module|sed 's/^/\tmake /g')
+$(cat source/rc_module|sed 's/^/    make /g')
 
 Note, the first time you install something, I will backup all your dotfiles
 that I may touch in `.backup/`. If the original files or folders are hidden,

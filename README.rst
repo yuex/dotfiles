@@ -17,7 +17,12 @@ Introduction
 
 A collection of my dotfiles, including:
 
-* bashnnethackntmuxnzshnvimnemacs
+* bash
+* nethack
+* tmux
+* zsh
+* vim
+* emacs
 
 Installation
 ============
@@ -64,7 +69,12 @@ If you like it, you can install by running::
 
 Or, you can install a particular module, one by one::
 
-tmake bashnnethackntmuxnzshnvimnemacs
+    make bash
+    make nethack
+    make tmux
+    make zsh
+    make vim
+    make emacs
 
 Note, the first time you install something, I will backup all your dotfiles
 that I may touch in `.backup/`. If the original files or folders are hidden,

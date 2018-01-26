@@ -43,7 +43,8 @@ rc_module: $(DRC_DIR)/rc_module
 
 .ONESHELL:
 $(DRC_DIR)/rc_module: $(RC_INCLUDE) |$(DRC_DIR)
-	echo $(RC_MODULE) |sed 's/ /\n/g' > $(DRC_DIR)/rc_module
+	echo $(RC_MODULE) |sed 's/ /\
+/g' > $(DRC_DIR)/rc_module
 
 remove: |$(DRC_DIR)
 	$(MAKE) -C $(DRC_DIR) clean

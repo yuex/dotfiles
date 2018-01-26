@@ -1,3 +1,6 @@
+;; setup proxy if needed
+(load (expand-file-name "proxy.el" user-emacs-directory) 'noerror)
+
 (package-initialize)
 (unless (assoc-default "melpa" package-archives)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
@@ -684,5 +687,4 @@
   )
 
 ;; Keep emacs Custom-settings in separate file
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror)
+(load (expand-file-name "custom.el" user-emacs-directory) 'noerror)

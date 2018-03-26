@@ -680,9 +680,14 @@
      ("k"   . avy-goto-line-above)
      ("p"   . avy-isearch)
      ("n"   . avy-isearch)
+
      ("y"   . avy-copy-region)
      ("m"   . avy-move-region)
      ("d"   . avy-kill-region)
+
+     ("Y"   . avy-copy-line)
+     ("M"   . avy-move-line)
+     ("D"   . avy-kill-whole-line)
      ))
   )
 

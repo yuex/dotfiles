@@ -605,7 +605,17 @@
   (define-key evil-normal-state-map (kbd "C-w C-j") 'evil-window-down)
   (define-key evil-normal-state-map (kbd "C-w C-k") 'evil-window-up)
 
-  (define-key evil-normal-state-map (kbd "C-w o") 'evil-window-prev)
+  ;; toggle fullscreen, credit to https://gist.github.com/mads-hartmann/3402786
+  (define-key evil-normal-state-map (kbd "C-w o")
+    (defun toggle-maximize-buffer () "Maximize buffer"
+           (interactive)
+           (if (= 1 (length (window-list)))
+               (jump-to-register '_)
+             (progn
+               (window-configuration-to-register '_)
+               (delete-other-windows))))
+    )
+
   (define-key evil-normal-state-map (kbd "C-w w") 'evil-window-next)
   (define-key evil-normal-state-map (kbd "C-w C-o") 'evil-window-prev)
   (define-key evil-normal-state-map (kbd "C-w C-w") 'evil-window-next)

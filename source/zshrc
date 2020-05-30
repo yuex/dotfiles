@@ -32,22 +32,6 @@ DISABLE_UNTRACKED_FILES_DIRTY="false"
 _ZSHRC_PRIVATE=$HOME/.zshrc-private
 [ -r "${_ZSHRC_PRIVATE}" ] && source "${_ZSHRC_PRIVATE}"
 
-# set the color right {{{
-#autoload -U colors zsh/terminfo
-if [ $terminfo[colors] -eq 256 ];then
-    eval my_blue='$FG[033]'
-    eval my_cyan='$FG[037]'
-    eval my_green='$FG[064]'
-    eval my_orange='$FG[166]'
-    DIRCOLORS_SOLARIZED=~/.dircolors-solarized/dircolors.ansi-dark
-    [ -f ${DIRCOLORS_SOLARIZED} ] && eval `dircolors ${DIRCOLORS_SOLARIZED}`
-else
-    eval my_blue='$fg[blue]'
-    eval my_cyan='$fg[cyan]'
-    eval my_green='$fg[green]'
-    eval my_orange='$fg[yellow]'
-fi #}}}
-
 source $ZSH/oh-my-zsh.sh
 
 export TERM='xterm-256color'
@@ -93,13 +77,15 @@ bindkey -A mymap main
 
 # set the color right {{{
 #autoload -U colors zsh/terminfo
-if [ $terminfo[colors] -eq 256 ];then
+if [ $terminfo[colors] -eq 256 ]; then
     eval my_blue='$FG[033]'
     eval my_cyan='$FG[037]'
     eval my_green='$FG[064]'
     eval my_orange='$FG[166]'
-    DIRCOLORS_SOLARIZED=~/.dircolors-solarized/dircolors.ansi-dark
-    [ -f ${DIRCOLORS_SOLARIZED} ] && eval `dircolors ${DIRCOLORS_SOLARIZED}`
+    if [ -x "$(command -v dircolors)" ]; then
+        DIRCOLORS_SOLARIZED=~/.dircolors-solarized/dircolors.ansi-dark
+        [ -f ${DIRCOLORS_SOLARIZED} ] && eval `dircolors ${DIRCOLORS_SOLARIZED}`
+    fi
 else
     eval my_blue='$fg[blue]'
     eval my_cyan='$fg[cyan]'

@@ -32,6 +32,11 @@ DISABLE_UNTRACKED_FILES_DIRTY="false"
 _ZSHRC_PRIVATE=$HOME/.zshrc-private
 [ -r "${_ZSHRC_PRIVATE}" ] && source "${_ZSHRC_PRIVATE}"
 
+if [ -x "$(command -v dircolors)" ]; then
+    DIRCOLORS_SOLARIZED=~/.dircolors-solarized/dircolors.ansi-dark
+    [ -f ${DIRCOLORS_SOLARIZED} ] && eval `dircolors ${DIRCOLORS_SOLARIZED}`
+fi
+
 source $ZSH/oh-my-zsh.sh
 
 export TERM='xterm-256color'
@@ -75,24 +80,6 @@ bindkey -M mymap -s 'a' 'tmux attach -t $USER || tmux new-session -s $USER'
 bindkey -A mymap main
 # }}}
 
-# set the color right {{{
-#autoload -U colors zsh/terminfo
-if [ $terminfo[colors] -eq 256 ]; then
-    eval my_blue='$FG[033]'
-    eval my_cyan='$FG[037]'
-    eval my_green='$FG[064]'
-    eval my_orange='$FG[166]'
-    if [ -x "$(command -v dircolors)" ]; then
-        DIRCOLORS_SOLARIZED=~/.dircolors-solarized/dircolors.ansi-dark
-        [ -f ${DIRCOLORS_SOLARIZED} ] && eval `dircolors ${DIRCOLORS_SOLARIZED}`
-    fi
-else
-    eval my_blue='$fg[blue]'
-    eval my_cyan='$fg[cyan]'
-    eval my_green='$fg[green]'
-    eval my_orange='$fg[yellow]'
-fi #}}}
-
 # prompt {{{
 # disable auto correction of zsh
 # unsetopt correct_all
@@ -112,6 +99,17 @@ function precmd { # {{{
     MOTTOS=`mottos $COLUMNS 2>/dev/null`
 } # }}}
 function setprompt { # {{{
+    if [ $terminfo[colors] -eq 256 ]; then
+        my_blue="$FG[033]"
+        my_cyan="$FG[037]"
+        my_green="$FG[064]"
+        my_orange="$FG[166]"
+    else
+        my_blue="$fg[blue]"
+        my_cyan="$fg[cyan]"
+        my_green="$fg[green]"
+        my_orange="$fg[yellow]"
+    fi
     PROMPT='
 [ $my_cyan%n%{$reset_color%} @ %B$my_cyan%M%{$reset_color%}%b | %$PWDLEN<...<%~%<< ] %*
 [ $my_green%B$MOTTOS%b%{$reset_color%} ]
@@ -126,6 +124,7 @@ $(git_prompt_info)%(!.#.») '
 
 setprompt
 # }}}
+
 # dirstack history {{{
 DIRSTACKSIZE=9
 DIRSTACKFILE=~/.zdirs
